@@ -1,6 +1,8 @@
+import LoginPage from "./views/login/index.jsx";
+
 const App = () => {
     return (
-        <div className="App"></div>
+        <LoginPage/>
     );
 }
 
