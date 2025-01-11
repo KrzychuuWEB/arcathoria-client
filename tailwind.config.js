@@ -6,34 +6,44 @@ export default {
     ],
     theme: {
         extend: {
-            backgroundImage: {
-                'arcathoria-default': "linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/src/assets/background.png')",
-            },
             fontFamily: {
-                magic: ['Cinzel Decorative', 'serif'],
-                body: ['Merriweather', 'serif'],
+                heading: ['Cinzel Decorative', 'serif'],
+                body: ['Roboto', 'sans-serif'],
+                tooltip: ['Open Sans', 'sans-serif'],
             },
             colors: {
-                'arcane-purple': {
-                    DEFAULT: '#6B21A8',
-                    100: '#EADFF5',
-                    200: '#D0BEEA',
-                    300: '#B69EDF',
-                    400: '#9D7FD4',
-                    500: '#854FCC',
-                    600: '#6B21A8',
-                    700: '#58178E',
-                    800: '#451075',
-                    900: '#320A5B',
+                primary: {
+                    DEFAULT: '#6A0DAD',
+                    300: '#9B59B6',
+                    600: '#4A007A',
                 },
-                'arcane-purple-500': '#6B21A8',
-                'mystic-blue': '#1E3A8A',
-                'golden-glow': '#FFD700',
-                'dark-shadow': '#0F172A',
-                'turquoise-magic': '#0BC5EA',
-                'illusion-pink': '#FF69B4',
-                'fire-red': '#B91C1C',
-                'ice-blue': '#3B82F6',
+                secondary: {
+                    DEFAULT: '#FFD700',
+                    300: '#FFE680',
+                    600: '#B89500',
+                },
+                complementary: {
+                    blue: {
+                        DEFAULT: '#0A74DA',
+                        300: '#1A8FE3',
+                        600: '#0645B1',
+                    },
+                    red: {
+                        DEFAULT: '#FF4C4C',
+                        300: '#FF6B6B',
+                        600: '#E02A2A',
+                    },
+                    green: {
+                        DEFAULT: '#4CAF50',
+                        300: '#66BB6A',
+                        600: '#388E3C',
+                    },
+                },
+                text: {
+                    light: '#F2F2F2',
+                    secondary: '#B0B0B0',
+                    highlight: '#FFD700',
+                },
             },
         },
     },

@@ -1,6 +1,6 @@
 import {useFormik} from "formik";
 import * as Yup from 'yup';
-import DefaultButton from "../../components/buttons/default.jsx";
+import LandingButton from "../../components/buttons/landingButton.jsx";
 import DefaultTextField from "../../components/fields/default.jsx";
 
 const validationSchema = Yup.object({
@@ -38,12 +38,14 @@ const LoginPageForm = () => {
                 placeholder="Wpisz swoje hasło"
             />
 
-            <DefaultButton
-                disabled={formik.isSubmitting}
-                type="submit"
-            >
-                Zaloguj się
-            </DefaultButton>
+            <div className="flex justify-end items-center pr-10">
+                <LandingButton
+                    disabled={formik.isSubmitting}
+                    type="submit"
+                >
+                    Zaloguj się
+                </LandingButton>
+            </div>
         </form>
     );
 };
