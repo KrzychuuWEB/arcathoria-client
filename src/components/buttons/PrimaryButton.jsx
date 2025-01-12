@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const LandingButton = ({children, href, ...props}) => {
+const PrimaryButton = ({children, href, ...props}) => {
     if (href) {
         return (
             <a href={href}
@@ -18,9 +18,9 @@ const LandingButton = ({children, href, ...props}) => {
     );
 };
 
-LandingButton.propTypes = {
+PrimaryButton.propTypes = {
     children: PropTypes.node.isRequired,
     href: PropTypes.string,
 }
 
-export default LandingButton;
+export default PrimaryButton;
