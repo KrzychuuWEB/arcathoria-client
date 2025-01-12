@@ -4,6 +4,7 @@ import AuthFlexButtons from "../components/AuthFlexButtons.jsx";
 import {paths} from "../../../routes/paths.js";
 import TextFieldWithLabel from "../../../components/fields/TextFieldWithLabel.jsx";
 import PrimaryButton from "../../../components/buttons/PrimaryButton.jsx";
+import AuthHelperLink from "../components/AuthHelperLink.jsx";
 
 const LoginPageForm = () => {
     const formik = useFormik({
@@ -34,9 +35,7 @@ const LoginPageForm = () => {
             />
 
             <AuthFlexButtons>
-                <a href={paths.auth.login} className="text-text-secondary underline">
-                    Zapomniałem hasła
-                </a>
+                <AuthHelperLink href={paths.auth.login} title="Zapomniałem hasła"/>
 
                 <PrimaryButton
                     disabled={formik.isSubmitting}

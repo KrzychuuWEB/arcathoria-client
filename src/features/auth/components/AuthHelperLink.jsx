@@ -2,7 +2,8 @@ import PropTypes from "prop-types";
 
 const AuthHelperLink = ({href, title}) => {
     return (
-        <a href={href} className="text-text-secondary underline">
+        <a href={href}
+           className="text-text-secondary underline hover:text-text-light transition duration-300 ease-in-out">
             {title}
         </a>
     );
