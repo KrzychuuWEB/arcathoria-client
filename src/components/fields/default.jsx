@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 const DefaultTextField = ({formik, name, type = "text", label}) => {
     return (
-        <div className="mb-4">
+        <div className="mb-2">
             <label className="block text-text-secondary font-medium mb-2" htmlFor={name}>
                 {label}
             </label>
@@ -16,7 +16,7 @@ const DefaultTextField = ({formik, name, type = "text", label}) => {
                 className="w-full px-4 py-2 border border-primary rounded-lg bg-gray-900 bg-opacity-70 text-white focus:outline-none focus:ring-2 focus:ring-primary-600"
             />
             {formik.touched[name] && formik.errors[name] ? (
-                <div className="flex items-center mt-2 text-red-500 text-sm">
+                <div className="flex items-center text-red-500 text-sm">
                     <svg className="w-5 h-5 mr-2 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                          xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
@@ -32,8 +32,7 @@ const DefaultTextField = ({formik, name, type = "text", label}) => {
 
 DefaultTextField.propTypes = {
     formik: PropTypes.object.isRequired,
-    placeholder: PropTypes.string,
-    name: PropTypes.string,
+    name: PropTypes.string.isRequired,
     type: PropTypes.string,
     label: PropTypes.string.isRequired,
 }

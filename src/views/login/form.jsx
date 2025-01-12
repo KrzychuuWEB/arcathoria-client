@@ -36,7 +36,7 @@ const LoginPageForm = () => {
                 type="password"
             />
 
-            <div className="flex justify-end items-center pr-10">
+            <div className="flex justify-end items-center pr-5 pl-5 mt-5">
                 <LandingButton
                     disabled={formik.isSubmitting}
                     type="submit"

@@ -1,18 +1,18 @@
-import LandingLink from "../../components/buttons/landingLink.jsx";
 import LandingTemplate from "../../components/templates/landingTemplate.jsx";
 import {path} from "../../utils/routes.js";
+import LandingButton from "../../components/buttons/landingButton.jsx";
 
 const HomePage = () => {
     return (
         <LandingTemplate>
             <div className="flex justify-center items-center gap-5">
-                <LandingLink href={path.login}>
+                <LandingButton href={path.login}>
                     Zaloguj się
-                </LandingLink>
+                </LandingButton>
 
-                <LandingLink href={path.login}>
+                <LandingButton href={path.register}>
                     Zarejestruj się
-                </LandingLink>
+                </LandingButton>
             </div>
         </LandingTemplate>
     );
