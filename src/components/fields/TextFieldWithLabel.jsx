@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const DefaultTextField = ({formik, name, type = "text", label}) => {
+const TextFieldWithLabel = ({formik, name, type = "text", label}) => {
     return (
         <div className="mb-2">
             <label className="block text-text-secondary font-medium mb-2" htmlFor={name}>
@@ -30,11 +30,11 @@ const DefaultTextField = ({formik, name, type = "text", label}) => {
     );
 };
 
-DefaultTextField.propTypes = {
+TextFieldWithLabel.propTypes = {
     formik: PropTypes.object.isRequired,
     name: PropTypes.string.isRequired,
     type: PropTypes.string,
     label: PropTypes.string.isRequired,
 }
 
-export default DefaultTextField;
+export default TextFieldWithLabel;
