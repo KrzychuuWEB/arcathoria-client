@@ -27,7 +27,6 @@ const LoginPageForm = () => {
                 formik={formik}
                 label="Email"
                 name="email"
-                placeholder="Wpisz swój email"
             />
 
             <DefaultTextField
@@ -35,7 +34,6 @@ const LoginPageForm = () => {
                 label="Hasło"
                 name="password"
                 type="password"
-                placeholder="Wpisz swoje hasło"
             />
 
             <div className="flex justify-end items-center pr-10">

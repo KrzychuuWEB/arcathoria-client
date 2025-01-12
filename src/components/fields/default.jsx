@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 
-const DefaultTextField = ({formik, placeholder, name, type = "text", label}) => {
+const DefaultTextField = ({formik, name, type = "text", label}) => {
     return (
         <div className="mb-4">
-            <label className="block text-primary-300 font-medium mb-2" htmlFor={name}>
+            <label className="block text-text-secondary font-medium mb-2" htmlFor={name}>
                 {label}
             </label>
             <input
@@ -13,8 +13,7 @@ const DefaultTextField = ({formik, placeholder, name, type = "text", label}) => 
                 name={name}
                 type={type}
                 id={name}
-                placeholder={placeholder}
-                className="w-full px-4 py-2 border border-primary rounded-lg bg-gray-900 text-white placeholder-arcane-purple-300 focus:outline-none focus:ring-2 focus:ring-primary-600"
+                className="w-full px-4 py-2 border border-primary rounded-lg bg-gray-900 bg-opacity-70 text-white focus:outline-none focus:ring-2 focus:ring-primary-600"
             />
             {formik.touched[name] && formik.errors[name] ? (
                 <div className="flex items-center mt-2 text-red-500 text-sm">
