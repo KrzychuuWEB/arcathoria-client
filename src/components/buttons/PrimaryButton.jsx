@@ -1,19 +1,20 @@
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
 
 const PrimaryButton = ({children, href, ...props}) => {
     if (href) {
         return (
-            <a href={href}
-               className="bg-primary hover:bg-primary-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out" {...props}>
+            <Link to={href}
+                  className="bg-primary hover:bg-primary-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out" {...props}>
                 {children}
-            </a>
+            </Link>
         );
     }
 
     return (
         <button
-            className="bg-primary hover:bg-primary-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out" {...props}>
-                {children}
+            className="bg-primary hover:bg-primary-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out disabled:bg-gray-400" {...props}>
+            {children}
         </button>
     );
 };
