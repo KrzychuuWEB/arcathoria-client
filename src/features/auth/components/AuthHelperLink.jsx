@@ -1,11 +1,12 @@
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
 
 const AuthHelperLink = ({href, title}) => {
     return (
-        <a href={href}
-           className="text-text-secondary underline hover:text-text-light transition duration-300 ease-in-out">
+        <Link to={href}
+              className="text-text-secondary underline hover:text-text-light transition duration-300 ease-in-out">
             {title}
-        </a>
+        </Link>
     );
 };
 

@@ -35,7 +35,7 @@ const LoginPageForm = () => {
             />
 
             <AuthFlexButtons>
-                <AuthHelperLink href={paths.auth.login} title="Zapomniałem hasła"/>
+                <AuthHelperLink href={paths.auth.recoveryPassword} title="Zapomniałem hasła"/>
 
                 <PrimaryButton
                     disabled={formik.isSubmitting}

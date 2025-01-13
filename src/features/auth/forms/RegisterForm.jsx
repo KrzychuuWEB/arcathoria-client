@@ -25,8 +25,8 @@ const RegisterForm = () => {
             <TextFieldWithLabel formik={formik} label="Nazwa postaci" name="username"/>
             <TextFieldWithLabel formik={formik} label="Email" name="email"/>
             <div className="gap-4 flex justify-between items-start">
-                <TextFieldWithLabel formik={formik} label="Hasło" name="password"/>
-                <TextFieldWithLabel formik={formik} label="Powtórz hasło" name="repeatPassword"/>
+                <TextFieldWithLabel formik={formik} label="Hasło" type="password" name="password"/>
+                <TextFieldWithLabel formik={formik} label="Powtórz hasło" type="password" name="repeatPassword"/>
             </div>
 
             <AuthFlexButtons>
