@@ -5,28 +5,51 @@ import AuthFlexButtons from "../components/AuthFlexButtons.jsx";
 import AuthHelperLink from "../components/AuthHelperLink.jsx";
 import TextFieldWithLabel from "../../../components/fields/TextFieldWithLabel.jsx";
 import PrimaryButton from "../../../components/buttons/PrimaryButton.jsx";
+import useNotification from "../../../hooks/useNotification.jsx";
+import {useNavigate} from "react-router-dom";
+import accountService from "../../../api/services/accountService.js";
 
 const RegisterForm = () => {
+    const navigate = useNavigate();
+    const {success} = useNotification();
+
     const formik = useFormik({
         initialValues: {
-            username: "",
             email: "",
             password: "",
             repeatPassword: "",
         },
         validationSchema: registerValidationSchema,
-        onSubmit: values => {
-            console.log(values);
+        onSubmit: (values, {setFieldError, setSubmitting}) => {
+            accountService.register({
+                email: values.email,
+                password: values.password,
+            })
+                .then(() => {
+                    success("Rejestracja udana!");
+                    navigate(paths.auth.login);
+                })
+                .catch((error) => {
+                    if (error.response.status === 409) {
+                        setFieldError("email", "Ten email jest już zajęty!");
+                    }
+                })
+                .finally(() => {
+                    setSubmitting(false);
+                });
         }
     })
 
     return (
         <form onSubmit={formik.handleSubmit} autoComplete="off">
-            <TextFieldWithLabel formik={formik} label="Nazwa postaci" name="username"/>
             <TextFieldWithLabel formik={formik} label="Email" name="email"/>
             <div className="gap-4 flex justify-between items-start">
-                <TextFieldWithLabel formik={formik} label="Hasło" type="password" name="password"/>
-                <TextFieldWithLabel formik={formik} label="Powtórz hasło" type="password" name="repeatPassword"/>
+                <div className="w-[49%]">
+                    <TextFieldWithLabel formik={formik} label="Hasło" type="password" name="password"/>
+                </div>
+                <div className="w-[49%]">
+                    <TextFieldWithLabel formik={formik} label="Powtórz hasło" type="password" name="repeatPassword"/>
+                </div>
             </div>
 
             <AuthFlexButtons>
