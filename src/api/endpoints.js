@@ -9,18 +9,23 @@ export const endpoints = {
     accounts: {
         register: {
             method: apiMethod.post,
-            url: "/accounts"
+            url: "/accounts/register"
+        },
+        login: {
+            method: apiMethod.post,
+            url: "/authenticate"
         },
     }
 }
 
 const publicEndpoints = [
     endpoints.accounts.register,
+    endpoints.accounts.login,
 ];
 
-export const isPublicEndpoint = (requestConfig) => {
+export const isPublicEndpoint = (url, method) => {
     return publicEndpoints.some(endpoint =>
-        endpoint.url === requestConfig.url &&
-        endpoint.method === requestConfig.method
+        endpoint.url === url &&
+        endpoint.method === method
     );
 };

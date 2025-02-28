@@ -1,5 +1,6 @@
 import {apiClient} from "./client.js";
-import {handleApiError} from "../utils/apiErrorsHandler.js";
+import {isPublicEndpoint} from "./endpoints.js";
+import {toast} from "react-toastify";
 
 let interceptorsInitialized = false;
 
@@ -9,12 +10,19 @@ export const initializeInterceptors = (setIsLoading) => {
 
     apiClient.interceptors.request.use(
         config => {
+
+            if (!isPublicEndpoint(config.url, config.method)) {
+                const token = localStorage.getItem('accessToken');
+                if (token) {
+                    config.headers.Authorization = `Bearer ${token}`;
+                }
+            }
+
             setIsLoading(true);
             return config;
         },
         error => {
             setIsLoading(false);
-            handleApiError(error);
             return Promise.reject(error);
         }
     );
@@ -26,7 +34,29 @@ export const initializeInterceptors = (setIsLoading) => {
         },
         error => {
             setIsLoading(false);
-            handleApiError(error);
+
+            if (error) {
+                switch (error.response.data.errorCode) {
+                    case "ERR-AUTH-EXPIRED_TOKEN-401":
+                        toast.warning("Twoja sesja wygasła. Zaloguj się ponownie!");
+                        break;
+                    case "ERR-AUTH-FORBIDDEN-403":
+                        toast.warning("Brak odpowiednich uprawnień do pobrania zasobów!");
+                        break;
+                    case "ERR-SERVER-500":
+                        toast.error("Wystąpił błąd po stronie serwera. Spróbuj ponownie za kilka minut.");
+                        break;
+                }
+            } else if (error.request) {
+                if (error.message === "Network Error" || !navigator.onLine) {
+                    toast.error("Brak połączenia z internetem. Sprawdź swoje połączenie.");
+                } else if (error.message === "ECONNABORTED") {
+                    toast.error("Przekroczono czas oczekiwania na odpowiedź.");
+                } else {
+                    toast.error("Wystąpił nieoczekiwany błąd.");
+                }
+            }
+
             return Promise.reject(error);
         }
     );

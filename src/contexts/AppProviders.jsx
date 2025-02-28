@@ -1,10 +1,13 @@
 import {LoadingProvider} from './LoadingContext';
 import PropTypes from "prop-types";
+import {AuthProvider} from "./AuthContext.jsx";
 
 const AppProviders = ({children}) => {
     return (
         <LoadingProvider>
-            {children}
+            <AuthProvider>
+                {children}
+            </AuthProvider>
         </LoadingProvider>
     );
 };

@@ -3,11 +3,10 @@ import {toast} from 'react-toastify';
 export const handleApiError = (error) => {
     if (error.response) {
         const status = error.response.status;
-        const message = error.response.data?.message || 'Coś poszło nie tak';
 
         switch (status) {
             case 401:
-                toast.error('Nie jesteś zalogowany!');
+                toast.error('Zaloguj się aby uzykać dostęp');
                 break;
             case 403:
                 toast.error('Brak dostępu!');
@@ -15,8 +14,6 @@ export const handleApiError = (error) => {
             case 500:
                 toast.error('Błąd serwera. Spróbuj ponownie później.');
                 break;
-            default:
-                toast.error(message);
         }
     } else if (error.request) {
         toast.error('Brak odpowiedzi od serwera. Sprawdź połączenie z internetem.');

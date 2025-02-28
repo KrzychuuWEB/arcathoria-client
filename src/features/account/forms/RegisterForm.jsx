@@ -11,7 +11,7 @@ import accountService from "../../../api/services/accountService.js";
 
 const RegisterForm = () => {
     const navigate = useNavigate();
-    const {success} = useNotification();
+    const {successNotification} = useNotification();
 
     const formik = useFormik({
         initialValues: {
@@ -25,13 +25,14 @@ const RegisterForm = () => {
                 email: values.email,
                 password: values.password,
             })
-                .then(() => {
-                    success("Rejestracja udana!");
-                    navigate(paths.auth.login);
-                })
-                .catch((error) => {
-                    if (error.response.status === 409) {
-                        setFieldError("email", "Ten email jest już zajęty!");
+                .then(response => {
+                    if (response.success) {
+                        successNotification("Rejestracja udana!");
+                        navigate(paths.auth.login);
+                    } else {
+                        if (response.code === "ERR_ACCOUNT_EMAIL_EXISTS-409") {
+                            setFieldError("email", "Ten email jest już zajęty!");
+                        }
                     }
                 })
                 .finally(() => {
