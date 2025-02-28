@@ -1,9 +1,9 @@
 import {Route} from "react-router-dom";
 import {paths} from "./paths.js";
-import LoginPage from "../features/auth/pages/LoginPage.jsx";
-import RegisterPage from "../features/auth/pages/RegisterPage.jsx";
-import RecoveryPasswordPage from "../features/auth/pages/RecoveryPasswordPage.jsx";
-import ResetPasswordPage from "../features/auth/pages/ResetPasswordPage.jsx";
+import LoginPage from "../features/account/pages/LoginPage.jsx";
+import RegisterPage from "../features/account/pages/RegisterPage.jsx";
+import RecoveryPasswordPage from "../features/account/pages/RecoveryPasswordPage.jsx";
+import ResetPasswordPage from "../features/account/pages/ResetPasswordPage.jsx";
 
 const AuthRoutes = () => {
     return (

@@ -1,23 +1,28 @@
 import {toast} from 'react-toastify';
 
 const useNotification = () => {
-    const success = (message) => {
+    const successNotification = (message) => {
         toast.success(message);
     };
 
-    const error = (message) => {
+    const errorNotification = (message) => {
         toast.error(message);
     };
 
-    const info = (message) => {
+    const infoNotification = (message) => {
         toast.info(message);
     };
 
-    const warning = (message) => {
+    const warningNotification = (message) => {
         toast.warning(message);
     };
 
-    return {success, error, info, warning};
+    return {
+        successNotification,
+        errorNotification,
+        infoNotification,
+        warningNotification
+    };
 };
 
 export default useNotification;

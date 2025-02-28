@@ -1,21 +1,43 @@
 import {useFormik} from "formik";
 import {loginValidationSchema} from "../validations/loginValidation.js";
 import AuthFlexButtons from "../components/AuthFlexButtons.jsx";
-import {paths} from "../../../routes/paths.js";
+import {paths as routes, paths} from "../../../routes/paths.js";
 import TextFieldWithLabel from "../../../components/fields/TextFieldWithLabel.jsx";
 import PrimaryButton from "../../../components/buttons/PrimaryButton.jsx";
 import AuthHelperLink from "../components/AuthHelperLink.jsx";
+import useNotification from "../../../hooks/useNotification.jsx";
+import accountService from "../../../api/services/accountService.js";
+import {useNavigate} from "react-router-dom";
+import useAuth from "../../../hooks/useAuth.jsx";
 
 const LoginPageForm = () => {
+    const {saveToken} = useAuth();
+    const {successNotification} = useNotification();
+    const navigate = useNavigate();
+
     const formik = useFormik({
         initialValues: {
-            email: "",
-            password: "",
+            email: "test@email.com",
+            password: "Lolek!23",
         },
         validationSchema: loginValidationSchema,
-        onSubmit: (values, {setSubmitting}) => {
-            console.log(values);
-            setSubmitting(false);
+        onSubmit: (values, {setFieldError, setSubmitting}) => {
+            accountService.login({
+                email: values.email,
+                password: values.password,
+            }, saveToken)
+                .then(response => {
+                    if (response.success) {
+                        successNotification("Logowanie udane!");
+                        navigate(routes.game.dashboard);
+                    } else {
+                        if (response.code === "ERR-AUTH-UNAUTHORIZED-401") {
+                            setFieldError("email", "Email lub hasło jest nieprawidłowe!");
+                            setFieldError("password", "Email lub hasło jest nieprawidłowe!");
+                        }
+                    }
+                })
+                .finally(() => setSubmitting(false))
         }
     })
 
