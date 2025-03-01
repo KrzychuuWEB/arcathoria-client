@@ -35,7 +35,7 @@ export const initializeInterceptors = (setIsLoading) => {
         error => {
             setIsLoading(false);
 
-            if (error) {
+            if (error.response) {
                 switch (error.response.data.errorCode) {
                     case "ERR-AUTH-EXPIRED_TOKEN-401":
                         toast.warning("Twoja sesja wygasła. Zaloguj się ponownie!");

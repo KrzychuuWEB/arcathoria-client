@@ -9,6 +9,7 @@ import useNotification from "../../../hooks/useNotification.jsx";
 import accountService from "../../../api/services/accountService.js";
 import {useNavigate} from "react-router-dom";
 import useAuth from "../../../hooks/useAuth.jsx";
+import {mapApiDetailsToFieldError} from "../../../utils/mapApiDetailsToFieldError.js";
 
 const LoginPageForm = () => {
     const {saveToken} = useAuth();
@@ -31,10 +32,11 @@ const LoginPageForm = () => {
                         successNotification("Logowanie udane!");
                         navigate(routes.game.dashboard);
                     } else {
-                        if (response.code === "ERR-AUTH-UNAUTHORIZED-401") {
+                        if (response.code === "ERR-AUTH-BAD_CREDENTIALS-400") {
                             setFieldError("email", "Email lub hasło jest nieprawidłowe!");
                             setFieldError("password", "Email lub hasło jest nieprawidłowe!");
                         }
+                        mapApiDetailsToFieldError(response, setFieldError);
                     }
                 })
                 .finally(() => setSubmitting(false))

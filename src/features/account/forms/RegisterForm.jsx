@@ -1,6 +1,5 @@
 import {paths} from "../../../routes/paths.js";
 import {useFormik} from "formik";
-import {registerValidationSchema} from "../validations/registerValidation.js";
 import AuthFlexButtons from "../components/AuthFlexButtons.jsx";
 import AuthHelperLink from "../components/AuthHelperLink.jsx";
 import TextFieldWithLabel from "../../../components/fields/TextFieldWithLabel.jsx";
@@ -8,6 +7,7 @@ import PrimaryButton from "../../../components/buttons/PrimaryButton.jsx";
 import useNotification from "../../../hooks/useNotification.jsx";
 import {useNavigate} from "react-router-dom";
 import accountService from "../../../api/services/accountService.js";
+import {mapApiDetailsToFieldError} from "../../../utils/mapApiDetailsToFieldError.js";
 
 const RegisterForm = () => {
     const navigate = useNavigate();
@@ -31,8 +31,9 @@ const RegisterForm = () => {
                         navigate(paths.auth.login);
                     } else {
                         if (response.code === "ERR_ACCOUNT_EMAIL_EXISTS-409") {
-                            setFieldError("email", "Ten email jest już zajęty!");
+                            setFieldError("email", response.message);
                         }
+                        mapApiDetailsToFieldError(response, setFieldError);
                     }
                 })
                 .finally(() => {

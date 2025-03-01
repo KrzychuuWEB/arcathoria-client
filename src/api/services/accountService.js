@@ -12,6 +12,8 @@ const accountService = {
                 return {
                     success: false,
                     code: error.response.data.errorCode,
+                    message: error.response.data.message,
+                    formErrors: error.response.data.details
                 }
             })
     },
@@ -25,6 +27,7 @@ const accountService = {
                 return {
                     success: false,
                     code: error.response.data.errorCode,
+                    formErrors: error.response.data.details,
                 }
             })
     },
