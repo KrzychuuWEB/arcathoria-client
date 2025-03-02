@@ -1,4 +1,4 @@
-const SelectCharacterBox = ({}) => {
+const SelectCharacterBox = () => {
     return (
         <div className="w-[150px] h-[200]">
             <div className="">
