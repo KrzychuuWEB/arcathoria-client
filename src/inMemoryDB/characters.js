@@ -1,12 +1,18 @@
 export const characters = [
     {
-        name: "Maguś123",
+        name: "Mag cienia niewiadomego pochodzenia",
         level: 123,
-        stamina: 100
+        experience: 30,
+        xpGain: 100,
+        stamina: 100,
+        gold: 500
     },
     {
         name: "Maguś321",
         level: 25,
-        stamina: 52
+        experience: 50,
+        xpGain: 100,
+        stamina: 52,
+        gold: 20
     }
 ];

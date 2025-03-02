@@ -1,6 +1,6 @@
-import LandingLayout from "../../../layouts/LandingLayout.jsx";
 import {characters} from "../../../inMemoryDB/characters.js";
 import SelectCharacterItem from "../components/SelectCharacterItem.jsx";
+import LandingLayout from "../../../layouts/LandingLayout.jsx";
 
 const CharacterSelectPage = () => {
     return (
