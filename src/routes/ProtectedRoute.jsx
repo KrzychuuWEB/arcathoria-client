@@ -11,7 +11,7 @@ const ProtectedRoute = ({ requiresAuth }) => {
     }
 
     if (!requiresAuth && isAuthenticated()) {
-        return <Navigate to={paths.game.dashboard} />;
+        return <Navigate to={paths.character.dashboard} />;
     }
 
     return <Outlet />;
