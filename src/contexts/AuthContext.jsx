@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { paths } from "../routes/paths.js";
 import { jwtDecode } from "jwt-decode";
+import PropTypes from "prop-types";
 
 const AuthContext = createContext();
 
@@ -39,6 +40,10 @@ export const AuthProvider = ({ children }) => {
             {children}
         </AuthContext.Provider>
     );
+};
+
+AuthProvider.propTypes = {
+    children: PropTypes.node.isRequired,
 };
 
 export default AuthContext;
