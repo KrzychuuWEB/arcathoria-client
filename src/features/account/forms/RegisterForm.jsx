@@ -8,6 +8,7 @@ import useNotification from "../../../hooks/useNotification.jsx";
 import {useNavigate} from "react-router-dom";
 import accountService from "../../../api/services/accountService.js";
 import {mapApiDetailsToFieldError} from "../../../utils/mapApiDetailsToFieldError.js";
+import {registerValidationSchema} from "../validations/registerValidation.js";
 
 const RegisterForm = () => {
     const navigate = useNavigate();
