@@ -1,12 +1,17 @@
 import LandingLayout from "../../../layouts/LandingLayout.jsx";
-import SelectCharacterBox from "../components/SelectCharacterBox.jsx";
+import {characters} from "../../../inMemoryDB/characters.js";
+import SelectCharacterItem from "../components/SelectCharacterItem.jsx";
 
 const CharacterSelectPage = () => {
     return (
         <LandingLayout>
-            <SelectCharacterBox title="Wybór postaci">
-                test
-            </SelectCharacterBox>
+            <div className="flex items-center justify-center">
+                {
+                    characters.map((item) => (
+                        <SelectCharacterItem key={item.name} character={item}/>
+                    ))
+                }
+            </div>
         </LandingLayout>
     );
 };
