@@ -1,8 +1,13 @@
+import LandingLayout from "../../../layouts/LandingLayout.jsx";
+import SelectCharacterBox from "../components/SelectCharacterBox.jsx";
+
 const CharacterSelectPage = () => {
     return (
-        <div>
-            hello game!
-        </div>
+        <LandingLayout>
+            <SelectCharacterBox title="Wybór postaci">
+                test
+            </SelectCharacterBox>
+        </LandingLayout>
     );
 };
 
