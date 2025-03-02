@@ -1,4 +1,4 @@
-import StatusBar from "../../components/game/character/StatusBar.jsx";
+import StatusBar from "../../features/character/components/StatusBar.jsx";
 import PrimaryButton from "../../components/buttons/PrimaryButton.jsx";
 import useAuth from "../../hooks/useAuth.jsx";
 

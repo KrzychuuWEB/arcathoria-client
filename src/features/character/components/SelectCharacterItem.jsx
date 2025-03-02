@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import StatusBar from "../../../components/game/character/StatusBar.jsx";
+import StatusBar from "./StatusBar.jsx";
 import PrimaryButton from "../../../components/buttons/PrimaryButton.jsx";
 
 const SelectCharacterItem = ({ character }) => {
