@@ -7,6 +7,7 @@ export const paths = {
         resetPassword: "/account/reset-password",
     },
     game: {
-        dashboard: "/dashboard",
+        dashboard: "/game/",
+        selectCharacter: "/game/select-character",
     }
 }
