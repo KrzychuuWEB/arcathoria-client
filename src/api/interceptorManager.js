@@ -1,10 +1,11 @@
 import {apiClient} from "./client.js";
 import {isPublicEndpoint} from "./endpoints.js";
 import {toast} from "react-toastify";
+import {paths} from "../routes/paths.js";
 
 let interceptorsInitialized = false;
 
-export const initializeInterceptors = (setIsLoading) => {
+export const initializeInterceptors = (setIsLoading, removeToken, navigate) => {
     if (interceptorsInitialized) return;
     interceptorsInitialized = true;
 
@@ -39,9 +40,11 @@ export const initializeInterceptors = (setIsLoading) => {
                 switch (error.response.data.errorCode) {
                     case "ERR-AUTH-EXPIRED_TOKEN-401":
                         toast.warning("Twoja sesja wygasła. Zaloguj się ponownie!");
+                        removeToken();
                         break;
                     case "ERR-AUTH-FORBIDDEN-403":
-                        toast.warning("Brak odpowiednich uprawnień do pobrania zasobów!");
+                        toast.warning("Brak odpowiednich uprawnień do przeglądania zasobów!");
+                        navigate(paths.home);
                         break;
                     case "ERR-SERVER-500":
                         toast.error("Wystąpił błąd po stronie serwera. Spróbuj ponownie za kilka minut.");

@@ -1,10 +1,12 @@
 import {createContext, useEffect, useState} from 'react';
+import {useNavigate} from "react-router-dom";
+import {paths} from "../routes/paths.js";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
     const [token, setToken] = useState(null);
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const saveToken = (jwtToken) => {
         localStorage.setItem('authToken', jwtToken);
@@ -14,6 +16,7 @@ export const AuthProvider = ({children}) => {
     const removeToken = () => {
         localStorage.removeItem('authToken');
         setToken(null);
+        navigate(paths.home);
     };
 
     useEffect(() => {
