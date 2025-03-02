@@ -1,6 +1,7 @@
 import {createContext, useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {paths} from "../routes/paths.js";
+import {jwtDecode} from "jwt-decode";
 
 const AuthContext = createContext();
 
@@ -19,6 +20,13 @@ export const AuthProvider = ({children}) => {
         navigate(paths.home);
     };
 
+    const isAuthenticated = (token) => {
+        if (!token) return false;
+
+        const decoded = jwtDecode(token);
+        return decoded.exp * 1000 < Date.now() && true;
+    }
+
     useEffect(() => {
         const savedToken = localStorage.getItem('authToken');
         if (savedToken) {
@@ -28,7 +36,7 @@ export const AuthProvider = ({children}) => {
 
 
     return (
-        <AuthContext.Provider value={{token, saveToken, removeToken}}>
+        <AuthContext.Provider value={{token, saveToken, removeToken, isAuthenticated}}>
             {children}
         </AuthContext.Provider>
     );
