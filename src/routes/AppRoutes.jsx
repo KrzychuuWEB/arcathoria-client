@@ -1,5 +1,5 @@
-import {Route, Routes} from "react-router-dom";
-import {paths} from "./paths.js";
+import { Route, Routes } from "react-router-dom";
+import { paths } from "./paths.js";
 import HomePage from "../pages/HomePage.jsx";
 import AuthRoutes from "./AuthRoutes.jsx";
 import NotFoundPage from "../pages/NotFoundPage.jsx";
@@ -9,12 +9,12 @@ import ProtectedRoute from "./ProtectedRoute.jsx";
 const AppRoutes = () => {
     return (
         <Routes>
-            <Route element={<ProtectedRoute requiresAuth={false}/>}>
-                <Route index path={paths.home} element={<HomePage/>}/>
+            <Route element={<ProtectedRoute requiresAuth={false} />}>
+                <Route index path={paths.home} element={<HomePage />} />
             </Route>
             {AuthRoutes()}
             {GameRoutes()}
-            <Route path="*" element={<NotFoundPage/>}/>
+            <Route path="*" element={<NotFoundPage />} />
         </Routes>
     );
 };

@@ -1,19 +1,17 @@
-import {LoadingProvider} from './LoadingContext';
+import { LoadingProvider } from "./LoadingContext";
 import PropTypes from "prop-types";
-import {AuthProvider} from "./AuthContext.jsx";
+import { AuthProvider } from "./AuthContext.jsx";
 
-const AppProviders = ({children}) => {
+const AppProviders = ({ children }) => {
     return (
         <LoadingProvider>
-            <AuthProvider>
-                {children}
-            </AuthProvider>
+            <AuthProvider>{children}</AuthProvider>
         </LoadingProvider>
     );
 };
 
 AppProviders.propTypes = {
     children: PropTypes.node,
-}
+};
 
 export default AppProviders;

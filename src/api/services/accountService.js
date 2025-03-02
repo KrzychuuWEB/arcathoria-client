@@ -2,34 +2,36 @@ import accountRepository from "../repositories/accountRepository.js";
 
 const accountService = {
     register: (data) => {
-        return accountRepository.register(data)
+        return accountRepository
+            .register(data)
             .then(() => {
                 return {
                     success: true,
-                }
+                };
             })
-            .catch(error => {
+            .catch((error) => {
                 return {
                     success: false,
                     code: error.response.data.errorCode,
                     message: error.response.data.message,
-                    formErrors: error.response.data.details
-                }
-            })
+                    formErrors: error.response.data.details,
+                };
+            });
     },
     login: (data, saveToken) => {
-        return accountRepository.login(data)
-            .then(response => {
+        return accountRepository
+            .login(data)
+            .then((response) => {
                 saveToken(response.data.token);
-                return {success: true};
+                return { success: true };
             })
-            .catch(error => {
+            .catch((error) => {
                 return {
                     success: false,
                     code: error.response.data.errorCode,
                     formErrors: error.response.data.details,
-                }
-            })
+                };
+            });
     },
 };
 

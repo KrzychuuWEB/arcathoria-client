@@ -3,7 +3,7 @@ import PrimaryButton from "../../components/buttons/PrimaryButton.jsx";
 import useAuth from "../../hooks/useAuth.jsx";
 
 const GameTopAppBar = () => {
-    const {removeToken} = useAuth();
+    const { removeToken } = useAuth();
 
     return (
         <div className="relative w-full flex items-center justify-between p-3 bg-black bg-opacity-40 z-[50]">
@@ -14,10 +14,10 @@ const GameTopAppBar = () => {
                 </div>
 
                 <div className="w-[200px] ml-5">
-                    <StatusBar value={65} maxValue={120} variant="hp"/>
-                    <StatusBar value={90} maxValue={250} variant="mana"/>
-                    <StatusBar value={25} variant="level"/>
-                    <StatusBar value={80} maxValue={100} variant="stamina"/>
+                    <StatusBar value={65} maxValue={120} variant="hp" />
+                    <StatusBar value={90} maxValue={250} variant="mana" />
+                    <StatusBar value={25} variant="level" />
+                    <StatusBar value={80} maxValue={100} variant="stamina" />
                 </div>
             </div>
 
@@ -28,7 +28,7 @@ const GameTopAppBar = () => {
             <div className="flex items-center justify-end ml-2">
                 <PrimaryButton
                     onClick={() => {
-                        removeToken()
+                        removeToken();
                     }}
                 >
                     Wyloguj
@@ -36,6 +36,6 @@ const GameTopAppBar = () => {
             </div>
         </div>
     );
-}
+};
 
 export default GameTopAppBar;

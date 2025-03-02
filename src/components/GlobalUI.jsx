@@ -1,9 +1,9 @@
-import {Bounce, ToastContainer} from "react-toastify";
+import { Bounce, ToastContainer } from "react-toastify";
 import ProgressBar from "./progressBar/ProgressBar.jsx";
-import {useLoading} from "../contexts/LoadingContext.jsx";
+import { useLoading } from "../contexts/LoadingContext.jsx";
 
 const GlobalUI = () => {
-    const {isLoading} = useLoading();
+    const { isLoading } = useLoading();
 
     return (
         <>
@@ -20,7 +20,7 @@ const GlobalUI = () => {
                 theme="dark"
                 transition={Bounce}
             />
-            <ProgressBar isAnimating={isLoading}/>
+            <ProgressBar isAnimating={isLoading} />
         </>
     );
 };

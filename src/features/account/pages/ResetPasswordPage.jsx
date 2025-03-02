@@ -1,9 +1,9 @@
 import LandingLayout from "../../../layouts/LandingLayout.jsx";
 import AuthContainer from "../components/AuthContainer.jsx";
-import {useNavigate, useSearchParams} from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import ResetPasswordForm from "../forms/ResetPasswordForm.jsx";
-import {useEffect, useState} from "react";
-import {paths} from "../../../routes/paths.js";
+import { useEffect, useState } from "react";
+import { paths } from "../../../routes/paths.js";
 
 const ResetPasswordPage = () => {
     const [isSuccess, setIsSuccess] = useState(false);
@@ -22,12 +22,13 @@ const ResetPasswordPage = () => {
     return (
         <LandingLayout>
             <AuthContainer title="Resetowanie hasła">
-                <ResetPasswordForm setIsSuccess={setIsSuccess}/>
+                <ResetPasswordForm setIsSuccess={setIsSuccess} />
 
-                {
-                    isSuccess && <p className="text-center text-text-highlight font-bold mt-3">Hasło zostało pomyślnie
-                        zresetowane!</p>
-                }
+                {isSuccess && (
+                    <p className="text-center text-text-highlight font-bold mt-3">
+                        Hasło zostało pomyślnie zresetowane!
+                    </p>
+                )}
             </AuthContainer>
         </LandingLayout>
     );

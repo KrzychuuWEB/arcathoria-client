@@ -1,16 +1,16 @@
-import {useFormik} from "formik";
-import {recoveryPasswordSchema} from "../validations/recoveryPasswordValidation.js";
+import { useFormik } from "formik";
+import { recoveryPasswordSchema } from "../validations/recoveryPasswordValidation.js";
 import PrimaryButton from "../../../components/buttons/PrimaryButton.jsx";
 import TextFieldWithLabel from "../../../components/fields/TextFieldWithLabel.jsx";
 import AuthHelperLink from "../components/AuthHelperLink.jsx";
-import {paths} from "../../../routes/paths.js";
+import { paths } from "../../../routes/paths.js";
 import AuthFlexButtons from "../components/AuthFlexButtons.jsx";
 
 const RecoveryPasswordForm = () => {
     const formik = useFormik({
-        initialValues: {email: ""},
+        initialValues: { email: "" },
         validationSchema: recoveryPasswordSchema,
-        onSubmit: values => {
+        onSubmit: (values) => {
             formik.setSubmitting(false);
             console.log(values);
         },
@@ -18,15 +18,12 @@ const RecoveryPasswordForm = () => {
 
     return (
         <form onSubmit={formik.handleSubmit} autoComplete="off">
-            <TextFieldWithLabel formik={formik} name="email" label="Email"/>
+            <TextFieldWithLabel formik={formik} name="email" label="Email" />
 
             <AuthFlexButtons>
-                <AuthHelperLink href={paths.auth.login} title="Zaloguj się"/>
+                <AuthHelperLink href={paths.auth.login} title="Zaloguj się" />
 
-                <PrimaryButton
-                    disabled={formik.isSubmitting}
-                    type="submit"
-                >
+                <PrimaryButton disabled={formik.isSubmitting} type="submit">
                     Przypomnij hasło
                 </PrimaryButton>
             </AuthFlexButtons>

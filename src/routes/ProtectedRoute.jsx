@@ -1,20 +1,20 @@
-import {Navigate, Outlet} from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import PropTypes from "prop-types";
 import useAuth from "../hooks/useAuth.jsx";
-import {paths} from "./paths.js";
+import { paths } from "./paths.js";
 
-const ProtectedRoute = ({requiresAuth}) => {
-    const {isAuthenticated} = useAuth();
+const ProtectedRoute = ({ requiresAuth }) => {
+    const { isAuthenticated } = useAuth();
 
     if (requiresAuth && !isAuthenticated()) {
-        return <Navigate to={paths.auth.login}/>;
+        return <Navigate to={paths.auth.login} />;
     }
 
     if (!requiresAuth && isAuthenticated()) {
-        return <Navigate to={paths.game.dashboard}/>;
+        return <Navigate to={paths.game.dashboard} />;
     }
 
-    return <Outlet/>;
+    return <Outlet />;
 };
 
 ProtectedRoute.propTypes = {

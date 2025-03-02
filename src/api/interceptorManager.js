@@ -1,7 +1,7 @@
-import {apiClient} from "./client.js";
-import {isPublicEndpoint} from "./endpoints.js";
-import {toast} from "react-toastify";
-import {paths} from "../routes/paths.js";
+import { apiClient } from "./client.js";
+import { isPublicEndpoint } from "./endpoints.js";
+import { toast } from "react-toastify";
+import { paths } from "../routes/paths.js";
 
 let interceptorsInitialized = false;
 
@@ -10,10 +10,9 @@ export const initializeInterceptors = (setIsLoading, removeToken, navigate) => {
     interceptorsInitialized = true;
 
     apiClient.interceptors.request.use(
-        config => {
-
+        (config) => {
             if (!isPublicEndpoint(config.url, config.method)) {
-                const token = localStorage.getItem('accessToken');
+                const token = localStorage.getItem("accessToken");
                 if (token) {
                     config.headers.Authorization = `Bearer ${token}`;
                 }
@@ -22,18 +21,18 @@ export const initializeInterceptors = (setIsLoading, removeToken, navigate) => {
             setIsLoading(true);
             return config;
         },
-        error => {
+        (error) => {
             setIsLoading(false);
             return Promise.reject(error);
-        }
+        },
     );
 
     apiClient.interceptors.response.use(
-        response => {
+        (response) => {
             setIsLoading(false);
             return response;
         },
-        error => {
+        (error) => {
             setIsLoading(false);
 
             if (error.response) {
@@ -47,7 +46,9 @@ export const initializeInterceptors = (setIsLoading, removeToken, navigate) => {
                         navigate(paths.home);
                         break;
                     case "ERR-SERVER-500":
-                        toast.error("Wystąpił błąd po stronie serwera. Spróbuj ponownie za kilka minut.");
+                        toast.error(
+                            "Wystąpił błąd po stronie serwera. Spróbuj ponownie za kilka minut.",
+                        );
                         break;
                 }
             } else if (error.request) {
@@ -61,6 +62,6 @@ export const initializeInterceptors = (setIsLoading, removeToken, navigate) => {
             }
 
             return Promise.reject(error);
-        }
+        },
     );
 };

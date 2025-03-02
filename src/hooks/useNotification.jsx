@@ -1,4 +1,4 @@
-import {toast} from 'react-toastify';
+import { toast } from "react-toastify";
 
 const useNotification = () => {
     const successNotification = (message) => {
@@ -21,7 +21,7 @@ const useNotification = () => {
         successNotification,
         errorNotification,
         infoNotification,
-        warningNotification
+        warningNotification,
     };
 };
 

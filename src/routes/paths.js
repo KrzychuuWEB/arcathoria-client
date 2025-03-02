@@ -9,5 +9,5 @@ export const paths = {
     game: {
         dashboard: "/game/",
         selectCharacter: "/game/select-character",
-    }
-}
+    },
+};

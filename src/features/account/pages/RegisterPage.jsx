@@ -6,10 +6,12 @@ const RegisterPage = () => {
     return (
         <LandingLayout>
             <AuthContainer title="Zarejestruj się">
-                <RegisterForm/>
+                <RegisterForm />
 
-                <p className="text-white text-center mt-5">Dołącz i rozpocznij swoją <span
-                    className="font-bold text-text-highlight">przygodę</span> już teraz!</p>
+                <p className="text-white text-center mt-5">
+                    Dołącz i rozpocznij swoją{" "}
+                    <span className="font-bold text-text-highlight">przygodę</span> już teraz!
+                </p>
             </AuthContainer>
         </LandingLayout>
     );

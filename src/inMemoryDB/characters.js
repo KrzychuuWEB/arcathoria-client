@@ -5,7 +5,7 @@ export const characters = [
         experience: 30,
         xpGain: 100,
         stamina: 100,
-        gold: 500
+        gold: 500,
     },
     {
         name: "Maguś321",
@@ -13,6 +13,6 @@ export const characters = [
         experience: 50,
         xpGain: 100,
         stamina: 52,
-        gold: 20
-    }
+        gold: 20,
+    },
 ];

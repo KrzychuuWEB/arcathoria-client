@@ -6,10 +6,12 @@ const RecoveryPasswordPage = () => {
     return (
         <LandingLayout>
             <AuthContainer title="Ozdyskaj hasło">
-                <RecoveryPasswordForm/>
+                <RecoveryPasswordForm />
 
-                <p className="text-white text-center mt-5">Odzyskaj hasło i wróć do krainy <span
-                    className="font-bold text-text-highlight">magii</span></p>
+                <p className="text-white text-center mt-5">
+                    Odzyskaj hasło i wróć do krainy{" "}
+                    <span className="font-bold text-text-highlight">magii</span>
+                </p>
             </AuthContainer>
         </LandingLayout>
     );

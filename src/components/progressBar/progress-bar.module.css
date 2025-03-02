@@ -11,9 +11,8 @@
 .progressBar {
     height: 4px;
     width: 100%;
-    background-image: linear-gradient(
-            to right,
-            #9B59B6, #6A0DAD
-    );
-    box-shadow: 0 0 10px #9B59B6, 0 0 5px #6A0DAD;
+    background-image: linear-gradient(to right, #9b59b6, #6a0dad);
+    box-shadow:
+        0 0 10px #9b59b6,
+        0 0 5px #6a0dad;
 }
