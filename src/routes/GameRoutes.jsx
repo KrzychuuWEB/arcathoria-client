@@ -8,7 +8,7 @@ import CreateCharacterPage from "../features/character/pages/CreateCharacterPage
 const GameRoutes = () => {
     return (
         <>
-            <Route element={<ProtectedRoute requiresAuth={false} />}>
+            <Route element={<ProtectedRoute requiresAuth={true} />}>
                 <Route path={paths.character.select} element={<CharacterSelectPage />} />
                 <Route path={paths.character.create} element={<CreateCharacterPage />} />
                 <Route path={paths.character.dashboard} element={<CharacterPage />} />

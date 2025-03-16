@@ -34,7 +34,7 @@ const LoginPageForm = () => {
                 .then((response) => {
                     if (response.success) {
                         successNotification("Logowanie udane!");
-                        navigate(routes.character.dashboard);
+                        navigate(routes.character.select);
                     } else {
                         if (response.code === "ERR-AUTH-BAD_CREDENTIALS-400") {
                             setFieldError("email", "Email lub hasło jest nieprawidłowe!");
