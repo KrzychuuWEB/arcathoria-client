@@ -16,6 +16,12 @@ export const endpoints = {
             url: "/authenticate",
         },
     },
+    characters: {
+        create: {
+            method: apiMethod.post,
+            url: "/characters",
+        },
+    },
 };
 
 const publicEndpoints = [endpoints.accounts.register, endpoints.accounts.login];

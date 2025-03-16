@@ -11,25 +11,29 @@ export const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
 
     const saveToken = (jwtToken) => {
-        localStorage.setItem("authToken", jwtToken);
+        localStorage.setItem("accessToken", jwtToken);
         setToken(jwtToken);
     };
 
     const removeToken = () => {
-        localStorage.removeItem("authToken");
+        localStorage.removeItem("accessToken");
         setToken(null);
         navigate(paths.home);
     };
 
-    const isAuthenticated = (token) => {
+    const isAuthenticated = () => {
         if (!token) return false;
 
-        const decoded = jwtDecode(token);
-        return decoded.exp * 1000 < Date.now() && true;
+        try {
+            const decoded = jwtDecode(token);
+            return decoded.exp * 1000 > Date.now();
+        } catch (error) {
+            removeToken();
+        }
     };
 
     useEffect(() => {
-        const savedToken = localStorage.getItem("authToken");
+        const savedToken = localStorage.getItem("accessToken");
         if (savedToken) {
             setToken(savedToken);
         }

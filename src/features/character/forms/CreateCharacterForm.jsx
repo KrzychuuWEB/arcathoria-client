@@ -2,15 +2,38 @@ import { useFormik } from "formik";
 import TextFieldWithLabel from "../../../components/fields/TextFieldWithLabel.jsx";
 import PrimaryButton from "../../../components/buttons/PrimaryButton.jsx";
 import { createCharacterSchema } from "../validations/createCharacterValidation.js";
+import { paths as routes } from "../../../routes/paths.js";
+import { mapApiDetailsToFieldError } from "../../../utils/mapApiDetailsToFieldError.js";
+import characterService from "../../../api/services/characterService.js";
+import useNotification from "../../../hooks/useNotification.jsx";
+import { useNavigate } from "react-router-dom";
 
 const CreateCharacterForm = () => {
+    const { successNotification } = useNotification();
+    const navigate = useNavigate();
+
     const formik = useFormik({
         initialValues: {
-            name: "",
+            characterName: "",
         },
         validationSchema: createCharacterSchema,
         onSubmit: (values, { setFieldError, setSubmitting }) => {
-            console.log(values);
+            characterService
+                .create({
+                    characterName: values.name,
+                })
+                .then((response) => {
+                    if (response.success) {
+                        successNotification("Postać utworzona!");
+                        navigate(routes.character.dashboard);
+                    } else {
+                        if (response.code === "ERR_CHARACTER_NAME_EXISTS-409") {
+                            setFieldError("characterName", response.message);
+                        }
+                        mapApiDetailsToFieldError(response, setFieldError);
+                    }
+                })
+                .finally(() => setSubmitting(false));
         },
     });
 
