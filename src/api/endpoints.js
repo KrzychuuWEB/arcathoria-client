@@ -33,6 +33,10 @@ export const endpoints = {
             method: apiMethod.get,
             url: "/characters/selects/me",
         },
+        removeMyCharacter: {
+            method: apiMethod.delete,
+            url: "/characters/selects",
+        },
     },
 };
 

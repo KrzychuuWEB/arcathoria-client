@@ -9,7 +9,7 @@ const SelectedCharacterContext = createContext();
 
 export const SelectedCharacterProvider = ({ children }) => {
     const [character, setCharacter] = useState(null);
-    const { warningNotification } = useNotification();
+    const { warningNotification, successNotification } = useNotification();
     const [isLoaded, setIsLoaded] = useState(false);
     const location = useLocation();
 
@@ -54,13 +54,30 @@ export const SelectedCharacterProvider = ({ children }) => {
         [warningNotification],
     );
 
+    const removeSelectedCharacter = () => {
+        characterService.removeSelectedCharacter().then((response) => {
+            if (response.success) {
+                setCharacter(null);
+                successNotification("Zostałeś/aś poprawnie wylogowany/a");
+            } else if (response.errorCode === "ERR_CHARACTER_SELECTED_NOT_FOUND-404") {
+                warningNotification(response.message);
+            }
+        });
+    };
+
     const hasSelectedCharacter = useCallback(() => {
         return character !== null;
     }, [character]);
 
     return (
         <SelectedCharacterContext.Provider
-            value={{ character, hasSelectedCharacter, selectCharacterById, isLoaded }}
+            value={{
+                character,
+                hasSelectedCharacter,
+                selectCharacterById,
+                isLoaded,
+                removeSelectedCharacter,
+            }}
         >
             {children}
         </SelectedCharacterContext.Provider>

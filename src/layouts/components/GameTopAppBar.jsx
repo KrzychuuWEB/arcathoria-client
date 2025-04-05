@@ -3,7 +3,7 @@ import PrimaryButton from "../../components/buttons/PrimaryButton.jsx";
 import useSelectedCharacter from "../../hooks/useSelectedCharacter.jsx";
 
 const GameTopAppBar = () => {
-    const { character } = useSelectedCharacter();
+    const { character, removeSelectedCharacter } = useSelectedCharacter();
 
     return (
         <div className="relative w-full flex items-center justify-between p-3 bg-black bg-opacity-40 z-[50]">
@@ -26,7 +26,13 @@ const GameTopAppBar = () => {
             </div>
 
             <div className="flex items-center justify-end ml-2">
-                <PrimaryButton>Wyloguj</PrimaryButton>
+                <PrimaryButton
+                    onClick={() => {
+                        removeSelectedCharacter();
+                    }}
+                >
+                    Wyloguj
+                </PrimaryButton>
             </div>
         </div>
     );

@@ -61,6 +61,22 @@ const characterService = {
                 };
             });
     },
+    removeSelectedCharacter: () => {
+        return characterRepository
+            .removeSelectedCharacter()
+            .then(() => {
+                return {
+                    success: true,
+                };
+            })
+            .catch((error) => {
+                return {
+                    success: false,
+                    errorCode: error.response.data.errorCode,
+                    message: error.response.data.message,
+                };
+            });
+    },
 };
 
 export default characterService;
