@@ -30,7 +30,7 @@ const RegisterForm = () => {
                 .then((response) => {
                     if (response.success) {
                         successNotification("Rejestracja udana!");
-                        navigate(paths.auth.login);
+                        navigate(paths.account.login);
                     } else {
                         if (response.code === "ERR_ACCOUNT_EMAIL_EXISTS-409") {
                             setFieldError("email", response.message);
@@ -67,7 +67,7 @@ const RegisterForm = () => {
             </div>
 
             <AuthFlexButtons>
-                <AuthHelperLink href={paths.auth.login} title="Mam już konto" />
+                <AuthHelperLink href={paths.account.login} title="Mam już konto" />
 
                 <PrimaryButton type="submit" disabled={formik.isSubmitting}>
                     Zarejestruj się

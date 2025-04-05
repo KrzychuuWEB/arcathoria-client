@@ -8,10 +8,14 @@ import CreateCharacterPage from "../features/character/pages/CreateCharacterPage
 const GameRoutes = () => {
     return (
         <>
-            <Route element={<ProtectedRoute requiresAuth={true} />}>
-                <Route path={paths.character.select} element={<CharacterSelectPage />} />
-                <Route path={paths.character.create} element={<CreateCharacterPage />} />
-                <Route path={paths.character.dashboard} element={<CharacterPage />} />
+            <Route path={paths.character.select} element={<ProtectedRoute />}>
+                <Route index element={<CharacterSelectPage />} />
+            </Route>
+            <Route path={paths.character.create} element={<ProtectedRoute />}>
+                <Route index element={<CreateCharacterPage />} />
+            </Route>
+            <Route path={paths.character.dashboard} element={<ProtectedRoute />}>
+                <Route index element={<CharacterPage />} />
             </Route>
         </>
     );

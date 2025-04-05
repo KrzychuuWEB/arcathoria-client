@@ -25,9 +25,11 @@ const HomePage = () => {
                     </h3>
 
                     <div className="flex justify-center items-center gap-5 mt-5">
-                        <PrimaryButton href={paths.auth.login}>Wejdź do Świata Magii</PrimaryButton>
+                        <PrimaryButton href={paths.account.login}>
+                            Wejdź do Świata Magii
+                        </PrimaryButton>
 
-                        <PrimaryButton href={paths.auth.register}>
+                        <PrimaryButton href={paths.account.register}>
                             Dołącz do Arcathorii
                         </PrimaryButton>
                     </div>

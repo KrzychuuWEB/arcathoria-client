@@ -1,15 +1,15 @@
 import StatusBar from "../../features/character/components/StatusBar.jsx";
 import PrimaryButton from "../../components/buttons/PrimaryButton.jsx";
-import useAuth from "../../hooks/useAuth.jsx";
+import useSelectedCharacter from "../../hooks/useSelectedCharacter.jsx";
 
 const GameTopAppBar = () => {
-    const { removeToken } = useAuth();
+    const { character, removeSelectedCharacter } = useSelectedCharacter();
 
     return (
         <div className="relative w-full flex items-center justify-between p-3 bg-black bg-opacity-40 z-[50]">
             <div className="flex justify-between items-center">
                 <div className="flex flex-col justify-center items-center">
-                    <p className="text-white text-[10px]">character name</p>
+                    <p className="text-white text-[10px]">{character.characterName}</p>
                     <div className="w-[50px] h-[50px] rounded-full bg-complementary-green-600"></div>
                 </div>
 
@@ -28,7 +28,7 @@ const GameTopAppBar = () => {
             <div className="flex items-center justify-end ml-2">
                 <PrimaryButton
                     onClick={() => {
-                        removeToken();
+                        removeSelectedCharacter();
                     }}
                 >
                     Wyloguj

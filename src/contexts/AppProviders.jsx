@@ -1,11 +1,14 @@
 import { LoadingProvider } from "./LoadingContext";
 import PropTypes from "prop-types";
 import { AuthProvider } from "./AuthContext.jsx";
+import { SelectedCharacterProvider } from "./SelectedCharacterContext.jsx";
 
 const AppProviders = ({ children }) => {
     return (
         <LoadingProvider>
-            <AuthProvider>{children}</AuthProvider>
+            <SelectedCharacterProvider>
+                <AuthProvider>{children}</AuthProvider>
+            </SelectedCharacterProvider>
         </LoadingProvider>
     );
 };
