@@ -21,6 +21,18 @@ export const endpoints = {
             method: apiMethod.post,
             url: "/characters",
         },
+        getAllMyCharacters: {
+            method: apiMethod.get,
+            url: "/characters/selects",
+        },
+        setMyCharacter: {
+            method: apiMethod.post,
+            url: "/characters/selects",
+        },
+        getMyCharacter: {
+            method: apiMethod.get,
+            url: "/characters/selects/me",
+        },
     },
 };
 

@@ -1,6 +1,6 @@
 export const paths = {
     home: "/",
-    auth: {
+    account: {
         login: "/account/login",
         register: "/account/register",
         recoveryPassword: "/account/recovery-password",

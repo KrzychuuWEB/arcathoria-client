@@ -41,6 +41,9 @@ export const initializeInterceptors = (setIsLoading, removeToken, navigate) => {
                         toast.warning("Twoja sesja wygasła. Zaloguj się ponownie!");
                         removeToken();
                         break;
+                    case "ERR_ACCESS_DENIED-403":
+                        toast.warning(error.response.data.message);
+                        break;
                     case "ERR-AUTH-FORBIDDEN-403":
                         toast.warning("Brak odpowiednich uprawnień do przeglądania zasobów!");
                         navigate(paths.home);

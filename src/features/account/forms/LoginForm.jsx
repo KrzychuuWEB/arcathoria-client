@@ -54,7 +54,7 @@ const LoginPageForm = () => {
             <TextFieldWithLabel formik={formik} label="Hasło" name="password" type="password" />
 
             <AuthFlexButtons>
-                <AuthHelperLink href={paths.auth.recoveryPassword} title="Zapomniałem hasła" />
+                <AuthHelperLink href={paths.account.recoveryPassword} title="Zapomniałem hasła" />
 
                 <PrimaryButton disabled={formik.isSubmitting} type="submit">
                     Zaloguj się

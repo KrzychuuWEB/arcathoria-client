@@ -21,7 +21,7 @@ const RecoveryPasswordForm = () => {
             <TextFieldWithLabel formik={formik} name="email" label="Email" />
 
             <AuthFlexButtons>
-                <AuthHelperLink href={paths.auth.login} title="Zaloguj się" />
+                <AuthHelperLink href={paths.account.login} title="Zaloguj się" />
 
                 <PrimaryButton disabled={formik.isSubmitting} type="submit">
                     Przypomnij hasło

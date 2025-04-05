@@ -13,7 +13,7 @@ const LoginPage = () => {
                 <p className="text-white text-center mt-5">
                     Chcesz dołączyć do świata magii?{" "}
                     <Link
-                        to={paths.auth.register}
+                        to={paths.account.register}
                         className="underline font-bold text-text-highlight"
                     >
                         Zarejestruj się
