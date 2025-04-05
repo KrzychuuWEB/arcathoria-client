@@ -2,26 +2,44 @@ import { createContext, useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import characterService from "../api/services/characterService.js";
 import useNotification from "../hooks/useNotification.jsx";
+import routesConfig from "../routes/config/routesConfig.js";
+import { matchPath, useLocation } from "react-router-dom";
 
 const SelectedCharacterContext = createContext();
 
 export const SelectedCharacterProvider = ({ children }) => {
     const [character, setCharacter] = useState(null);
     const { warningNotification } = useNotification();
+    const [isLoaded, setIsLoaded] = useState(false);
+    const location = useLocation();
+
+    const isCharacterRequiredForCurrentRoute = (pathname) => {
+        const route = Object.values(routesConfig).find((config) =>
+            matchPath({ path: config.path, end: true }, pathname),
+        );
+        return route?.allowAuthenticatedWithCharacter ?? false;
+    };
 
     const fetchSelectedCharacter = useCallback(async () => {
         const response = await characterService.getSelectedCharacter();
 
         if (response.success) {
             setCharacter(response.data);
-        } else if (response.errorCode === "ERR_CHARACTER_SELECTED_NOT_FOUND-404") {
+        } else if (
+            response.errorCode === "ERR_CHARACTER_SELECTED_NOT_FOUND-404" &&
+            isCharacterRequiredForCurrentRoute(location.pathname)
+        ) {
             warningNotification(response.message);
         }
-    }, [warningNotification]);
+
+        setIsLoaded(true);
+    }, [warningNotification, location.pathname]);
 
     useEffect(() => {
-        fetchSelectedCharacter();
-    }, [fetchSelectedCharacter]);
+        if (!isLoaded) {
+            fetchSelectedCharacter();
+        }
+    }, []);
 
     const selectCharacterById = useCallback(
         async (id) => {
@@ -42,7 +60,7 @@ export const SelectedCharacterProvider = ({ children }) => {
 
     return (
         <SelectedCharacterContext.Provider
-            value={{ character, hasSelectedCharacter, selectCharacterById }}
+            value={{ character, hasSelectedCharacter, selectCharacterById, isLoaded }}
         >
             {children}
         </SelectedCharacterContext.Provider>

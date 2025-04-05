@@ -7,14 +7,18 @@ import { paths } from "./paths.js";
 const ProtectedRoute = () => {
     const location = useLocation();
     const { isAuthenticated } = useAuth();
-    const { hasSelectedCharacter } = useSelectedCharacter();
+    const { hasSelectedCharacter, isLoaded } = useSelectedCharacter();
 
     const currentRouteConfig = Object.values(routesConfig).find((config) =>
         matchPath({ path: config.path, end: true }, location.pathname),
     );
 
     if (!currentRouteConfig) {
-        return <Navigate to="/notloadingroutesconfig" />;
+        return <Navigate to="/404" />;
+    }
+
+    if (!isLoaded) {
+        return null;
     }
 
     const { allowUnauthenticated, allowAuthenticatedNoCharacter, allowAuthenticatedWithCharacter } =
