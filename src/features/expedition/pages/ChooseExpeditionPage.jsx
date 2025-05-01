@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import GameLayout from "../../../layouts/GameLayout.jsx";
 import { bgImages } from "../../../layouts/backgroundImages.js";
 import ForestIcon from "../assets/icons/forest.png";
@@ -6,21 +7,17 @@ import RuinsIcon from "../assets/icons/ruins.png";
 import VulcanIcon from "../assets/icons/vulcan.png";
 import ExpeditionIcon from "../components/ExpeditionIcon.jsx";
 import ExpeditionModal from "../components/ExpeditionModal.jsx";
-import { useState } from "react";
 import TeleportOverlay from "../components/TeleportOverlay.jsx";
-
-const exampleExpedition = {
-    name: "Firelands",
-    story: "Dawno temu płomienie pochłonęły tę krainę...",
-    difficulty: "Trudny",
-    bonuses: ["+10% Fire Resistance", "+5% Mana Regen"],
-    penalties: ["-10% Ice Resistance", "-5% HP"],
-    characteristics: "Skrajnie gorące tereny, dominują ogniste kreatury.",
-};
+import { expeditionInMemory } from "../../../inMemoryDB/expedition.js";
 
 const ChooseExpeditionPage = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [expeditionModal, setExpeditionModal] = useState({ open: false, expedition: null });
     const [isTeleporting, setIsTeleporting] = useState(false);
+    const [expeditions, setExpeditions] = useState([]);
+
+    useEffect(() => {
+        setExpeditions(expeditionInMemory);
+    }, []);
 
     const startFight = () => {
         setIsTeleporting(true);
@@ -28,6 +25,18 @@ const ChooseExpeditionPage = () => {
 
     const handleTeleportEnd = () => {
         setIsTeleporting(false);
+    };
+
+    const getExpeditionByCode = (code) => {
+        return expeditions.find((expedition) => expedition.code === code) || null;
+    };
+
+    const openExpeditionModal = (expeditionData) => {
+        setExpeditionModal({ open: true, expedition: expeditionData });
+    };
+
+    const closeExpeditionModal = () => {
+        setExpeditionModal({ open: false, expedition: null });
     };
 
     return (
@@ -39,7 +48,7 @@ const ChooseExpeditionPage = () => {
                     positionX={180}
                     positionY={20}
                     biomeName="Las"
-                    action={() => setIsModalOpen(true)}
+                    action={() => openExpeditionModal(getExpeditionByCode("forest"))}
                 />
                 <ExpeditionIcon
                     url={RuinsIcon}
@@ -47,7 +56,7 @@ const ChooseExpeditionPage = () => {
                     positionX={1100}
                     positionY={20}
                     biomeName="Ruiny"
-                    action={() => setIsModalOpen(true)}
+                    action={() => openExpeditionModal(getExpeditionByCode("ruins"))}
                 />
                 <ExpeditionIcon
                     url={MountainIcon}
@@ -55,7 +64,7 @@ const ChooseExpeditionPage = () => {
                     positionX={750}
                     positionY={450}
                     biomeName="Góry"
-                    action={() => setIsModalOpen(true)}
+                    action={() => openExpeditionModal(getExpeditionByCode("mountains"))}
                 />
                 <ExpeditionIcon
                     url={VulcanIcon}
@@ -63,16 +72,16 @@ const ChooseExpeditionPage = () => {
                     positionX={1250}
                     positionY={350}
                     biomeName="Wulkan"
-                    action={() => setIsModalOpen(true)}
+                    action={() => openExpeditionModal(getExpeditionByCode("vulcan"))}
                 />
             </div>
 
             <ExpeditionModal
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                expedition={exampleExpedition}
+                isOpen={expeditionModal.open}
+                onClose={() => closeExpeditionModal()}
+                expedition={expeditionModal.expedition}
                 onStartFight={() => {
-                    setIsModalOpen(false);
+                    closeExpeditionModal();
                     startFight();
                 }}
             />
