@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import "./css/modal.css";
+import PrimaryButton from "../../../components/buttons/PrimaryButton.jsx";
 
 const ExpeditionModal = ({ isOpen, onClose, expedition, onStartFight }) => {
     if (!isOpen) return null;
@@ -61,12 +62,7 @@ const ExpeditionModal = ({ isOpen, onClose, expedition, onStartFight }) => {
                         Uciekaj
                     </button>
 
-                    <button
-                        onClick={onStartFight}
-                        className="px-6 py-2 bg-primary hover:bg-primary-600 text-white font-bold rounded-lg text-lg transition"
-                    >
-                        Wejdź do walki
-                    </button>
+                    <PrimaryButton onClick={onStartFight}>Wejdź do walki</PrimaryButton>
                 </div>
             </div>
         </div>
