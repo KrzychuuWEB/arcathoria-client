@@ -9,11 +9,14 @@ import ExpeditionIcon from "../components/ExpeditionIcon.jsx";
 import ExpeditionModal from "../components/ExpeditionModal.jsx";
 import TeleportOverlay from "../components/TeleportOverlay.jsx";
 import { expeditionInMemory } from "../../../inMemoryDB/expedition.js";
+import { useNavigate } from "react-router-dom";
+import { paths } from "../../../routes/paths.js";
 
 const ChooseExpeditionPage = () => {
     const [expeditionModal, setExpeditionModal] = useState({ open: false, expedition: null });
     const [isTeleporting, setIsTeleporting] = useState(false);
     const [expeditions, setExpeditions] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         setExpeditions(expeditionInMemory);
@@ -21,6 +24,7 @@ const ChooseExpeditionPage = () => {
 
     const startFight = () => {
         setIsTeleporting(true);
+        setTimeout(() => navigate(paths.combat.pve), 1000);
     };
 
     const handleTeleportEnd = () => {
