@@ -1,4 +1,4 @@
-@keyframes hit-shake {
+@keyframes animate-hit {
     0% {
         transform: translate(0, 0);
     }
@@ -19,6 +19,6 @@
     }
 }
 
-.hit-shake {
-    animation: hit-shake 0.4s ease-in-out;
+.animate-hit {
+    animation: animate-hit 0.4s ease-in-out;
 }

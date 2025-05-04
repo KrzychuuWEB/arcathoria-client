@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
-import "./avatarAnimation.css";
+import "../cards/hitAnimation.css";
 
-const AvatarWithLevel = ({ avatar, level, isHit, size }) => {
+const AvatarWithLevel = ({ avatar, level, size }) => {
     return (
         <div
             style={{
@@ -13,7 +13,7 @@ const AvatarWithLevel = ({ avatar, level, isHit, size }) => {
             <img
                 src={avatar}
                 alt="avatar"
-                className={`w-full h-full object-cover rounded-full border border-black ${isHit ? "hit-shake" : ""}`}
+                className="w-full h-full object-cover rounded-full border border-black"
             />
             {size < 100 ? (
                 <div className="absolute -top-2 left-2 bg-secondary text-black text-[9px] font-bold px-2 py-0.5 rounded-full shadow-md">
@@ -32,7 +32,6 @@ AvatarWithLevel.propTypes = {
     avatar: PropTypes.string.isRequired,
     level: PropTypes.number.isRequired,
     size: PropTypes.number.isRequired,
-    isHit: PropTypes.bool,
 };
 
 export default AvatarWithLevel;
