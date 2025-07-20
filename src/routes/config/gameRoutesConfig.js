@@ -7,6 +7,18 @@ const gameRoutesConfig = {
         allowAuthenticatedNoCharacter: false,
         allowAuthenticatedWithCharacter: true,
     },
+    [paths.expedition.choose]: {
+        path: paths.expedition.choose,
+        allowUnauthenticated: false,
+        allowAuthenticatedNoCharacter: false,
+        allowAuthenticatedWithCharacter: true,
+    },
+    [paths.combat.pve]: {
+        path: paths.combat.pve,
+        allowUnauthenticated: false,
+        allowAuthenticatedNoCharacter: false,
+        allowAuthenticatedWithCharacter: true,
+    },
 };
 
 export default gameRoutesConfig;

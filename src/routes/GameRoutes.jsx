@@ -4,6 +4,8 @@ import ProtectedRoute from "./ProtectedRoute.jsx";
 import CharacterSelectPage from "../features/character/pages/CharacterSelectPage.jsx";
 import CharacterPage from "../features/character/pages/CharacterPage.jsx";
 import CreateCharacterPage from "../features/character/pages/CreateCharacterPage.jsx";
+import ChooseExpeditionPage from "../features/expedition/pages/ChooseExpeditionPage.jsx";
+import CombatPvEPage from "../features/pve/pages/CombatPvEPage.jsx";
 
 const GameRoutes = () => {
     return (
@@ -16,6 +18,12 @@ const GameRoutes = () => {
             </Route>
             <Route path={paths.character.dashboard} element={<ProtectedRoute />}>
                 <Route index element={<CharacterPage />} />
+            </Route>
+            <Route path={paths.expedition.choose} element={<ProtectedRoute />}>
+                <Route index element={<ChooseExpeditionPage />} />
+            </Route>
+            <Route path={paths.combat.pve} element={<ProtectedRoute />}>
+                <Route index element={<CombatPvEPage />} />
             </Route>
         </>
     );

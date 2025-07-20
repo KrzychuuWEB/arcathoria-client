@@ -11,4 +11,10 @@ export const paths = {
         select: "/game/character/select",
         create: "/game/character/create",
     },
+    expedition: {
+        choose: "/game/expedition",
+    },
+    combat: {
+        pve: "/game/combat",
+    },
 };

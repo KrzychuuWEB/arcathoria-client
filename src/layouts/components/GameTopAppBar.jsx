@@ -1,6 +1,9 @@
 import StatusBar from "../../features/character/components/StatusBar.jsx";
 import PrimaryButton from "../../components/buttons/PrimaryButton.jsx";
 import useSelectedCharacter from "../../hooks/useSelectedCharacter.jsx";
+import { Link } from "react-router-dom";
+import { paths } from "../../routes/paths.js";
+import AvatarWithLevel from "../../components/avatar/AvatarWithLevel.jsx";
 
 const GameTopAppBar = () => {
     const { character, removeSelectedCharacter } = useSelectedCharacter();
@@ -8,10 +11,9 @@ const GameTopAppBar = () => {
     return (
         <div className="relative w-full flex items-center justify-between p-3 bg-black bg-opacity-40 z-[50]">
             <div className="flex justify-between items-center">
-                <div className="flex flex-col justify-center items-center">
-                    <p className="text-white text-[10px]">{character.characterName}</p>
-                    <div className="w-[50px] h-[50px] rounded-full bg-complementary-green-600"></div>
-                </div>
+                <Link to={paths.character.dashboard}>
+                    <AvatarWithLevel size={60} avatar="../default_avatar.png" level={100} />
+                </Link>
 
                 <div className="w-[200px] ml-5">
                     <StatusBar value={65} maxValue={120} variant="hp" />
