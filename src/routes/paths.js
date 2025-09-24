@@ -15,6 +15,7 @@ export const paths = {
         choose: "/game/expedition",
     },
     combat: {
-        pve: "/game/combat",
+        areaPattern: "/game/combat/:combatId",
+        area: (combatId) => `/game/combat/${combatId}`,
     },
 };

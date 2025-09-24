@@ -1,23 +1,19 @@
 import GameLayout from "../../../layouts/GameLayout.jsx";
 import { bgImages } from "../../../layouts/backgroundImages.js";
 import CharacterCard from "../../../components/cards/CharacterCard.jsx";
-import useSelectedCharacter from "../../../hooks/useSelectedCharacter.jsx";
 import PulseVsWithLineBanner from "../../../components/banners/PulseVsWithLineBanner.jsx";
 import { useEffect, useState } from "react";
-import { monsters } from "../../../inMemoryDB/monster.js";
 import ActionBar from "../components/bar/ActionBar.jsx";
 import EscapeAction from "../components/bar/buttons/EscapeAction.jsx";
 import WandAttackAction from "../components/bar/buttons/WandAttackAction.jsx";
+import { useParams } from "react-router-dom";
 
-const CombatPvEPage = () => {
-    const { character } = useSelectedCharacter();
-    const [monster, setMonster] = useState({});
+const CombatPage = () => {
+    const { combatId } = useParams();
+    const [combat, setCombat] = useState({});
     const [opponentHit, setOpponentHit] = useState(false);
 
-    useEffect(() => {
-        const target = monsters.find((m) => m.name === "Wilk");
-        setMonster(target);
-    }, []);
+    useEffect(() => {}, []);
 
     const onAttack = () => {
         setOpponentHit(true);
@@ -33,10 +29,10 @@ const CombatPvEPage = () => {
                 <div className="relative">
                     <CharacterCard
                         resource={{
-                            avatar: "../default_avatar.png",
-                            name: character.characterName,
-                            hp: character.health,
-                            maxHp: character.health,
+                            avatar: "/default_avatar.png",
+                            name: "character.characterName",
+                            hp: 1,
+                            maxHp: 1,
                             level: 1,
                         }}
                     />
@@ -53,11 +49,11 @@ const CombatPvEPage = () => {
                 <div className="relative">
                     <CharacterCard
                         resource={{
-                            avatar: "../wolf.png",
-                            name: monster.name,
-                            hp: monster.hp,
-                            maxHp: monster.hp,
-                            level: monster.level,
+                            avatar: "/wolf.png",
+                            name: "monster.name",
+                            hp: 1,
+                            maxHp: 1,
+                            level: 1,
                         }}
                         isHit={opponentHit}
                         onHitEnd={handleHitEnd}
@@ -74,4 +70,4 @@ const CombatPvEPage = () => {
     );
 };
 
-export default CombatPvEPage;
+export default CombatPage;

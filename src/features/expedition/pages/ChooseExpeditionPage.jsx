@@ -11,12 +11,15 @@ import TeleportOverlay from "../components/TeleportOverlay.jsx";
 import { expeditionInMemory } from "../../../inMemoryDB/expedition.js";
 import { useNavigate } from "react-router-dom";
 import { paths } from "../../../routes/paths.js";
+import combatService from "../../../api/services/combatService.js";
+import useNotification from "../../../hooks/useNotification.jsx";
 
 const ChooseExpeditionPage = () => {
     const [expeditionModal, setExpeditionModal] = useState({ open: false, expedition: null });
     const [isTeleporting, setIsTeleporting] = useState(false);
     const [expeditions, setExpeditions] = useState([]);
     const navigate = useNavigate();
+    const { errorNotification } = useNotification();
 
     useEffect(() => {
         setExpeditions(expeditionInMemory);
@@ -24,7 +27,21 @@ const ChooseExpeditionPage = () => {
 
     const startFight = () => {
         setIsTeleporting(true);
-        setTimeout(() => navigate(paths.combat.pve), 1000);
+
+        combatService
+            .initPveCombat({ monsterId: "bf4397d8-b4dc-361e-9b6d-191a352e9134" })
+            .then((response) => {
+                if (response.success) {
+                    console.log(response);
+                    navigate(paths.combat.area(response.data.combatId));
+                }
+
+                if (response.code === "ERR_COMBAT_PARTICIPANT_UNAVAILABLE-400") {
+                    errorNotification(
+                        "Nie można rozpocząć walki, jeden z uczestników nie został znaleziony!",
+                    );
+                }
+            });
     };
 
     const handleTeleportEnd = () => {

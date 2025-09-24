@@ -12,7 +12,7 @@ const GameTopAppBar = () => {
         <div className="relative w-full flex items-center justify-between p-3 bg-black bg-opacity-40 z-[50]">
             <div className="flex justify-between items-center">
                 <Link to={paths.character.dashboard}>
-                    <AvatarWithLevel size={60} avatar="../default_avatar.png" level={100} />
+                    <AvatarWithLevel size={60} avatar="/default_avatar.png" level={100} />
                 </Link>
 
                 <div className="w-[200px] ml-5">
