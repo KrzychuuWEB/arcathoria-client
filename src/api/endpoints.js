@@ -43,6 +43,10 @@ export const endpoints = {
             method: apiMethod.post,
             url: "/combats/init/pve",
         },
+        performAction: {
+            method: apiMethod.post,
+            url: (combatId) => `/combats/${combatId}/actions/execute`,
+        },
     },
 };
 

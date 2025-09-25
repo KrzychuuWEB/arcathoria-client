@@ -66,7 +66,7 @@ const ChooseExpeditionPage = () => {
                 <ExpeditionIcon
                     url={ForestIcon}
                     alt="Biom leśny"
-                    positionX={180}
+                    positionX={5}
                     positionY={20}
                     biomeName="Las"
                     action={() => openExpeditionModal(getExpeditionByCode("forest"))}
@@ -74,7 +74,7 @@ const ChooseExpeditionPage = () => {
                 <ExpeditionIcon
                     url={RuinsIcon}
                     alt="Biom ruin"
-                    positionX={1100}
+                    positionX={800}
                     positionY={20}
                     biomeName="Ruiny"
                     action={() => openExpeditionModal(getExpeditionByCode("ruins"))}
@@ -82,7 +82,7 @@ const ChooseExpeditionPage = () => {
                 <ExpeditionIcon
                     url={MountainIcon}
                     alt="Biom gór"
-                    positionX={750}
+                    positionX={500}
                     positionY={450}
                     biomeName="Góry"
                     action={() => openExpeditionModal(getExpeditionByCode("mountains"))}
@@ -90,8 +90,8 @@ const ChooseExpeditionPage = () => {
                 <ExpeditionIcon
                     url={VulcanIcon}
                     alt="Biom wulkanu"
-                    positionX={1250}
-                    positionY={350}
+                    positionX={900}
+                    positionY={300}
                     biomeName="Wulkan"
                     action={() => openExpeditionModal(getExpeditionByCode("vulcan"))}
                 />

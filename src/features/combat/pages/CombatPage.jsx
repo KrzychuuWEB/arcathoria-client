@@ -6,21 +6,54 @@ import { useEffect, useState } from "react";
 import ActionBar from "../components/bar/ActionBar.jsx";
 import EscapeAction from "../components/bar/buttons/EscapeAction.jsx";
 import WandAttackAction from "../components/bar/buttons/WandAttackAction.jsx";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import combatService from "../../../api/services/combatService.js";
+import useNotification from "../../../hooks/useNotification.jsx";
+import { paths } from "../../../routes/paths.js";
+import { useCombatEffects } from "../../../hooks/useCombatEffects.jsx";
 
 const CombatPage = () => {
     const { combatId } = useParams();
     const [combat, setCombat] = useState({});
-    const [opponentHit, setOpponentHit] = useState(false);
+    const playerEffects = useCombatEffects();
+    const enemyEffects = useCombatEffects();
+    const { errorNotification } = useNotification();
+    const navigate = useNavigate();
 
     useEffect(() => {}, []);
 
     const onAttack = () => {
-        setOpponentHit(true);
-    };
+        combatService
+            .performAction({ combatId: combatId, actionType: "melee" }, combatId)
+            .then((response) => {
+                if (response.success) {
+                    console.log(response);
+                    enemyEffects.triggerEffects([{ type: "damage", value: "-124" }]);
+                }
 
-    const handleHitEnd = () => {
-        setOpponentHit(false);
+                if (!response.success) {
+                    switch (response.code) {
+                        case "ERR_COMBAT_PARTICIPANT_NOT_FOUND_IN_COMBAT":
+                            errorNotification("Uczestnik nie jest przypisany do tej walki!");
+                            navigate(paths.home);
+                            break;
+                        case "ERR_COMBAT_ACTION_TYPE":
+                            errorNotification("Błędy typ akcji!");
+                            break;
+                        case "ERR_COMBAT_NOT_FOUND-404":
+                            errorNotification("Nie znaleziono walki!");
+                            navigate(paths.home);
+                            break;
+                        case "ERR_COMBAT_ALREADY_FINISHED":
+                            errorNotification("Nie możesz wykonać ruchu na zakończonej walce!");
+                            navigate(paths.home);
+                            break;
+                        case "ERR_COMBAT_WRONG_TURN":
+                            errorNotification("Aktualnie jest tura przeciwnika!");
+                            break;
+                    }
+                }
+            });
     };
 
     return (
@@ -55,8 +88,9 @@ const CombatPage = () => {
                             maxHp: 1,
                             level: 1,
                         }}
-                        isHit={opponentHit}
-                        onHitEnd={handleHitEnd}
+                        isHit={enemyEffects.isHit}
+                        effects={enemyEffects.effects}
+                        onHitEnd={enemyEffects.onHitEnd}
                     />
 
                     <div className="absolute -right-14 top-2">
