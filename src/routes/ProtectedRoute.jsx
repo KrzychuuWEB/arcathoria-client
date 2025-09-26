@@ -24,11 +24,14 @@ const ProtectedRoute = () => {
     const { allowUnauthenticated, allowAuthenticatedNoCharacter, allowAuthenticatedWithCharacter } =
         currentRouteConfig;
 
-    if (!isAuthenticated()) {
+    const isUserAuthenticated = isAuthenticated();
+    const hasCharacter = hasSelectedCharacter();
+
+    if (!isUserAuthenticated) {
         return allowUnauthenticated ? <Outlet /> : <Navigate to={paths.account.login} />;
     }
 
-    if (isAuthenticated() && !hasSelectedCharacter()) {
+    if (isUserAuthenticated && !hasCharacter) {
         return allowAuthenticatedNoCharacter ? (
             <Outlet />
         ) : (
@@ -36,7 +39,7 @@ const ProtectedRoute = () => {
         );
     }
 
-    if (isAuthenticated() && hasSelectedCharacter()) {
+    if (isUserAuthenticated && hasCharacter) {
         return allowAuthenticatedWithCharacter ? (
             <Outlet />
         ) : (

@@ -47,6 +47,10 @@ export const endpoints = {
             method: apiMethod.post,
             url: (combatId) => `/combats/${combatId}/actions/execute`,
         },
+        getActiveCombat: {
+            method: apiMethod.post,
+            url: "/combats/active",
+        },
     },
 };
 

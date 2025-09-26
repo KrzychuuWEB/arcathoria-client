@@ -5,6 +5,7 @@ const combatRepository = {
     initPve: (data) => apiService.post(endpoints.combats.initPve.url, data),
     performAction: (data, combatId) =>
         apiService.post(endpoints.combats.performAction.url(combatId), data),
+    getActiveCombatForSelectedCharacter: () => apiService.get(endpoints.combats.getActiveCombat),
 };
 
 export default combatRepository;

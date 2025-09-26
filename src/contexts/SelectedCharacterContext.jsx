@@ -2,8 +2,6 @@ import { createContext, useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import characterService from "../api/services/characterService.js";
 import useNotification from "../hooks/useNotification.jsx";
-import routesConfig from "../routes/config/routesConfig.js";
-import { matchPath, useLocation } from "react-router-dom";
 
 const SelectedCharacterContext = createContext();
 
@@ -11,14 +9,6 @@ export const SelectedCharacterProvider = ({ children }) => {
     const [character, setCharacter] = useState(null);
     const { warningNotification, successNotification } = useNotification();
     const [isLoaded, setIsLoaded] = useState(false);
-    const location = useLocation();
-
-    const isCharacterRequiredForCurrentRoute = (pathname) => {
-        const route = Object.values(routesConfig).find((config) =>
-            matchPath({ path: config.path, end: true }, pathname),
-        );
-        return route?.allowAuthenticatedWithCharacter ?? false;
-    };
 
     const clearSelectedCharacter = useCallback(() => {
         setCharacter(null);
@@ -31,14 +21,10 @@ export const SelectedCharacterProvider = ({ children }) => {
             setCharacter(response.data);
         } else if (response.errorCode === "ERR_CHARACTER_SELECTED_NOT_FOUND-404") {
             clearSelectedCharacter();
-
-            if (isCharacterRequiredForCurrentRoute(location.pathname)) {
-                warningNotification(response.message);
-            }
         }
 
         setIsLoaded(true);
-    }, [warningNotification, location.pathname, clearSelectedCharacter]);
+    }, [clearSelectedCharacter]);
 
     useEffect(() => {
         if (!isLoaded) {
