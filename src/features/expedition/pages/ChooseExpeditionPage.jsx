@@ -32,7 +32,6 @@ const ChooseExpeditionPage = () => {
             .initPveCombat({ monsterId: "bf4397d8-b4dc-361e-9b6d-191a352e9134" })
             .then((response) => {
                 if (response.success) {
-                    console.log(response);
                     navigate(paths.combat.area(response.data.combatId));
                 }
 

@@ -20,20 +20,25 @@ export const SelectedCharacterProvider = ({ children }) => {
         return route?.allowAuthenticatedWithCharacter ?? false;
     };
 
+    const clearSelectedCharacter = useCallback(() => {
+        setCharacter(null);
+    }, []);
+
     const fetchSelectedCharacter = useCallback(async () => {
         const response = await characterService.getSelectedCharacter();
 
         if (response.success) {
             setCharacter(response.data);
-        } else if (
-            response.errorCode === "ERR_CHARACTER_SELECTED_NOT_FOUND-404" &&
-            isCharacterRequiredForCurrentRoute(location.pathname)
-        ) {
-            warningNotification(response.message);
+        } else if (response.errorCode === "ERR_CHARACTER_SELECTED_NOT_FOUND-404") {
+            clearSelectedCharacter();
+
+            if (isCharacterRequiredForCurrentRoute(location.pathname)) {
+                warningNotification(response.message);
+            }
         }
 
         setIsLoaded(true);
-    }, [warningNotification, location.pathname]);
+    }, [warningNotification, location.pathname, clearSelectedCharacter]);
 
     useEffect(() => {
         if (!isLoaded) {
@@ -57,10 +62,11 @@ export const SelectedCharacterProvider = ({ children }) => {
     const removeSelectedCharacter = () => {
         characterService.removeSelectedCharacter().then((response) => {
             if (response.success) {
-                setCharacter(null);
+                clearSelectedCharacter();
                 successNotification("Zostałeś/aś poprawnie wylogowany/a");
             } else if (response.errorCode === "ERR_CHARACTER_SELECTED_NOT_FOUND-404") {
                 warningNotification(response.message);
+                clearSelectedCharacter();
             }
         });
     };
@@ -77,6 +83,7 @@ export const SelectedCharacterProvider = ({ children }) => {
                 selectCharacterById,
                 isLoaded,
                 removeSelectedCharacter,
+                clearSelectedCharacter,
             }}
         >
             {children}

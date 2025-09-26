@@ -5,7 +5,12 @@ import { paths } from "../routes/paths.js";
 
 let interceptorsInitialized = false;
 
-export const initializeInterceptors = (setIsLoading, removeToken, navigate) => {
+export const initializeInterceptors = (
+    setIsLoading,
+    removeToken,
+    navigate,
+    clearSelectedCharacter,
+) => {
     if (interceptorsInitialized) return;
     interceptorsInitialized = true;
 
@@ -40,6 +45,11 @@ export const initializeInterceptors = (setIsLoading, removeToken, navigate) => {
                     case "ERR-AUTH-EXPIRED_TOKEN-401":
                         toast.warning("Twoja sesja wygasła. Zaloguj się ponownie!");
                         removeToken();
+                        break;
+                    case "ERR_CHARACTER_SELECTED_NOT_FOUND-404":
+                        toast.warning(error.response.data.message);
+                        clearSelectedCharacter?.();
+                        navigate(paths.character.select);
                         break;
                     case "ERR_ACCESS_DENIED-403":
                         toast.warning(error.response.data.message);
