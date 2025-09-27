@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { paths } from "../../../routes/paths.js";
 import combatService from "../../../api/services/combatService.js";
 import useNotification from "../../../hooks/useNotification.jsx";
+import useActiveCombat from "../../../hooks/useActiveCombat.jsx";
 
 const ChooseExpeditionPage = () => {
     const [expeditionModal, setExpeditionModal] = useState({ open: false, expedition: null });
@@ -20,6 +21,7 @@ const ChooseExpeditionPage = () => {
     const [expeditions, setExpeditions] = useState([]);
     const navigate = useNavigate();
     const { errorNotification } = useNotification();
+    const { setActiveCombat } = useActiveCombat();
 
     useEffect(() => {
         setExpeditions(expeditionInMemory);
@@ -32,6 +34,7 @@ const ChooseExpeditionPage = () => {
             .initPveCombat({ monsterId: "bf4397d8-b4dc-361e-9b6d-191a352e9134" })
             .then((response) => {
                 if (response.success) {
+                    setActiveCombat(response.data.combatId);
                     navigate(paths.combat.area(response.data.combatId));
                 }
 

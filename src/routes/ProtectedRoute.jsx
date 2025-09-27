@@ -3,21 +3,29 @@ import routesConfig from "./config/routesConfig.js";
 import useAuth from "../hooks/useAuth.jsx";
 import useSelectedCharacter from "../hooks/useSelectedCharacter.jsx";
 import { paths } from "./paths.js";
+import useActiveCombat from "../hooks/useActiveCombat.jsx";
 
 const ProtectedRoute = () => {
     const location = useLocation();
     const { isAuthenticated } = useAuth();
     const { hasSelectedCharacter, isLoaded } = useSelectedCharacter();
+    const { activeCombatId, isCombatLoaded } = useActiveCombat();
 
     const currentRouteConfig = Object.values(routesConfig).find((config) =>
         matchPath({ path: config.path, end: true }, location.pathname),
     );
 
+    const combatRouteMatch = matchPath(
+        { path: paths.combat.areaPattern, end: true },
+        location.pathname,
+    );
+    const routeCombatId = combatRouteMatch?.params?.combatId;
+
     if (!currentRouteConfig) {
         return <Navigate to="/404" />;
     }
 
-    if (!isLoaded) {
+    if (!isLoaded || !isCombatLoaded) {
         return null;
     }
 
@@ -26,6 +34,18 @@ const ProtectedRoute = () => {
 
     const isUserAuthenticated = isAuthenticated();
     const hasCharacter = hasSelectedCharacter();
+
+    if (activeCombatId !== null && activeCombatId !== undefined) {
+        const normalizedActiveCombatId = String(activeCombatId);
+
+        if (!combatRouteMatch || routeCombatId !== normalizedActiveCombatId) {
+            return <Navigate to={paths.combat.area(normalizedActiveCombatId)} replace />;
+        }
+    }
+
+    if (activeCombatId === null && combatRouteMatch) {
+        return <Navigate to={paths.character.dashboard} replace />;
+    }
 
     if (!isUserAuthenticated) {
         return allowUnauthenticated ? <Outlet /> : <Navigate to={paths.account.login} />;
