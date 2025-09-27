@@ -26,7 +26,7 @@ export const ActiveCombatProvider = ({ children }) => {
         setIsCombatLoaded(true);
     }, []);
 
-    const refreshActiveCombat = useCallback(async () => {
+    const refreshActiveCombat = useCallback(() => {
         if (!token || !hasSelectedCharacter()) {
             clearActiveCombat();
             return { success: false };
@@ -34,10 +34,8 @@ export const ActiveCombatProvider = ({ children }) => {
 
         setIsCombatLoaded(false);
 
-        try {
-            const response = await combatService.getActiveCombatForSelectedCharacter();
-
-            if (response.success && response.data) {
+        combatService.getActiveCombatForSelectedCharacter().then((response) => {
+            if (response.success) {
                 setActiveCombat(response.data.combatId);
                 return response;
             }
@@ -47,12 +45,7 @@ export const ActiveCombatProvider = ({ children }) => {
             } else {
                 setIsCombatLoaded(true);
             }
-
-            return response;
-        } catch (error) {
-            setIsCombatLoaded(true);
-            return { success: false, error };
-        }
+        });
     }, [token, hasSelectedCharacter, clearActiveCombat, setActiveCombat]);
 
     const selectedCharacterId = character?.id ?? null;
