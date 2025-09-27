@@ -19,7 +19,7 @@ const CharacterCard = ({ resource, effects = [], isHit, onHitEnd }) => {
 
                 <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
                     {effects.map((eff, i) => (
-                        <HitEffect key={i} type={eff.type} value={eff.value} delay={i * 200} />
+                        <HitEffect key={i} type={eff.type} value={eff.value} delay={i * 300} />
                     ))}
                 </div>
             </div>

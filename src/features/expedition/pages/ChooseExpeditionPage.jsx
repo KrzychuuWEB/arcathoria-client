@@ -12,16 +12,16 @@ import { expeditionInMemory } from "../../../inMemoryDB/expedition.js";
 import { useNavigate } from "react-router-dom";
 import { paths } from "../../../routes/paths.js";
 import combatService from "../../../api/services/combatService.js";
-import useNotification from "../../../hooks/useNotification.jsx";
 import useActiveCombat from "../../../hooks/useActiveCombat.jsx";
+import { useCombatErrors } from "../../../api/errors/combatErrors.jsx";
 
 const ChooseExpeditionPage = () => {
     const [expeditionModal, setExpeditionModal] = useState({ open: false, expedition: null });
     const [isTeleporting, setIsTeleporting] = useState(false);
     const [expeditions, setExpeditions] = useState([]);
     const navigate = useNavigate();
-    const { errorNotification } = useNotification();
     const { setActiveCombat } = useActiveCombat();
+    const { handleCombatErrors } = useCombatErrors();
 
     useEffect(() => {
         setExpeditions(expeditionInMemory);
@@ -38,10 +38,8 @@ const ChooseExpeditionPage = () => {
                     navigate(paths.combat.area(response.data.combatId));
                 }
 
-                if (response.code === "ERR_COMBAT_PARTICIPANT_UNAVAILABLE-400") {
-                    errorNotification(
-                        "Nie można rozpocząć walki, jeden z uczestników nie został znaleziony!",
-                    );
+                if (!response.success) {
+                    handleCombatErrors(response.code);
                 }
             });
     };

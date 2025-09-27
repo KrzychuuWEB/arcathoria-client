@@ -51,6 +51,10 @@ export const endpoints = {
             method: apiMethod.get,
             url: "/combats/active",
         },
+        getCombatById: {
+            method: apiMethod.get,
+            url: (combatId) => `/combats/${combatId}`,
+        },
     },
 };
 

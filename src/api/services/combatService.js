@@ -1,47 +1,18 @@
 import combatRepository from "../repositories/combatRepository.js";
+import { toApiResult } from "../defaultResult.js";
 
 const accountService = {
     initPveCombat: (data) => {
-        return combatRepository
-            .initPve(data)
-            .then((response) => {
-                return { success: true, data: response.data };
-            })
-            .catch((error) => {
-                return {
-                    success: false,
-                    code: error.response.data.errorCode,
-                    formErrors: error.response.data.details,
-                };
-            });
+        return toApiResult(combatRepository.initPve(data));
     },
     performAction: (data, combatId) => {
-        return combatRepository
-            .performAction(data, combatId)
-            .then((response) => {
-                return { success: true, data: response.data };
-            })
-            .catch((error) => {
-                return {
-                    success: false,
-                    code: error.response.data.errorCode,
-                    formErrors: error.response.data.details,
-                };
-            });
+        return toApiResult(combatRepository.performAction(data, combatId));
     },
     getActiveCombatForSelectedCharacter: () => {
-        return combatRepository
-            .getActiveCombatForSelectedCharacter()
-            .then((response) => {
-                return { success: true, data: response.data };
-            })
-            .catch((error) => {
-                return {
-                    success: false,
-                    code: error.response.data.errorCode,
-                    formErrors: error.response.data.details,
-                };
-            });
+        return toApiResult(combatRepository.getActiveCombatForSelectedCharacter());
+    },
+    getCombatById: (combatId) => {
+        return toApiResult(combatRepository.getCombatById(combatId));
     },
 };
 

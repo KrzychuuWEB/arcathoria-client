@@ -7,6 +7,7 @@ const combatRepository = {
         apiService.post(endpoints.combats.performAction.url(combatId), data),
     getActiveCombatForSelectedCharacter: () =>
         apiService.get(endpoints.combats.getActiveCombat.url),
+    getCombatById: (combatId) => apiService.get(endpoints.combats.getCombatById.url(combatId)),
 };
 
 export default combatRepository;

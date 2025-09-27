@@ -6,7 +6,7 @@ const HitEffect = ({ type, value, delay = 0 }) => {
 
     useEffect(() => {
         const timeout = setTimeout(() => setVisible(true), delay);
-        const hideTimeout = setTimeout(() => setVisible(false), delay + 1000);
+        const hideTimeout = setTimeout(() => setVisible(false), delay + 2000);
         return () => {
             clearTimeout(timeout);
             clearTimeout(hideTimeout);

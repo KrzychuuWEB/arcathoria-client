@@ -6,100 +6,119 @@ import { useEffect, useState } from "react";
 import ActionBar from "../components/bar/ActionBar.jsx";
 import EscapeAction from "../components/bar/buttons/EscapeAction.jsx";
 import WandAttackAction from "../components/bar/buttons/WandAttackAction.jsx";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import combatService from "../../../api/services/combatService.js";
-import useNotification from "../../../hooks/useNotification.jsx";
-import { paths } from "../../../routes/paths.js";
 import { useCombatEffects } from "../../../hooks/useCombatEffects.jsx";
+import useSelectedCharacter from "../../../hooks/useSelectedCharacter.jsx";
+import { useCombatErrors } from "../../../api/errors/combatErrors.jsx";
 
 const CombatPage = () => {
     const { combatId } = useParams();
-    const [combat, setCombat] = useState({});
-    const playerEffects = useCombatEffects();
+    const [combat, setCombat] = useState(null);
+    const { character } = useSelectedCharacter();
     const enemyEffects = useCombatEffects();
-    const { errorNotification } = useNotification();
-    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    const { handleCombatErrors } = useCombatErrors();
 
-    useEffect(() => {}, []);
+    useEffect(() => {
+        setLoading(true);
+
+        combatService
+            .getCombatById(combatId)
+            .then((response) => {
+                if (response.success) {
+                    setCombat(response.data);
+                }
+
+                if (!response.success) {
+                    handleCombatErrors(response.code);
+                }
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }, [combatId]);
 
     const onAttack = () => {
         combatService
             .performAction({ combatId: combatId, actionType: "melee" }, combatId)
             .then((response) => {
                 if (response.success) {
-                    console.log(response);
-                    enemyEffects.triggerEffects([{ type: "damage", value: "-124" }]);
+                    setCombat(response.data);
+                    enemyEffects.triggerEffects([
+                        {
+                            type: "damage",
+                            value: combat.defender.currentHp - response.data.defender.currentHp,
+                        },
+                    ]);
                 }
 
                 if (!response.success) {
-                    switch (response.code) {
-                        case "ERR_COMBAT_PARTICIPANT_NOT_FOUND_IN_COMBAT":
-                            errorNotification("Uczestnik nie jest przypisany do tej walki!");
-                            navigate(paths.home);
-                            break;
-                        case "ERR_COMBAT_ACTION_TYPE":
-                            errorNotification("Błędy typ akcji!");
-                            break;
-                        case "ERR_COMBAT_NOT_FOUND-404":
-                            errorNotification("Nie znaleziono walki!");
-                            navigate(paths.home);
-                            break;
-                        case "ERR_COMBAT_ALREADY_FINISHED":
-                            errorNotification("Nie możesz wykonać ruchu na zakończonej walce!");
-                            navigate(paths.home);
-                            break;
-                        case "ERR_COMBAT_WRONG_TURN":
-                            errorNotification("Aktualnie jest tura przeciwnika!");
-                            break;
-                    }
+                    handleCombatErrors(response.code);
                 }
             });
     };
 
+    const getPlayer = () => {
+        if (!combat || !combat.attacker || !combat.defender) return null;
+        return combat.attacker.id === character.id ? combat.attacker : combat.defender;
+    };
+
+    const getOpponent = () => {
+        if (!combat || !combat.attacker || !combat.defender) return null;
+        return combat.attacker.id !== character.id ? combat.attacker : combat.defender;
+    };
+
     return (
         <GameLayout background={bgImages.forestCombat}>
-            <div className="flex flex-col items-center mt-10">
-                <div className="relative">
-                    <CharacterCard
-                        resource={{
-                            avatar: "/default_avatar.png",
-                            name: "character.characterName",
-                            hp: 1,
-                            maxHp: 1,
-                            level: 1,
-                        }}
-                    />
+            {loading || !combat ? (
+                <div>Ładowanie...</div>
+            ) : (
+                <div className="flex flex-col items-center mt-10">
+                    {getPlayer() && (
+                        <div className="relative">
+                            <CharacterCard
+                                resource={{
+                                    avatar: "/default_avatar.png",
+                                    name: getPlayer().id,
+                                    hp: getPlayer().currentHp,
+                                    maxHp: getPlayer().maxHp,
+                                    level: 1,
+                                }}
+                            />
+                            <div className="absolute -left-14 top-2">
+                                <ActionBar>
+                                    <EscapeAction onClick={() => console.log("ucieczka")} />
+                                </ActionBar>
+                            </div>
+                        </div>
+                    )}
 
-                    <div className="absolute -left-14 top-2">
-                        <ActionBar>
-                            <EscapeAction onClick={() => console.log("ucieczka")} />
-                        </ActionBar>
-                    </div>
+                    <PulseVsWithLineBanner />
+
+                    {getOpponent() && (
+                        <div className="relative">
+                            <CharacterCard
+                                resource={{
+                                    avatar: "/wolf.png",
+                                    name: getOpponent().id,
+                                    hp: getOpponent().currentHp,
+                                    maxHp: getOpponent().maxHp,
+                                    level: 1,
+                                }}
+                                isHit={enemyEffects.isHit}
+                                effects={enemyEffects.effects}
+                                onHitEnd={enemyEffects.onHitEnd}
+                            />
+                            <div className="absolute -right-14 top-2">
+                                <ActionBar>
+                                    <WandAttackAction onClick={onAttack} isActive={true} />
+                                </ActionBar>
+                            </div>
+                        </div>
+                    )}
                 </div>
-
-                <PulseVsWithLineBanner />
-
-                <div className="relative">
-                    <CharacterCard
-                        resource={{
-                            avatar: "/wolf.png",
-                            name: "monster.name",
-                            hp: 1,
-                            maxHp: 1,
-                            level: 1,
-                        }}
-                        isHit={enemyEffects.isHit}
-                        effects={enemyEffects.effects}
-                        onHitEnd={enemyEffects.onHitEnd}
-                    />
-
-                    <div className="absolute -right-14 top-2">
-                        <ActionBar>
-                            <WandAttackAction onClick={onAttack} isActive={true} />
-                        </ActionBar>
-                    </div>
-                </div>
-            </div>
+            )}
         </GameLayout>
     );
 };
