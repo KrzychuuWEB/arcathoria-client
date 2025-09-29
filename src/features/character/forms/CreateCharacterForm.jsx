@@ -20,7 +20,7 @@ const CreateCharacterForm = () => {
         onSubmit: (values, { setFieldError, setSubmitting }) => {
             characterService
                 .create({
-                    characterName: values.name,
+                    characterName: values.characterName,
                 })
                 .then((response) => {
                     if (response.success) {
