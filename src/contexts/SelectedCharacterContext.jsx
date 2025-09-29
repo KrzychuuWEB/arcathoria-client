@@ -19,7 +19,7 @@ export const SelectedCharacterProvider = ({ children }) => {
 
         if (response.success) {
             setCharacter(response.data);
-        } else if (response.errorCode === "ERR_CHARACTER_SELECTED_NOT_FOUND-404") {
+        } else if (response.code === "ERR_CHARACTER_SELECTED_NOT_FOUND-404") {
             clearSelectedCharacter();
         }
 
@@ -38,7 +38,7 @@ export const SelectedCharacterProvider = ({ children }) => {
 
             if (response.success) {
                 setCharacter(response.data);
-            } else if (response.errorCode === "ERR_CHARACTER_NOT_FOUND-404") {
+            } else if (response.code === "ERR_CHARACTER_NOT_FOUND-404") {
                 warningNotification(response.message);
             }
         },
@@ -50,7 +50,7 @@ export const SelectedCharacterProvider = ({ children }) => {
             if (response.success) {
                 clearSelectedCharacter();
                 successNotification("Zostałeś/aś poprawnie wylogowany/a");
-            } else if (response.errorCode === "ERR_CHARACTER_SELECTED_NOT_FOUND-404") {
+            } else if (response.code === "ERR_CHARACTER_SELECTED_NOT_FOUND-404") {
                 warningNotification(response.message);
                 clearSelectedCharacter();
             }
