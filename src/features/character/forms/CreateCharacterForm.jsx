@@ -39,7 +39,7 @@ const CreateCharacterForm = () => {
 
     return (
         <form autoComplete="off" onSubmit={formik.handleSubmit}>
-            <TextFieldWithLabel formik={formik} label="Nazwa postaci" name="name" />
+            <TextFieldWithLabel formik={formik} label="Nazwa postaci" name="characterName" />
 
             <div className="flex justify-end items-center mt-5 mr-5">
                 <PrimaryButton disabled={formik.isSubmitting} type="submit">
