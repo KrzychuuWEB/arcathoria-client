@@ -5,6 +5,7 @@ export function extractError(error) {
     return {
         success: false,
         code: data?.errorCode ?? "ERR_UNKNOWN",
+        message: data?.message ?? null,
         formErrors: data?.details ?? null,
     };
 }
