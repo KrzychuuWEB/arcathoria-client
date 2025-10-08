@@ -2,8 +2,6 @@ import { createContext, useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import characterService from "../api/services/characterService.js";
 import useNotification from "../hooks/useNotification.jsx";
-import routesConfig from "../routes/config/routesConfig.js";
-import { matchPath, useLocation } from "react-router-dom";
 
 const SelectedCharacterContext = createContext();
 
@@ -11,29 +9,22 @@ export const SelectedCharacterProvider = ({ children }) => {
     const [character, setCharacter] = useState(null);
     const { warningNotification, successNotification } = useNotification();
     const [isLoaded, setIsLoaded] = useState(false);
-    const location = useLocation();
 
-    const isCharacterRequiredForCurrentRoute = (pathname) => {
-        const route = Object.values(routesConfig).find((config) =>
-            matchPath({ path: config.path, end: true }, pathname),
-        );
-        return route?.allowAuthenticatedWithCharacter ?? false;
-    };
+    const clearSelectedCharacter = useCallback(() => {
+        setCharacter(null);
+    }, []);
 
     const fetchSelectedCharacter = useCallback(async () => {
         const response = await characterService.getSelectedCharacter();
 
         if (response.success) {
             setCharacter(response.data);
-        } else if (
-            response.errorCode === "ERR_CHARACTER_SELECTED_NOT_FOUND-404" &&
-            isCharacterRequiredForCurrentRoute(location.pathname)
-        ) {
-            warningNotification(response.message);
+        } else if (response.code === "ERR_CHARACTER_SELECTED_NOT_FOUND") {
+            clearSelectedCharacter();
         }
 
         setIsLoaded(true);
-    }, [warningNotification, location.pathname]);
+    }, [clearSelectedCharacter]);
 
     useEffect(() => {
         if (!isLoaded) {
@@ -47,7 +38,7 @@ export const SelectedCharacterProvider = ({ children }) => {
 
             if (response.success) {
                 setCharacter(response.data);
-            } else if (response.errorCode === "ERR_CHARACTER_NOT_FOUND-404") {
+            } else if (response.code === "ERR_CHARACTER_NOT_FOUND-404") {
                 warningNotification(response.message);
             }
         },
@@ -57,10 +48,11 @@ export const SelectedCharacterProvider = ({ children }) => {
     const removeSelectedCharacter = () => {
         characterService.removeSelectedCharacter().then((response) => {
             if (response.success) {
-                setCharacter(null);
+                clearSelectedCharacter();
                 successNotification("Zostałeś/aś poprawnie wylogowany/a");
-            } else if (response.errorCode === "ERR_CHARACTER_SELECTED_NOT_FOUND-404") {
+            } else if (response.code === "ERR_CHARACTER_SELECTED_NOT_FOUND") {
                 warningNotification(response.message);
+                clearSelectedCharacter();
             }
         });
     };
@@ -77,6 +69,7 @@ export const SelectedCharacterProvider = ({ children }) => {
                 selectCharacterById,
                 isLoaded,
                 removeSelectedCharacter,
+                clearSelectedCharacter,
             }}
         >
             {children}

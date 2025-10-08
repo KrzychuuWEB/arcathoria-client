@@ -9,7 +9,7 @@ import ProtectedRoute from "./ProtectedRoute.jsx";
 const AppRoutes = () => {
     return (
         <Routes>
-            <Route element={<ProtectedRoute requiresAuth={false} />}>
+            <Route element={<ProtectedRoute />}>
                 <Route index path={paths.home} element={<HomePage />} />
             </Route>
             {AccountRoutes()}

@@ -5,7 +5,12 @@ import { paths } from "../routes/paths.js";
 
 let interceptorsInitialized = false;
 
-export const initializeInterceptors = (setIsLoading, removeToken, navigate) => {
+export const initializeInterceptors = (
+    setIsLoading,
+    removeToken,
+    navigate,
+    clearSelectedCharacter,
+) => {
     if (interceptorsInitialized) return;
     interceptorsInitialized = true;
 
@@ -37,18 +42,23 @@ export const initializeInterceptors = (setIsLoading, removeToken, navigate) => {
 
             if (error.response) {
                 switch (error.response.data.errorCode) {
-                    case "ERR-AUTH-EXPIRED_TOKEN-401":
+                    case "ERR-AUTH-EXPIRED_TOKEN":
                         toast.warning("Twoja sesja wygasła. Zaloguj się ponownie!");
                         removeToken();
                         break;
-                    case "ERR_ACCESS_DENIED-403":
+                    case "ERR_CHARACTER_SELECTED_NOT_FOUND":
+                        toast.warning(error.response.data.message);
+                        clearSelectedCharacter?.();
+                        navigate(paths.character.select);
+                        break;
+                    case "ERR_ACCESS_DENIED":
                         toast.warning(error.response.data.message);
                         break;
-                    case "ERR-AUTH-FORBIDDEN-403":
+                    case "ERR-AUTH-FORBIDDEN":
                         toast.warning("Brak odpowiednich uprawnień do przeglądania zasobów!");
                         navigate(paths.home);
                         break;
-                    case "ERR-SERVER-500":
+                    case "ERR_COMMON_INTERNAL":
                         toast.error(
                             "Wystąpił błąd po stronie serwera. Spróbuj ponownie za kilka minut.",
                         );

@@ -11,12 +11,17 @@ import TeleportOverlay from "../components/TeleportOverlay.jsx";
 import { expeditionInMemory } from "../../../inMemoryDB/expedition.js";
 import { useNavigate } from "react-router-dom";
 import { paths } from "../../../routes/paths.js";
+import combatService from "../../../api/services/combatService.js";
+import useActiveCombat from "../../../hooks/useActiveCombat.jsx";
+import { useCombatErrors } from "../../../api/errors/combatErrors.jsx";
 
 const ChooseExpeditionPage = () => {
     const [expeditionModal, setExpeditionModal] = useState({ open: false, expedition: null });
     const [isTeleporting, setIsTeleporting] = useState(false);
     const [expeditions, setExpeditions] = useState([]);
     const navigate = useNavigate();
+    const { setActiveCombat } = useActiveCombat();
+    const { handleCombatErrors } = useCombatErrors();
 
     useEffect(() => {
         setExpeditions(expeditionInMemory);
@@ -24,7 +29,19 @@ const ChooseExpeditionPage = () => {
 
     const startFight = () => {
         setIsTeleporting(true);
-        setTimeout(() => navigate(paths.combat.pve), 1000);
+
+        combatService
+            .initPveCombat({ monsterId: "bf4397d8-b4dc-361e-9b6d-191a352e9134" })
+            .then((response) => {
+                if (response.success) {
+                    setActiveCombat(response.data.combatId);
+                    navigate(paths.combat.area(response.data.combatId));
+                }
+
+                if (!response.success) {
+                    handleCombatErrors(response.code);
+                }
+            });
     };
 
     const handleTeleportEnd = () => {
@@ -49,7 +66,7 @@ const ChooseExpeditionPage = () => {
                 <ExpeditionIcon
                     url={ForestIcon}
                     alt="Biom leśny"
-                    positionX={180}
+                    positionX={5}
                     positionY={20}
                     biomeName="Las"
                     action={() => openExpeditionModal(getExpeditionByCode("forest"))}
@@ -57,7 +74,7 @@ const ChooseExpeditionPage = () => {
                 <ExpeditionIcon
                     url={RuinsIcon}
                     alt="Biom ruin"
-                    positionX={1100}
+                    positionX={800}
                     positionY={20}
                     biomeName="Ruiny"
                     action={() => openExpeditionModal(getExpeditionByCode("ruins"))}
@@ -65,7 +82,7 @@ const ChooseExpeditionPage = () => {
                 <ExpeditionIcon
                     url={MountainIcon}
                     alt="Biom gór"
-                    positionX={750}
+                    positionX={500}
                     positionY={450}
                     biomeName="Góry"
                     action={() => openExpeditionModal(getExpeditionByCode("mountains"))}
@@ -73,8 +90,8 @@ const ChooseExpeditionPage = () => {
                 <ExpeditionIcon
                     url={VulcanIcon}
                     alt="Biom wulkanu"
-                    positionX={1250}
-                    positionY={350}
+                    positionX={900}
+                    positionY={300}
                     biomeName="Wulkan"
                     action={() => openExpeditionModal(getExpeditionByCode("vulcan"))}
                 />

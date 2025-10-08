@@ -32,7 +32,7 @@ const RegisterForm = () => {
                         successNotification("Rejestracja udana!");
                         navigate(paths.account.login);
                     } else {
-                        if (response.code === "ERR_ACCOUNT_EMAIL_EXISTS-409") {
+                        if (response.code === "ERR_ACCOUNT_EMAIL_EXISTS") {
                             setFieldError("email", response.message);
                         }
                         mapApiDetailsToFieldError(response, setFieldError);

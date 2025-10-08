@@ -2,8 +2,9 @@ import StatusBar from "../../features/character/components/StatusBar.jsx";
 import AvatarWithLevel from "../avatar/AvatarWithLevel.jsx";
 import PropTypes from "prop-types";
 import "./hitAnimation.css";
+import HitEffect from "./HitEffect.jsx";
 
-const CharacterCard = ({ resource, isHit, onHitEnd }) => {
+const CharacterCard = ({ resource, effects = [], isHit, onHitEnd }) => {
     return (
         <div className="relative flex flex-col items-center bg-black bg-opacity-30 p-6 rounded-2xl shadow-lg w-[300px]">
             <div className="relative">
@@ -14,6 +15,12 @@ const CharacterCard = ({ resource, isHit, onHitEnd }) => {
                     }}
                 >
                     <AvatarWithLevel size={150} avatar={resource.avatar} level={resource.level} />
+                </div>
+
+                <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                    {effects.map((eff, i) => (
+                        <HitEffect key={i} type={eff.type} value={eff.value} delay={i * 300} />
+                    ))}
                 </div>
             </div>
             <p className="text-text-highlight text-xl font-heading text-center mt-2 mb-2 shadow-sm drop-shadow-md">
@@ -26,6 +33,7 @@ const CharacterCard = ({ resource, isHit, onHitEnd }) => {
 
 CharacterCard.propTypes = {
     resource: PropTypes.object.isRequired,
+    effects: PropTypes.array,
     isHit: PropTypes.bool,
     onHitEnd: PropTypes.func,
 };

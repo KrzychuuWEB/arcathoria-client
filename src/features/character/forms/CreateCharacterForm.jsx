@@ -20,14 +20,14 @@ const CreateCharacterForm = () => {
         onSubmit: (values, { setFieldError, setSubmitting }) => {
             characterService
                 .create({
-                    characterName: values.name,
+                    characterName: values.characterName,
                 })
                 .then((response) => {
                     if (response.success) {
                         successNotification("Postać utworzona!");
                         navigate(routes.character.dashboard);
                     } else {
-                        if (response.code === "ERR_CHARACTER_NAME_EXISTS-409") {
+                        if (response.code === "ERR_CHARACTER_NAME_EXISTS") {
                             setFieldError("characterName", response.message);
                         }
                         mapApiDetailsToFieldError(response, setFieldError);
@@ -39,7 +39,7 @@ const CreateCharacterForm = () => {
 
     return (
         <form autoComplete="off" onSubmit={formik.handleSubmit}>
-            <TextFieldWithLabel formik={formik} label="Nazwa postaci" name="name" />
+            <TextFieldWithLabel formik={formik} label="Nazwa postaci" name="characterName" />
 
             <div className="flex justify-end items-center mt-5 mr-5">
                 <PrimaryButton disabled={formik.isSubmitting} type="submit">

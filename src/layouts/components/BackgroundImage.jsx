@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 
-const BackgroundImage = ({imageUrl}) => (
+const BackgroundImage = ({ imageUrl }) => (
     <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0"
-        style={{backgroundImage: `url(${imageUrl})`}}
+        className="fixed inset-0 bg-cover bg-center bg-no-repeat z-0"
+        style={{ backgroundImage: `url(${imageUrl})` }}
     />
 );
 
