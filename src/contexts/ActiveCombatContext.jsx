@@ -40,7 +40,7 @@ export const ActiveCombatProvider = ({ children }) => {
                 return response;
             }
 
-            if (response.code === "ERR_PARTICIPANT_NOT_HAS_ACTIVE_COMBAT-404") {
+            if (response.code === "ERR_PARTICIPANT_NOT_HAS_ACTIVE_COMBAT") {
                 clearActiveCombat();
             } else {
                 setIsCombatLoaded(true);

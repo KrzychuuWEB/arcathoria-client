@@ -27,7 +27,7 @@ const CreateCharacterForm = () => {
                         successNotification("Postać utworzona!");
                         navigate(routes.character.dashboard);
                     } else {
-                        if (response.code === "ERR_CHARACTER_NAME_EXISTS-409") {
+                        if (response.code === "ERR_CHARACTER_NAME_EXISTS") {
                             setFieldError("characterName", response.message);
                         }
                         mapApiDetailsToFieldError(response, setFieldError);

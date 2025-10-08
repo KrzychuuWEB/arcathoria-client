@@ -16,7 +16,7 @@ export const useCombatErrors = () => {
             case "ERR_COMBAT_ACTION_TYPE":
                 errorNotification("Błędny typ akcji!");
                 break;
-            case "ERR_COMBAT_NOT_FOUND-404":
+            case "ERR_COMBAT_NOT_FOUND":
                 errorNotification("Nie znaleziono walki!");
                 navigate(pathname);
                 break;
