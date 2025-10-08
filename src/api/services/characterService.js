@@ -1,23 +1,9 @@
 import characterRepository from "../repositories/characterRepository.js";
+import { toApiResult } from "../defaultResult.js";
 
 const characterService = {
-    create: (data) => {
-        return characterRepository
-            .create(data)
-            .then(() => {
-                return {
-                    success: true,
-                };
-            })
-            .catch((error) => {
-                return {
-                    success: false,
-                    code: error.response.data.errorCode,
-                    message: error.response.data.message,
-                    formErrors: error.response.data.details,
-                };
-            });
-    },
+    create: (data) => toApiResult(characterRepository.create(data)),
+
     getAllMyCharacters: () => {
         return characterRepository.getAllMyCharacters().then((response) => {
             if (response.data.length > 0) {
@@ -27,56 +13,12 @@ const characterService = {
             }
         });
     },
-    selectCharacter: (id) => {
-        return characterRepository
-            .selectCharacter(id)
-            .then((response) => {
-                return {
-                    success: true,
-                    data: response.data,
-                };
-            })
-            .catch((error) => {
-                return {
-                    success: false,
-                    errorCode: error.response.data.errorCode,
-                    message: error.response.data.message,
-                };
-            });
-    },
-    getSelectedCharacter: () => {
-        return characterRepository
-            .getSelectedCharacter()
-            .then((response) => {
-                return {
-                    success: true,
-                    data: response.data,
-                };
-            })
-            .catch((error) => {
-                return {
-                    success: false,
-                    errorCode: error.response.data.errorCode,
-                    message: error.response.data.message,
-                };
-            });
-    },
-    removeSelectedCharacter: () => {
-        return characterRepository
-            .removeSelectedCharacter()
-            .then(() => {
-                return {
-                    success: true,
-                };
-            })
-            .catch((error) => {
-                return {
-                    success: false,
-                    errorCode: error.response.data.errorCode,
-                    message: error.response.data.message,
-                };
-            });
-    },
+
+    selectCharacter: (id) => toApiResult(characterRepository.selectCharacter(id)),
+
+    getSelectedCharacter: () => toApiResult(characterRepository.getSelectedCharacter()),
+
+    removeSelectedCharacter: () => toApiResult(characterRepository.removeSelectedCharacter()),
 };
 
 export default characterService;

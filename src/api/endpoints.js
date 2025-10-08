@@ -38,6 +38,24 @@ export const endpoints = {
             url: "/characters/selects",
         },
     },
+    combats: {
+        initPve: {
+            method: apiMethod.post,
+            url: "/combats/init/pve",
+        },
+        performAction: {
+            method: apiMethod.post,
+            url: (combatId) => `/combats/${combatId}/actions/execute`,
+        },
+        getActiveCombat: {
+            method: apiMethod.get,
+            url: "/combats/active",
+        },
+        getCombatById: {
+            method: apiMethod.get,
+            url: (combatId) => `/combats/${combatId}`,
+        },
+    },
 };
 
 const publicEndpoints = [endpoints.accounts.register, endpoints.accounts.login];

@@ -1,23 +1,9 @@
 import accountRepository from "../repositories/accountRepository.js";
+import { extractError, toApiResult } from "../defaultResult.js";
 
 const accountService = {
-    register: (data) => {
-        return accountRepository
-            .register(data)
-            .then(() => {
-                return {
-                    success: true,
-                };
-            })
-            .catch((error) => {
-                return {
-                    success: false,
-                    code: error.response.data.errorCode,
-                    message: error.response.data.message,
-                    formErrors: error.response.data.details,
-                };
-            });
-    },
+    register: (data) => toApiResult(accountRepository.register(data)),
+
     login: (data, saveToken) => {
         return accountRepository
             .login(data)
@@ -26,11 +12,7 @@ const accountService = {
                 return { success: true };
             })
             .catch((error) => {
-                return {
-                    success: false,
-                    code: error.response.data.errorCode,
-                    formErrors: error.response.data.details,
-                };
+                return extractError(error);
             });
     },
 };

@@ -13,8 +13,8 @@ const gameRoutesConfig = {
         allowAuthenticatedNoCharacter: false,
         allowAuthenticatedWithCharacter: true,
     },
-    [paths.combat.pve]: {
-        path: paths.combat.pve,
+    [paths.combat.areaPattern]: {
+        path: paths.combat.areaPattern,
         allowUnauthenticated: false,
         allowAuthenticatedNoCharacter: false,
         allowAuthenticatedWithCharacter: true,
