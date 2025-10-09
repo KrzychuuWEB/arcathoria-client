@@ -1,4 +1,5 @@
 # Arcathoria Client
+
 > Web client for the Arcathoria game built with React and Vite |
 > Backend: [Arcathoria API](https://github.com/KrzychuuWEB/arcathoria-api)
 
@@ -83,4 +84,14 @@ Create a `.env` file in the project root:
 
 - Open `http://localhost:5173/` in your browser.
 - Register a new account or log in with existing credentials.
-- Explore characters, battles, items, and leaderboard via the navigation menu.
+- Explore characters, combat via the navigation menu.
+
+## Screenshots
+
+![Login Page](gh_img/login.png)
+
+![Expeditions](gh_img/expedition.png)
+
+![Choose Expedition](gh_img/choose_expedition.png)
+
+![PvE Combat](gh_img/combat.png)
