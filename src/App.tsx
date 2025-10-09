@@ -1,5 +1,7 @@
+import { AppRouter } from "@app/router.tsx";
+
 const App = () => {
-    return <div></div>;
+    return <AppRouter />;
 };
 
 export default App;
