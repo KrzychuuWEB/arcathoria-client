@@ -1,17 +1,14 @@
 # Arcathoria Client
+
 > Web client for the Arcathoria game built with React and Vite |
 > Backend: [Arcathoria API](https://github.com/KrzychuuWEB/arcathoria-api)
 
 ---
 
-**Current client version is not fully connected to the API (the API has a new response for exceptions) I working on new
-client version with typescript**
-
 ## Description
 
 Web client for the Arcathoria game built with React and Vite (SPA). In the game player can login, register, create
 character, select character and init PvE combat and perform melee attack. I want to develop new features in the future.
-My first step is a migrate from plain Javascript to Typescript.
 
 ## Features
 
@@ -36,7 +33,7 @@ My first step is a migrate from plain Javascript to Typescript.
 
 ## Stack
 
-- React with plain JavaScript
+- React with Typescript
 - Vite
 - Formik
 - Yup
