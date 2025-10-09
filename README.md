@@ -33,12 +33,11 @@ character, select character and init PvE combat and perform melee attack. I want
 
 ## Stack
 
-- React with Typescript
-- Vite
-- Formik
-- Yup
+- React with Vite
+- Typescript
+- Tanstack/React Query
+- React hook form
 - React Toastify
-- Axios
 - React NProgress
 - React Router DOM
 - Tailwind CSS
