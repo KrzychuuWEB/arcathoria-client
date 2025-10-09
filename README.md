@@ -48,11 +48,6 @@ My first step is a migrate from plain Javascript to Typescript.
 - Tailwind CSS
 - Prettier
 
-## Requirements
-
-- Node.js 16 or higher
-- NPM 8+ or Yarn 1+/2+
-
 ## Environment Variables
 
 Create a `.env` file in the project root:
