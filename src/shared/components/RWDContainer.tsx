@@ -5,7 +5,7 @@ type ContainerProps = {
     className?: string;
 };
 
-const Container = ({ children, className }: ContainerProps) => {
+const RWDContainer = ({ children, className }: ContainerProps) => {
     return (
         <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full ${className}`}>
             {children}
@@ -13,4 +13,4 @@ const Container = ({ children, className }: ContainerProps) => {
     );
 };
 
-export default Container;
+export default RWDContainer;

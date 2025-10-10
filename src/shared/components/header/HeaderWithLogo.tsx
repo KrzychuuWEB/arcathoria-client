@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import "./HeaderContainer.css";
+import "./HeaderWithLogo.css";
 
-const AccountHeaderContainer = () => {
+const HeaderWithLogo = () => {
     return (
         <header className="text-center py-16 px-4">
             <h1 className="text-5xl md:text-6xl font-heading text-glow-title leading-tight">
@@ -16,4 +16,4 @@ const AccountHeaderContainer = () => {
     );
 };
 
-export default AccountHeaderContainer;
+export default HeaderWithLogo;
