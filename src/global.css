@@ -26,26 +26,12 @@
     --color-text-light: #f2f2f2;
     --color-text-secondary: #b0b0b0;
     --color-text-highlight: #ffd700;
+
+    --font-heading: "Cinzel Decorative", serif;
+    --font-body: "Roboto", sans-serif;
+    --font-tooltip: "Open Sans", sans-serif;
 }
 
 body {
     font-family: "Roboto", "sans-serif";
-}
-
-.progressContainer {
-    pointer-events: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1031;
-    background-color: rgba(0, 0, 0, 0.05);
-}
-
-.progressBar {
-    height: 4px;
-    width: 100%;
-    background-image: linear-gradient(to right, #9b59b6, #6a0dad);
-    box-shadow: 0 0 10px #9b59b6,
-    0 0 5px #6a0dad;
 }

@@ -83,10 +83,4 @@ Create a `.env` file in the project root:
 
 ## Screenshots
 
-![Login Page](../login.png)
-
-![Expeditions](../expedition.png)
-
-![Choose Expedition](../choose_expedition.png)
-
-![PvE Combat](../combat.png)
+![Login Page](gh_img/login.png)
