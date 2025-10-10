@@ -1,0 +1,24 @@
+.text-glow-title {
+    animation: glowTitle 4s ease-in-out infinite;
+    text-shadow: 0 0 4px #6A0DAD, 0 0 10px #FFD700, 0 0 15px #6A0DAD;
+}
+
+@keyframes glowTitle {
+    0%, 100% {
+        text-shadow: 0 0 4px #6A0DAD,
+        0 0 10px #FFD700,
+        0 0 15px #6A0DAD;
+    }
+    50% {
+        text-shadow: 0 0 6px #FFD700,
+        0 0 12px #6A0DAD,
+        0 0 18px #FFD700;
+    }
+}
+
+.gradient-text {
+    background: linear-gradient(90deg, #6A0DAD, #FFD700, #6A0DAD);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: brightness(1.2) contrast(1.2);
+}

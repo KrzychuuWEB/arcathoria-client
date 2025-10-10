@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from "react";
-import NProgress from "@shared/libs/nprogress";
+import NProgress from "@shared/libs/nprogress/nprogress.ts";
 
 type UseNProgressOptions = {
     startOnMount?: boolean;
