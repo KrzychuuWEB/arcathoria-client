@@ -1,5 +1,5 @@
 import AccountContainer from "@features/account/components/AccountContainer.tsx";
-import AccountHeaderContainer from "@features/account/components/AccountHeaderContainer.tsx";
+import HeaderWithLogo from "@shared/components/header/HeaderWithLogo.tsx";
 import LoginForm from "@features/account/forms/LoginForm.tsx";
 import { Link } from "react-router-dom";
 import { routes } from "@app/routes.ts";
@@ -7,7 +7,7 @@ import { routes } from "@app/routes.ts";
 const LoginPage = () => {
     return (
         <div>
-            <AccountHeaderContainer />
+            <HeaderWithLogo />
 
             <AccountContainer title="„Wypowiedz swoje Imię, a Runy rozpoznają twoją Duszę.”">
                 <LoginForm />

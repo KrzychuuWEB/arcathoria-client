@@ -7,4 +7,8 @@ export const routes = {
         login: "/account/login",
         register: "/account/register",
     },
+    character: {
+        base: "/character",
+        list: "/character/list",
+    },
 } as const;

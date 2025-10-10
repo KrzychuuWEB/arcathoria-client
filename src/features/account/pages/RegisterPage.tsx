@@ -1,4 +1,4 @@
-import AccountHeaderContainer from "@features/account/components/AccountHeaderContainer.tsx";
+import HeaderWithLogo from "@shared/components/header/HeaderWithLogo.tsx";
 import AccountContainer from "@features/account/components/AccountContainer.tsx";
 import RegisterForm from "@features/account/forms/RegisterForm.tsx";
 import { Link } from "react-router-dom";
@@ -7,7 +7,7 @@ import { routes } from "@app/routes.ts";
 const RegisterPage = () => {
     return (
         <div>
-            <AccountHeaderContainer />
+            <HeaderWithLogo />
 
             <AccountContainer title="„Każda legenda zaczyna się od jednej iskry magii.”">
                 <RegisterForm />
