@@ -5,10 +5,13 @@ import InputField from "@shared/components/InputField.tsx";
 import { Lock, LogIn, Mail } from "lucide-react";
 import Button from "@shared/components/Button.tsx";
 import { z } from "zod";
+import { useNavigate } from "react-router-dom";
+import { routes } from "@app/routes.ts";
 
 type RegisterFormData = z.infer<typeof registerSchema>;
 
 const RegisterForm = () => {
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -19,6 +22,7 @@ const RegisterForm = () => {
 
     const onSubmit = (data: RegisterFormData) => {
         console.log("Dane logowania:", data);
+        navigate(routes.account.login);
     };
 
     return (
@@ -28,13 +32,7 @@ const RegisterForm = () => {
                 type="text"
                 placeholder="Twój email"
                 icon={<Mail size={18} />}
-                {...register("email", {
-                    required: "Email jest wymagany",
-                    pattern: {
-                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                        message: "Nieprawidłowy adres email",
-                    },
-                })}
+                {...register("email")}
                 error={errors.email?.message}
             />
             <InputField
@@ -42,13 +40,7 @@ const RegisterForm = () => {
                 type="password"
                 placeholder="Twoje hasło"
                 icon={<Lock size={18} />}
-                {...register("password", {
-                    required: "Hasło jest wymagane",
-                    minLength: {
-                        value: 6,
-                        message: "Hasło musi mieć min. 6 znaków",
-                    },
-                })}
+                {...register("password")}
                 error={errors.password?.message}
             />
 
@@ -57,13 +49,7 @@ const RegisterForm = () => {
                 type="password"
                 placeholder="Powtórz hasło"
                 icon={<Lock size={18} />}
-                {...register("confirmPassword", {
-                    required: "Hasło jest wymagane",
-                    minLength: {
-                        value: 6,
-                        message: "Hasło musi mieć min. 6 znaków",
-                    },
-                })}
+                {...register("confirmPassword")}
                 error={errors.confirmPassword?.message}
             />
 

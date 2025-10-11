@@ -10,5 +10,6 @@ export const routes = {
     character: {
         base: "/character",
         list: "/character/list",
+        create: "/character/create",
     },
 } as const;

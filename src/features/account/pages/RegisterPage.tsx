@@ -16,7 +16,7 @@ const RegisterPage = () => {
                     Masz już konto?{" "}
                     <Link
                         to={routes.account.login}
-                        className="text-yellow-400 font-medium hover:underline hover:text-yellow-300 transition-colors"
+                        className="text-secondary font-medium hover:underline hover:text-secondary-300 transition-colors"
                     >
                         Zaloguj się
                     </Link>

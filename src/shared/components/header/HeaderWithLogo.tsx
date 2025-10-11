@@ -8,7 +8,7 @@ const HeaderWithLogo = () => {
                 <Link to="/" className="gradient-text hover:opacity-90 transition-opacity">
                     Arcathoria
                 </Link>
-                <span className="block text-yellow-400 tracking-widest font-heading text-lg mt-2 drop-shadow-[0_0_6px_rgba(255,215,0,0.4)]">
+                <span className="block text-secondary tracking-widest font-heading text-lg mt-2 drop-shadow-[0_0_6px_rgba(255,215,0,0.4)]">
                     The Spellforge
                 </span>
             </h1>
