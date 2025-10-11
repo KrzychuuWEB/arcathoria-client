@@ -24,43 +24,45 @@ const ConfirmDialog = ({
 }: ConfirmDialogProps) => {
     const confirmClasses =
         variant === "danger"
-            ? "bg-rose-600/90 hover:bg-rose-600 text-white border border-rose-400/40"
-            : "bg-[#6A0DAD]/70 hover:bg-[#6A0DAD] text-[#F2F2F2] border border-[#FFD700]/30";
+            ? "bg-complementary-red/90 hover:bg-complementary-red text-text-light border border-complementary-red/40"
+            : "bg-primary/70 hover:bg-primary text-text-light border border-secondary/30";
 
     return (
         <ReactDialog.Root open={open}>
             <ReactDialog.Portal>
                 <ReactDialog.Overlay
                     className="
-          fixed inset-0 bg-black/60 backdrop-blur-sm
-          data-[state=open]:animate-fadeIn z-40
-        "
+                        fixed inset-0 bg-black/60 backdrop-blur-sm
+                        data-[state=open]:animate-fadeIn z-40
+                    "
                 />
                 <ReactDialog.Content
                     className="
-          fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
-          w-[92vw] max-w-md rounded-2xl
-          bg-[#1E1E2C]/90 text-[#F2F2F2] border border-[#6A0DAD]/40
-          shadow-[0_0_30px_rgba(106,13,173,0.45)]
-          p-5
-          data-[state=open]:animate-scaleIn z-50
-        "
+                        fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+                        w-[92vw] max-w-md rounded-2xl
+                        bg-black/90 text-text-light border border-primary/40
+                        shadow-[0_0_30px_rgba(106,13,173,0.45)]
+                        p-5
+                        data-[state=open]:animate-scaleIn z-50
+                    "
                 >
-                    <div className="absolute z-50 -inset-[2px] rounded-2xl pointer-events-none opacity-60 blur-[10px] bg-gradient-to-tr from-[#6A0DAD]/25 via-transparent to-[#FFD700]/25" />
+                    <div className="absolute z-50 -inset-[2px] rounded-2xl pointer-events-none opacity-60 blur-[10px] bg-gradient-to-tr from-primary/25 via-transparent to-secondary/25" />
 
                     <div className="relative z-50 flex items-start gap-3">
                         <div className="mt-0.5">
                             <AlertTriangle
                                 className={
-                                    variant === "danger" ? "text-rose-400" : "text-[#FFD700]"
+                                    variant === "danger"
+                                        ? "text-complementary-red"
+                                        : "text-secondary"
                                 }
                             />
                         </div>
                         <div className="flex-1">
-                            <ReactDialog.Title className="font-cinzel text-lg">
+                            <ReactDialog.Title className="font-cinzel text-lg text-text-light">
                                 {title}
                             </ReactDialog.Title>
-                            <ReactDialog.Description className="font-roboto text-sm text-[#D1C4E9] mt-1">
+                            <ReactDialog.Description className="font-roboto text-sm text-text-secondary mt-1">
                                 {description}
                             </ReactDialog.Description>
                         </div>
@@ -68,8 +70,10 @@ const ConfirmDialog = ({
                         <ReactDialog.Close asChild>
                             <button
                                 onClick={onCancel}
-                                className="cursor-pointer inline-flex items-center justify-center w-8 h-8 rounded-full
-                           bg-white/5 hover:bg-white/10 border border-white/10"
+                                className="
+                                    cursor-pointer inline-flex items-center justify-center w-8 h-8 rounded-full
+                                    bg-white/5 hover:bg-white/10 border border-white/10 text-text-light
+                                "
                                 aria-label="Zamknij"
                             >
                                 <X className="w-4 h-4" />
@@ -81,7 +85,10 @@ const ConfirmDialog = ({
                         <ReactDialog.Close asChild>
                             <button
                                 onClick={onCancel}
-                                className="cursor-pointer px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[#F2F2F2]"
+                                className="
+                                    cursor-pointer px-3 py-2 rounded-xl
+                                    bg-white/5 hover:bg-white/10 border border-white/10 text-text-light
+                                "
                             >
                                 {cancelText}
                             </button>

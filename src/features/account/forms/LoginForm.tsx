@@ -6,10 +6,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@shared/validations/accountSchema.ts";
 import { z } from "zod";
 import useNotification from "@shared/hooks/useNotification.ts";
+import { useNavigate } from "react-router-dom";
+import { routes } from "@app/routes.ts";
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
 const LoginForm = () => {
+    const navigate = useNavigate();
     const { successNotify } = useNotification();
 
     const {
@@ -23,6 +26,7 @@ const LoginForm = () => {
     const onSubmit = (data: LoginFormData) => {
         console.log("Dane logowania:", data);
         successNotify("Runy rozpoznały Twoje Imię. Witaj w Wieży!");
+        navigate(routes.character.list);
     };
 
     return (
@@ -32,13 +36,7 @@ const LoginForm = () => {
                 type="text"
                 placeholder="Twój email"
                 icon={<Mail size={18} />}
-                {...register("email", {
-                    required: "Email jest wymagany",
-                    pattern: {
-                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                        message: "Nieprawidłowy adres email",
-                    },
-                })}
+                {...register("email")}
                 error={errors.email?.message}
             />
             <InputField
@@ -46,13 +44,7 @@ const LoginForm = () => {
                 type="password"
                 placeholder="Twoje hasło"
                 icon={<Lock size={18} />}
-                {...register("password", {
-                    required: "Hasło jest wymagane",
-                    minLength: {
-                        value: 6,
-                        message: "Hasło musi mieć min. 6 znaków",
-                    },
-                })}
+                {...register("password")}
                 error={errors.password?.message}
             />
             <Button type="submit" icon={<LogIn size={18} />} disabled={isSubmitting}>

@@ -6,6 +6,7 @@ import { ProgressFallback } from "@shared/components/ProgressFallback.tsx";
 import CharacterLayout from "@features/character/CharacterLayout.tsx";
 
 const CharacterListPage = lazy(() => import("./pages/CharacterListPage"));
+const CharacterCreatePage = lazy(() => import("./pages/CharacterCreatePage"));
 
 const S = (el: React.ReactElement) => <Suspense fallback={<ProgressFallback />}>{el}</Suspense>;
 
@@ -17,6 +18,7 @@ export const characterRoutes: RouteObject[] = [
         children: [
             { index: true, element: S(<CharacterListPage />) },
             { path: "list", element: S(<CharacterListPage />) },
+            { path: "create", element: S(<CharacterCreatePage />) },
         ],
     },
 ];

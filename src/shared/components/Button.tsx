@@ -20,10 +20,10 @@ const Button = ({
     const baseClasses = `
         inline-flex items-center justify-center gap-2
         w-full py-3 px-6 rounded-md text-base font-roboto
-        bg-[#32224f] text-white
+        bg-primary-dark text-text-light
         border border-transparent
-        hover:bg-[#3b2a5e]
-        active:bg-[#2b1a45]
+        hover:bg-primary/50
+        active:bg-primary/70
         transition-colors duration-150
         cursor-pointer
         disabled:opacity-50 disabled:cursor-not-allowed
@@ -36,7 +36,7 @@ const Button = ({
             disabled={disabled}
             className={`${baseClasses} ${className}`}
         >
-            {icon && <span className="text-base">{icon}</span>}
+            {icon && <span className="text-base text-secondary">{icon}</span>}
             <span>{children}</span>
         </button>
     );

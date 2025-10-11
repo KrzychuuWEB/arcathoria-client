@@ -16,7 +16,7 @@ const LoginPage = () => {
                     Nie masz konta?{" "}
                     <Link
                         to={routes.account.register}
-                        className="text-yellow-400 font-medium hover:underline hover:text-yellow-300 transition-colors"
+                        className="text-secondary font-medium hover:underline hover:text-secondary-300 transition-colors"
                     >
                         Zarejestruj się
                     </Link>

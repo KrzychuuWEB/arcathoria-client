@@ -4,7 +4,7 @@ import ImageBackground from "@shared/components/ImageBackground.tsx";
 
 const AccountLayout = () => {
     return (
-        <ImageBackground src="../../../../public/home_bg.png">
+        <ImageBackground src="/home_bg.png">
             <RWDContainer>
                 <main>
                     <Outlet />
