@@ -4,7 +4,7 @@ import "./HeaderWithLogo.css";
 const HeaderWithLogo = () => {
     return (
         <header className="text-center py-16 px-4">
-            <h1 className="text-5xl md:text-6xl font-heading text-glow-title leading-tight">
+            <h1 className="text-4xl md:text-6xl font-heading text-glow-title leading-tight">
                 <Link to="/" className="gradient-text hover:opacity-90 transition-opacity">
                     Arcathoria
                 </Link>
