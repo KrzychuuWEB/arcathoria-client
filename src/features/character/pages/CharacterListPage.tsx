@@ -17,7 +17,6 @@ const CharacterListPage = () => {
     const characters = mockCharacters;
     const emptySlots = Math.max(0, maxSlots - characters.length);
 
-    const handleDelete = (id: string) => console.log("Usuń:", id);
     const handleSelect = (id: string) => console.log("Wybierz:", id);
     const handleAdd = () => console.log("Dodaj postać");
 
@@ -29,12 +28,7 @@ const CharacterListPage = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                 {characters.map((ch) => (
-                    <SelectCharacterCard
-                        key={ch.id}
-                        character={ch}
-                        onDelete={handleDelete}
-                        onSelect={handleSelect}
-                    />
+                    <SelectCharacterCard key={ch.id} character={ch} onSelect={handleSelect} />
                 ))}
 
                 {Array.from({ length: emptySlots }).map((_, i) => (
