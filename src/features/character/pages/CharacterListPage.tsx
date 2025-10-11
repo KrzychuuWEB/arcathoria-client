@@ -1,4 +1,4 @@
-import CharacterCard from "@features/character/components/CharacterCard.tsx";
+import SelectCharacterCard from "@features/character/components/SelectCharacterCard.tsx";
 import EmptyCharacterCard from "@features/character/components/EmptyCharacterCard.tsx";
 
 type Character = {
@@ -29,7 +29,7 @@ const CharacterListPage = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                 {characters.map((ch) => (
-                    <CharacterCard
+                    <SelectCharacterCard
                         key={ch.id}
                         character={ch}
                         onDelete={handleDelete}
