@@ -22,7 +22,7 @@ export default function TopMenu({
     const goToCharacters = () => navigate("/character/list");
 
     return (
-        <header className="sticky top-0 z-50 backdrop-blur-md">
+        <header className="sticky top-0 z-1 backdrop-blur-md">
             <div className="mx-auto w-full px-4 sm:px-6 py-3 rounded-b-2xl border border-[#6A0DAD]/40 bg-[#1E1E2C]/60 shadow-[0_0_20px_rgba(106,13,173,0.35)] relative overflow-hidden">
                 <div className="pointer-events-none absolute inset-0 opacity-60">
                     <div className="absolute -inset-12 bg-gradient-to-r from-[#6A0DAD]/20 via-transparent to-[#FFD700]/20 blur-2xl" />
