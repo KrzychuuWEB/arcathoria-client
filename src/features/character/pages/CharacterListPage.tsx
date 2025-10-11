@@ -9,7 +9,7 @@ type Character = {
 };
 
 const mockCharacters: Character[] = [
-    { id: "c1", name: "Mag", level: 27, avatarUrl: "/default_avatar.png" },
+    { id: "c1", name: "Mag", level: 1, avatarUrl: "/default_avatar.png" },
 ];
 
 const CharacterListPage = () => {

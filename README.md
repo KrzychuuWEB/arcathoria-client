@@ -84,3 +84,5 @@ Create a `.env` file in the project root:
 ## Screenshots
 
 ![Login Page](gh_img/login.png)
+
+![Character List page](gh_img/character_list.png)

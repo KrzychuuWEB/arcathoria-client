@@ -9,8 +9,8 @@ const CharacterLayout = () => {
         <ImageBackground src="home_bg.png">
             <RWDContainer>
                 <TopMenu
-                    email="mag@arcathoria.realm"
-                    characterCount={3}
+                    email="test@arcathoria.com"
+                    characterCount={1}
                     maxSlots={4}
                     onLogout={() => console.log("Wyloguj")}
                     onOpenSettings={() => console.log("Ustawienia")}
