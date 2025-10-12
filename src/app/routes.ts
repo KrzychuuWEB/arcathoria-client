@@ -12,4 +12,8 @@ export const routes = {
         list: "/character/list",
         create: "/character/create",
     },
+    combat: {
+        base: "/combat",
+        byId: (id: string) => `/combat/${id}`,
+    },
 } as const;
