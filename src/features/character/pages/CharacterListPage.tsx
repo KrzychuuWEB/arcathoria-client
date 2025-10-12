@@ -21,7 +21,7 @@ const CharacterListPage = () => {
     const characters = mockCharacters;
     const emptySlots = Math.max(0, maxSlots - characters.length);
 
-    const handleSelect = (id: string) => console.log("Wybierz:", id);
+    const handleSelect = (id: string) => navigate(routes.combat.byId(id));
     const handleAdd = () => navigate(routes.character.create);
 
     return (
