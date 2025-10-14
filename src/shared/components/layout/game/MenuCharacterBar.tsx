@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { cn } from "@shared/libs/cn";
 
 const clampPct = (value: number) => Math.max(0, Math.min(100, value));
 
@@ -9,36 +10,45 @@ type BarProps = {
     value: number;
     max: number;
     ariaLabel?: string;
+    className?: string;
 };
 
 const variantStyles: Record<BarVariant, { from: string; to: string; label: string }> = {
     energy: {
-        from: "#388e3c",
-        to: "#66bb6a",
+        from: "from-secondary",
+        to: "to-secondary-300",
         label: "Pasek energii",
     },
     xp: {
-        from: "#e02a2a",
-        to: "#ff6b6b",
+        from: "from-complementary-red",
+        to: "to-complementary-red-300",
         label: "Pasek doświadczenia",
     },
 };
 
-export const MenuCharacterBar = ({ variant, value, max, ariaLabel }: BarProps) => {
+export const MenuCharacterBar = ({ variant, value, max, ariaLabel, className }: BarProps) => {
     const { from, to, label } = variantStyles[variant];
     const pct = useMemo(() => clampPct((value / Math.max(max, 1)) * 100), [value, max]);
 
     return (
         <div
-            className="w-full h-2 rounded-full bg-black/40 border border-primary/30 overflow-hidden"
+            className={cn(
+                "w-full h-2 rounded-full bg-black/40 border border-primary/30 overflow-hidden",
+                className,
+            )}
             aria-label={ariaLabel || label}
+            role="progressbar"
+            aria-valuemin={0}
+            aria-valuemax={max}
+            aria-valuenow={value}
         >
             <div
-                className="h-full transition-all duration-500 ease-out"
-                style={{
-                    width: `${pct}%`,
-                    background: `linear-gradient(90deg, ${from}, ${to})`,
-                }}
+                className={cn(
+                    "h-full transition-all duration-500 ease-out bg-gradient-to-r",
+                    from,
+                    to,
+                )}
+                style={{ width: `${pct}%` }}
             />
         </div>
     );
