@@ -4,7 +4,7 @@ import { CombatBasicActions } from "@features/combat/components/CombatBasicActio
 import { CombatSpells } from "@features/combat/components/CombatSpells.tsx";
 import { CombatParticipantCard } from "@features/combat/components/CombatParticipantCard.tsx";
 import BlurContainer from "@shared/components/BlurContainer.tsx";
-import type { EffectItem } from "@shared/components/floatingEffect/FloatingEffect.tsx";
+import { useFloatingEffects } from "@shared/hooks/useFloatingEffect.ts";
 
 type Entity = {
     id: string;
@@ -32,7 +32,7 @@ const CombatPage = () => {
     });
     const [turn, setTurn] = useState<"player" | "enemy">("enemy");
     const [turnTime, setTurnTime] = useState(100);
-    const [enemyEffects, setEnemyEffects] = useState<EffectItem[]>([]);
+    const enemyEffects = useFloatingEffects();
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -47,15 +47,8 @@ const CombatPage = () => {
         return () => clearInterval(interval);
     }, []);
 
-    const addEnemyEffect = (fx: Omit<EffectItem, "id">) => {
-        setEnemyEffects((xs) => [...xs, { id: crypto.randomUUID(), ...fx }]);
-    };
-    const removeEnemyEffect = (id: string) => {
-        setEnemyEffects((xs) => xs.filter((x) => x.id !== id));
-    };
-
     const performBasicAttack = () => {
-        addEnemyEffect({ variant: "damage", value: 10, lifetimeMs: 900 });
+        enemyEffects.addEffect({ variant: "damage", value: 100 });
     };
 
     return (
@@ -73,8 +66,6 @@ const CombatPage = () => {
                                 hpMax={player.hpMax}
                                 mp={player.mp}
                                 mpMax={player.mpMax}
-                                isActiveTurn={turn === "player"}
-                                turnProgress={turn === "player" ? turnTime / 100 : 0}
                             />
 
                             <CombatParticipantCard
@@ -88,8 +79,7 @@ const CombatPage = () => {
                                 mpMax={player.mpMax}
                                 isActiveTurn={turn === "enemy"}
                                 turnProgress={turn === "enemy" ? turnTime / 100 : 0}
-                                effects={enemyEffects}
-                                onEffectDone={removeEnemyEffect}
+                                effects={enemyEffects.effects}
                             />
                         </div>
                     </BlurContainer>

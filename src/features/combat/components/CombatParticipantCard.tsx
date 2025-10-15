@@ -19,7 +19,6 @@ type CombatParticipantCardProps = {
     turnProgress?: number;
     isActiveTurn?: boolean;
     effects?: EffectItem[];
-    onEffectDone?: (id: string) => void;
 };
 
 export const CombatParticipantCard = ({
@@ -34,7 +33,6 @@ export const CombatParticipantCard = ({
     turnProgress = 0,
     isActiveTurn = false,
     effects,
-    onEffectDone,
 }: CombatParticipantCardProps) => {
     const isEnemy = role === "enemy";
     const RoleIcon = isEnemy ? Skull : ShieldCheck;
@@ -54,9 +52,7 @@ export const CombatParticipantCard = ({
                         className="w-full h-full rounded-full border border-primary/40 object-cover"
                     />
                     <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/20 to-secondary/10 opacity-60 blur-md" />
-                    {!!effects?.length && (
-                        <FloatingEffectsHost effects={effects} onRemove={onEffectDone!} />
-                    )}
+                    {!!effects?.length && <FloatingEffectsHost effects={effects} />}
                 </div>
 
                 <div className="absolute inset-0 -m-1 grid place-items-center pointer-events-none">
