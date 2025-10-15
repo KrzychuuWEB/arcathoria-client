@@ -1,16 +1,18 @@
-@keyframes float-up {
+@keyframes fx-floatUp {
     0% {
         opacity: 0;
-        transform: translate(-50%, 0) scale(0.95);
-        filter: blur(0.2px);
+        transform: translateY(0) scale(1.05);
     }
-    12% {
+    10% {
         opacity: 1;
-        transform: translate(-50%, -6px) scale(1.02);
+        transform: translateY(-10px) scale(1);
+    }
+    70% {
+        opacity: 1;
+        transform: translateY(-50px);
     }
     100% {
         opacity: 0;
-        transform: translate(-50%, -36px) scale(1.06);
-        filter: blur(0.3px);
+        transform: translateY(-90px) scale(0.98);
     }
 }

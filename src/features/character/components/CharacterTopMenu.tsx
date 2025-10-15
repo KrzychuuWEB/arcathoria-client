@@ -29,7 +29,7 @@ const CharacterTopMenu = ({
 
     return (
         <header className="sticky top-0 z-50 backdrop-blur-md">
-            <div className="mx-auto w-full px-3 sm:px-4 md:px-6 py-2.5 sm:py-3 rounded-b-2xl border border-primary/40 bg-black/30 shadow-[0_0_20px_rgba(106,13,173,0.35)] relative overflow-hidden">
+            <div className="mx-auto w-full px-3 sm:px-4 md:px-6 py-2.5 sm:py-3 rounded-b-2xl border border-primary/40 bg-black/50 shadow-[0_0_20px_rgba(106,13,173,0.35)] relative overflow-hidden">
                 <div className="pointer-events-none absolute inset-0 opacity-60">
                     <div className="absolute -inset-12 bg-gradient-to-r from-primary/20 via-transparent to-secondary/20 blur-2xl" />
                 </div>
