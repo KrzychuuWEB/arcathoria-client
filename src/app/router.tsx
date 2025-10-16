@@ -5,6 +5,7 @@ import { characterRoutes } from "@features/character/CharacterRoutes.tsx";
 import { combatRoutes } from "@features/combat/CombatRouters.tsx";
 import { expeditionRoutes } from "@features/expedition/ExpeditionRoutes.tsx";
 import { dashboardRoutes } from "@features/dashboard/DashboardRoutes.tsx";
+import { NotFoundPage } from "@shared/components/NotFoundPage.tsx";
 
 const router = createBrowserRouter([
     { path: routes.home.base, element: <Navigate to={routes.account.login} replace /> },
@@ -13,7 +14,7 @@ const router = createBrowserRouter([
     ...dashboardRoutes,
     ...combatRoutes,
     ...expeditionRoutes,
-    { path: "*", element: <div>404</div> },
+    { path: "*", element: <NotFoundPage /> },
 ]);
 
 export function AppRouter() {
