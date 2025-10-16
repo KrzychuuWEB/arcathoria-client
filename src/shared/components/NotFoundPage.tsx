@@ -8,7 +8,6 @@ export const NotFoundPage = () => {
             <div className="relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden">
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/60" />
 
-                {/* Treść 404 */}
                 <div className="relative z-10 flex flex-col items-center justify-center gap-6 px-6 text-center">
                     <div className="inline-flex items-baseline justify-center gap-3">
                         <span
