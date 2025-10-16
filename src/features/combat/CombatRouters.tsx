@@ -4,6 +4,7 @@ import * as React from "react";
 import { lazy, Suspense } from "react";
 import { ProgressFallback } from "@shared/components/ProgressFallback.tsx";
 import CombatLayout from "@features/combat/CombatLayout.tsx";
+import { NotFoundPage } from "@shared/components/NotFoundPage.tsx";
 
 const CombatPage = lazy(() => import("./pages/CombatPage"));
 
@@ -13,7 +14,7 @@ export const combatRoutes: RouteObject[] = [
     {
         path: routes.combat.base + "/:id",
         element: <CombatLayout />,
-        errorElement: <div>Error (combat)</div>,
+        errorElement: <NotFoundPage />,
         children: [{ index: true, element: S(<CombatPage />) }],
     },
 ];

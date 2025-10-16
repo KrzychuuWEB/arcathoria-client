@@ -4,6 +4,7 @@ import * as React from "react";
 import { lazy, Suspense } from "react";
 import { ProgressFallback } from "@shared/components/ProgressFallback.tsx";
 import DashboardLayout from "@features/dashboard/DashboardLayout.tsx";
+import { NotFoundPage } from "@shared/components/NotFoundPage.tsx";
 
 const DashboardPage = lazy(() => import("./pages/./DashboardPage"));
 
@@ -13,7 +14,7 @@ export const dashboardRoutes: RouteObject[] = [
     {
         path: routes.dashboard.base,
         element: <DashboardLayout />,
-        errorElement: <div>Error (dashbaord)</div>,
+        errorElement: <NotFoundPage />,
         children: [{ index: true, element: S(<DashboardPage />) }],
     },
 ];
