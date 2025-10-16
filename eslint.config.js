@@ -26,6 +26,11 @@ export default tseslint.config(
             "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
             "prettier/prettier": "warn",
             ...prettierConfig.rules,
+            "func-style": ["error", "expression", { allowArrowFunctions: true }],
+            "react/function-component-definition": [
+                "error",
+                { namedComponents: "arrow-function", unnamedComponents: "arrow-function" },
+            ],
         },
     },
 );

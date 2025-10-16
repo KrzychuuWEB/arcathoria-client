@@ -7,7 +7,7 @@ import { MainComponentWithStyles } from "@shared/components/layout/game/MainComp
 const CombatLayout = () => {
     return (
         <GameLayout>
-            <ImageBackground src="/combat_forest.png">
+            <ImageBackground src="/dashboard_bg.png">
                 <RWDContainer>
                     <MainComponentWithStyles>
                         <Outlet />
