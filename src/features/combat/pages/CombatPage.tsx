@@ -21,7 +21,7 @@ type Entity = {
 const CombatPage = () => {
     const [player, setPlayer] = useState<Entity>({
         id: "p1",
-        name: "Elyndra",
+        name: "Player name",
         avatar: "/default_avatar.png",
         level: 27,
         hp: 180,
@@ -52,7 +52,7 @@ const CombatPage = () => {
     };
 
     return (
-        <div className="mt-20 flex items-start lg:items-center justify-center px-4 sm:px-6 py-6">
+        <div className="flex items-start lg:items-center justify-center px-4 sm:px-6 py-6">
             <div className="w-full max-w-6xl grid gap-6 lg:grid-cols-[1fr_360px]">
                 <section className="space-y-4">
                     <BlurContainer>
@@ -70,13 +70,13 @@ const CombatPage = () => {
 
                             <CombatParticipantCard
                                 role="enemy"
-                                name={player.name}
+                                name={"Wilk"}
                                 avatar={"/wolf.png"}
-                                level={player.level}
-                                hp={player.hp}
-                                hpMax={player.hpMax}
-                                mp={player.mp}
-                                mpMax={player.mpMax}
+                                level={30}
+                                hp={200}
+                                hpMax={250}
+                                mp={70}
+                                mpMax={100}
                                 isActiveTurn={turn === "enemy"}
                                 turnProgress={turn === "enemy" ? turnTime / 100 : 0}
                                 effects={enemyEffects.effects}

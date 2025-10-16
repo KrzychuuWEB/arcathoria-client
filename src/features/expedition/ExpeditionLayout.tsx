@@ -4,10 +4,10 @@ import { Outlet } from "react-router-dom";
 import GameLayout from "@shared/components/layout/GameLayout.tsx";
 import { MainComponentWithStyles } from "@shared/components/layout/game/MainComponentWithStyles.tsx";
 
-const CombatLayout = () => {
+const ExpeditionLayout = () => {
     return (
         <GameLayout>
-            <ImageBackground src="/combat_forest.png">
+            <ImageBackground src="/expedition_bg.png">
                 <RWDContainer>
                     <MainComponentWithStyles>
                         <Outlet />
@@ -18,4 +18,4 @@ const CombatLayout = () => {
     );
 };
 
-export default CombatLayout;
+export default ExpeditionLayout;

@@ -86,3 +86,7 @@ Create a `.env` file in the project root:
 ![Login Page](gh_img/login.png)
 
 ![Character List page](gh_img/character_list.png)
+
+![Character create](gh_img/character_create.png)
+
+![Combat page](gh_img/combat.png)
