@@ -7,11 +7,14 @@ import Button from "@shared/components/Button.tsx";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
 import { routes } from "@app/routes.ts";
+import useNotification from "@shared/hooks/useNotification.ts";
 
 type RegisterFormData = z.infer<typeof registerSchema>;
 
 const RegisterForm = () => {
     const navigate = useNavigate();
+    const { successNotify } = useNotification();
+
     const {
         register,
         handleSubmit,
@@ -22,6 +25,7 @@ const RegisterForm = () => {
 
     const onSubmit = (data: RegisterFormData) => {
         console.log("Dane logowania:", data);
+        successNotify("Konto zostało zarejestrowane");
         navigate(routes.account.login);
     };
 
@@ -45,7 +49,7 @@ const RegisterForm = () => {
             />
 
             <InputField
-                label="Hasło"
+                label="Powtórz hasło"
                 type="password"
                 placeholder="Powtórz hasło"
                 icon={<Lock size={18} />}
