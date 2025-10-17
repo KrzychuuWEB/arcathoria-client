@@ -1,51 +1,24 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CombatLog } from "@features/combat/components/CombatLog.tsx";
 import { CombatBasicActions } from "@features/combat/components/CombatBasicActions.tsx";
 import { CombatSpells } from "@features/combat/components/CombatSpells.tsx";
 import { CombatParticipantCard } from "@features/combat/components/CombatParticipantCard.tsx";
 import BlurContainer from "@shared/components/BlurContainer.tsx";
 import { useFloatingEffects } from "@shared/hooks/useFloatingEffect.ts";
-
-type Entity = {
-    id: string;
-    name: string;
-    avatar: string;
-    level: number;
-    hp: number;
-    hpMax: number;
-    mp: number;
-    mpMax: number;
-    status?: { label: string; kind: "buff" | "debuff" }[];
-};
+import type { Participant } from "@/domain/combat/types.ts";
 
 const CombatPage = () => {
-    const [player, setPlayer] = useState<Entity>({
-        id: "p1",
-        name: "Player name",
-        avatar: "/default_avatar.png",
-        level: 27,
-        hp: 180,
-        hpMax: 220,
-        mp: 95,
-        mpMax: 120,
-        status: [{ label: "Bariera Runiczna", kind: "buff" }],
+    const [player, setPlayer] = useState<Participant>({
+        id: "123",
+        health: { value: 100, max: 100 },
     });
-    const [turn, setTurn] = useState<"player" | "enemy">("enemy");
-    const [turnTime, setTurnTime] = useState(100);
-    const enemyEffects = useFloatingEffects();
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setTurnTime((t) => {
-                if (t <= 0) {
-                    setTurn((prev) => (prev === "player" ? "enemy" : "player"));
-                    return 100;
-                }
-                return t - 1;
-            });
-        }, 100);
-        return () => clearInterval(interval);
-    }, []);
+    const [enemy, setEnemy] = useState<Participant>({
+        id: "321",
+        health: { value: 50, max: 50 },
+    });
+
+    const enemyEffects = useFloatingEffects();
 
     const performBasicAttack = () => {
         enemyEffects.addEffect({ variant: "damage", value: 100 });
@@ -59,26 +32,24 @@ const CombatPage = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <CombatParticipantCard
                                 role="player"
-                                name={player.name}
-                                avatar={player.avatar}
-                                level={player.level}
-                                hp={player.hp}
-                                hpMax={player.hpMax}
-                                mp={player.mp}
-                                mpMax={player.mpMax}
+                                name="brak danych"
+                                avatar={"/default_avatar.png"}
+                                level={0}
+                                hp={player.health.value}
+                                hpMax={player.health.max}
+                                mp={0}
+                                mpMax={0}
                             />
 
                             <CombatParticipantCard
                                 role="enemy"
-                                name={"Wilk"}
-                                avatar={"/wolf.png"}
-                                level={30}
-                                hp={200}
-                                hpMax={250}
-                                mp={70}
-                                mpMax={100}
-                                isActiveTurn={turn === "enemy"}
-                                turnProgress={turn === "enemy" ? turnTime / 100 : 0}
+                                name="brak danych"
+                                avatar={"/default_avatar.png"}
+                                level={0}
+                                hp={enemy.health.value}
+                                hpMax={enemy.health.max}
+                                mp={0}
+                                mpMax={0}
                                 effects={enemyEffects.effects}
                             />
                         </div>
