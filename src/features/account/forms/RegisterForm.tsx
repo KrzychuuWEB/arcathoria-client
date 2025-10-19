@@ -5,15 +5,15 @@ import Button from "@shared/components/Button.tsx";
 import { useNavigate } from "react-router-dom";
 import { routes } from "@app/routes.ts";
 import useNotification from "@shared/hooks/useNotification.ts";
-import {
-    RegisterFormSchema,
-    type RegisterFormType,
-    toRegisterDTO,
-} from "@features/account/forms/registerFormSchema.ts";
 import { useRegisterRequest } from "@api/orval.ts";
 import { applyFieldViolations } from "@shared/utils/applyFieldViolations.ts";
 import { isAxiosError } from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+    type RegisterFormData,
+    registerSchema,
+    toRegisterDTO,
+} from "@shared/validations/schema/account/register.ts";
 
 const RegisterForm = () => {
     const navigate = useNavigate();
@@ -25,12 +25,12 @@ const RegisterForm = () => {
         handleSubmit,
         setError,
         formState: { errors, isSubmitting },
-    } = useForm<RegisterFormType>({
-        resolver: zodResolver(RegisterFormSchema),
+    } = useForm<RegisterFormData>({
+        resolver: zodResolver(registerSchema),
         defaultValues: { email: "", password: "", confirmPassword: "" },
     });
 
-    const onSubmit = async (formData: RegisterFormType) => {
+    const onSubmit = async (formData: RegisterFormData) => {
         try {
             const dto = toRegisterDTO(formData);
             await registerMutation.mutateAsync({
@@ -41,7 +41,7 @@ const RegisterForm = () => {
             navigate(routes.account.login);
         } catch (error) {
             if (isAxiosError(error)) {
-                applyFieldViolations<RegisterFormType>(error.response?.data, setError);
+                applyFieldViolations<RegisterFormData>(error.response?.data, setError);
             }
         }
     };

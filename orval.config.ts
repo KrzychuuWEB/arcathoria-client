@@ -17,13 +17,4 @@ export default defineConfig({
             mock: false,
         },
     },
-    schemas: {
-        input: "./src/api/openapi.json",
-        output: {
-            target: "src/api/schemas.ts",
-            client: "zod",
-            mode: "single",
-            prettier: true,
-        },
-    },
 });
