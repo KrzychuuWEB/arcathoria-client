@@ -5,7 +5,10 @@ export const emailField = z
     .min(1, "Email jest wymagany")
     .email("Nieprawidłowy adres email");
 
-export const passwordField = z.string().min(6, "Hasło musi mieć min. 6 znaków");
+export const passwordField = z
+    .string()
+    .min(8, "Hasło musi mieć min. 8 znaków")
+    .max(32, "Hasło może mieć maksymalnie 32 znaki");
 
 export const characterNameField = z
     .string()

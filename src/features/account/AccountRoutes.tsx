@@ -1,13 +1,12 @@
 import type { RouteObject } from "react-router-dom";
 import { routes } from "@app/routes.ts";
 import * as React from "react";
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
 import AccountLayout from "@features/account/AccountLayout.tsx";
 import { ProgressFallback } from "@shared/components/ProgressFallback.tsx";
 import { NotFoundPage } from "@shared/components/NotFoundPage.tsx";
-
-const LoginPage = lazy(() => import("./pages/LoginPage"));
-const RegisterPage = lazy(() => import("./pages/RegisterPage"));
+import LoginPage from "@features/account/pages/LoginPage.tsx";
+import RegisterPage from "@features/account/pages/RegisterPage.tsx";
 
 const S = (el: React.ReactElement) => <Suspense fallback={<ProgressFallback />}>{el}</Suspense>;
 
