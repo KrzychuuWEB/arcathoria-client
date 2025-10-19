@@ -1,4 +1,4 @@
-// tailwind.config.js
+// @ts-ignore
 import forms from "@tailwindcss/forms";
 
 /** @type {import('tailwindcss').Config} */

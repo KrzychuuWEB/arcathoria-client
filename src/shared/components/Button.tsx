@@ -7,6 +7,7 @@ type ButtonProps = {
     onClick?: () => void;
     type?: "button" | "submit" | "reset";
     disabled?: boolean;
+    loading?: boolean;
 };
 
 const Button = ({
@@ -16,6 +17,7 @@ const Button = ({
     onClick,
     type = "button",
     disabled = false,
+    loading = false,
 }: ButtonProps) => {
     const baseClasses = `
         inline-flex items-center justify-center gap-2
@@ -33,11 +35,17 @@ const Button = ({
         <button
             type={type}
             onClick={onClick}
-            disabled={disabled}
+            disabled={disabled || loading}
             className={`${baseClasses} ${className}`}
         >
-            {icon && <span className="text-base text-secondary">{icon}</span>}
-            <span>{children}</span>
+            {loading ? (
+                <span className="inline-block w-5 h-5 border-3 border-t-transparent border-secondary rounded-full animate-spin" />
+            ) : (
+                <>
+                    {icon && <span className="text-base text-secondary">{icon}</span>}
+                    <span>{children}</span>
+                </>
+            )}
         </button>
     );
 };

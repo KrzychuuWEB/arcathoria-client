@@ -42,6 +42,9 @@
       "@features/*": [
         "features/*"
       ],
+      "@domain/*": [
+        "domain/*"
+      ],
       "@shared/*": [
         "shared/*"
       ]

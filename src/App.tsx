@@ -1,13 +1,7 @@
-import { AppRouter } from "@app/router.tsx";
-import ToastProvider from "@shared/libs/toastify/ToastProvider.tsx";
+import { Providers } from "@app/Providers.tsx";
 
 const App = () => {
-    return (
-        <>
-            <AppRouter />
-            <ToastProvider />
-        </>
-    );
+    return <Providers></Providers>;
 };
 
 export default App;

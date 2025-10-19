@@ -15,7 +15,7 @@ character, select character and init PvE combat and perform melee attack. I want
 - **Authentication:** Sign up and log in using JWT-based authentication
 - **Character Management:** Create and select character
 - **Combat Interface:** Initiate PvE Combat and perform attack
-- **Form Validation:** Built with Formik and Yup
+- **Form Validation:** Built with React-hook-form and zod
 - **Notifications:** Real-time feedback with React Toastify
 - **Progress Indicators:** Page loading indicators via `@tanem/react-nprogress`
 
@@ -42,6 +42,9 @@ character, select character and init PvE combat and perform melee attack. I want
 - React Router DOM
 - Tailwind CSS
 - Prettier
+- Orval
+- Zod
+- Axios
 
 ## Environment Variables
 
