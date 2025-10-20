@@ -9,45 +9,46 @@ import { useRegisterRequest } from "@api/orval.ts";
 import { applyFieldViolations } from "@shared/utils/applyFieldViolations.ts";
 import { isAxiosError } from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-    type RegisterFormData,
-    registerSchema,
-    toRegisterDTO,
-} from "@shared/validations/schema/account/register.ts";
+import { type RegisterFormData, registerSchema, toRegisterDTO, } from "@shared/validations/schema/account/register.ts";
 
 const RegisterForm = () => {
     const navigate = useNavigate();
-    const { successNotify } = useNotification();
-    const registerMutation = useRegisterRequest();
+    const { successNotify, errorNotify } = useNotification();
 
     const {
         register,
         handleSubmit,
         setError,
-        formState: { errors, isSubmitting },
+        formState: { errors },
     } = useForm<RegisterFormData>({
         resolver: zodResolver(registerSchema),
         defaultValues: { email: "", password: "", confirmPassword: "" },
     });
 
-    const onSubmit = async (formData: RegisterFormData) => {
-        try {
-            const dto = toRegisterDTO(formData);
-            await registerMutation.mutateAsync({
-                data: dto,
-            });
+    const registerMutation = useRegisterRequest({
+        mutation: {
+            onSuccess: () => {
+                successNotify("Konto zostało zarejestrowane");
+                navigate(routes.account.login);
+            },
+            onError: (error) => {
+                if (isAxiosError(error)) {
+                    applyFieldViolations<RegisterFormData>(error.response?.data, setError);
+                } else {
+                    errorNotify("Nie udało się zarejestrować. Spróbuj ponownie.");
+                }
+            },
+        },
+    });
 
-            successNotify("Konto zostało zarejestrowane");
-            navigate(routes.account.login);
-        } catch (error) {
-            if (isAxiosError(error)) {
-                applyFieldViolations<RegisterFormData>(error.response?.data, setError);
-            }
-        }
-    };
+    const onSubmit = handleSubmit((formData) => {
+        registerMutation.mutate({ data: toRegisterDTO(formData) });
+    });
+
+    const isLoading = registerMutation.isPending;
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={onSubmit} className="space-y-6">
             <InputField
                 label="Email"
                 type="text"
@@ -55,7 +56,7 @@ const RegisterForm = () => {
                 icon={<Mail size={18} />}
                 {...register("email")}
                 error={errors.email?.message}
-                disabled={isSubmitting || registerMutation.isPending}
+                disabled={isLoading}
             />
             <InputField
                 label="Hasło"
@@ -64,9 +65,8 @@ const RegisterForm = () => {
                 icon={<Lock size={18} />}
                 {...register("password")}
                 error={errors.password?.message}
-                disabled={isSubmitting || registerMutation.isPending}
+                disabled={isLoading}
             />
-
             <InputField
                 label="Powtórz hasło"
                 type="password"
@@ -74,16 +74,16 @@ const RegisterForm = () => {
                 icon={<Lock size={18} />}
                 {...register("confirmPassword")}
                 error={errors.confirmPassword?.message}
-                disabled={isSubmitting || registerMutation.isPending}
+                disabled={isLoading}
             />
 
             <Button
                 type="submit"
                 icon={<LogIn size={18} />}
-                disabled={isSubmitting || registerMutation.isPending}
-                loading={registerMutation.isPending}
+                disabled={isLoading}
+                loading={isLoading}
             >
-                Zarejestruj sie
+                Zarejestruj się
             </Button>
         </form>
     );
