@@ -9,7 +9,7 @@ export const registerSchema = z
         confirmPassword: z.string().min(1, "Potwierdź hasło"),
     })
     .refine((data) => data.password === data.confirmPassword, {
-        message: "Hasła muiszą być takie same",
+        message: "Hasła muszą być takie same",
         path: ["confirmPassword"],
     });
 

@@ -3,7 +3,7 @@ import axios from "axios";
 import NProgress from "nprogress";
 
 const instance = axios.create({
-    baseURL: import.meta.env.VITE_API_URL ?? "http://localhost:8080",
+    baseURL: import.meta.env.API_URL ?? "http://localhost:8080/v1",
     headers: {
         "Content-Type": "application/json",
         "Accept-Language": "pl-PL",
@@ -22,10 +22,17 @@ instance.interceptors.request.use((config) => {
 instance.interceptors.response.use(
     (response) => {
         NProgress.done();
+
         return response;
     },
     (error) => {
         NProgress.done();
+
+        if (error.response?.data) {
+            const problemDetail = error.response.data;
+            return Promise.reject(problemDetail);
+        }
+
         return Promise.reject(error);
     },
 );
