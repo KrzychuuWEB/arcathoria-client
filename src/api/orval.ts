@@ -22,14 +22,19 @@ import type {
 
 import type {
     AccountDTO,
+    AccountProblemDetail,
+    AuthProblemDetail,
     AuthRequestDTO,
     CharacterDTO,
+    CharacterProblemDetail,
     CombatIdDTO,
+    CombatProblemDetail,
     CombatResultDTO,
     CreateCharacterDTO,
     ExecuteActionDTO,
     InitPveDTO,
     MonsterDTO,
+    MonsterProblemDetail,
     RegisterDTO,
     SelectCharacterDTO,
     TokenResponseDTO,
@@ -52,7 +57,7 @@ export const performActionInCombat = (
 };
 
 export const getPerformActionInCombatMutationOptions = <
-    TError = unknown,
+    TError = CombatProblemDetail | CombatProblemDetail | CombatProblemDetail,
     TContext = unknown,
 >(options?: {
     mutation?: UseMutationOptions<
@@ -90,9 +95,15 @@ export type PerformActionInCombatMutationResult = NonNullable<
     Awaited<ReturnType<typeof performActionInCombat>>
 >;
 export type PerformActionInCombatMutationBody = ExecuteActionDTO;
-export type PerformActionInCombatMutationError = unknown;
+export type PerformActionInCombatMutationError =
+    | CombatProblemDetail
+    | CombatProblemDetail
+    | CombatProblemDetail;
 
-export const usePerformActionInCombat = <TError = unknown, TContext = unknown>(
+export const usePerformActionInCombat = <
+    TError = CombatProblemDetail | CombatProblemDetail | CombatProblemDetail,
+    TContext = unknown,
+>(
     options?: {
         mutation?: UseMutationOptions<
             Awaited<ReturnType<typeof performActionInCombat>>,
@@ -123,7 +134,10 @@ export const initPveCombat = (initPveDTO: InitPveDTO, signal?: AbortSignal) => {
     });
 };
 
-export const getInitPveCombatMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+export const getInitPveCombatMutationOptions = <
+    TError = CombatProblemDetail | CombatProblemDetail | CombatProblemDetail,
+    TContext = unknown,
+>(options?: {
     mutation?: UseMutationOptions<
         Awaited<ReturnType<typeof initPveCombat>>,
         TError,
@@ -157,9 +171,15 @@ export const getInitPveCombatMutationOptions = <TError = unknown, TContext = unk
 
 export type InitPveCombatMutationResult = NonNullable<Awaited<ReturnType<typeof initPveCombat>>>;
 export type InitPveCombatMutationBody = InitPveDTO;
-export type InitPveCombatMutationError = unknown;
+export type InitPveCombatMutationError =
+    | CombatProblemDetail
+    | CombatProblemDetail
+    | CombatProblemDetail;
 
-export const useInitPveCombat = <TError = unknown, TContext = unknown>(
+export const useInitPveCombat = <
+    TError = CombatProblemDetail | CombatProblemDetail | CombatProblemDetail,
+    TContext = unknown,
+>(
     options?: {
         mutation?: UseMutationOptions<
             Awaited<ReturnType<typeof initPveCombat>>,
@@ -190,7 +210,10 @@ export const create = (createCharacterDTO: CreateCharacterDTO, signal?: AbortSig
     });
 };
 
-export const getCreateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+export const getCreateMutationOptions = <
+    TError = CharacterProblemDetail | CharacterProblemDetail | CharacterProblemDetail,
+    TContext = unknown,
+>(options?: {
     mutation?: UseMutationOptions<
         Awaited<ReturnType<typeof create>>,
         TError,
@@ -224,9 +247,15 @@ export const getCreateMutationOptions = <TError = unknown, TContext = unknown>(o
 
 export type CreateMutationResult = NonNullable<Awaited<ReturnType<typeof create>>>;
 export type CreateMutationBody = CreateCharacterDTO;
-export type CreateMutationError = unknown;
+export type CreateMutationError =
+    | CharacterProblemDetail
+    | CharacterProblemDetail
+    | CharacterProblemDetail;
 
-export const useCreate = <TError = unknown, TContext = unknown>(
+export const useCreate = <
+    TError = CharacterProblemDetail | CharacterProblemDetail | CharacterProblemDetail,
+    TContext = unknown,
+>(
     options?: {
         mutation?: UseMutationOptions<
             Awaited<ReturnType<typeof create>>,
@@ -257,7 +286,7 @@ export const getGetAllByAccountIdQueryKey = () => {
 
 export const getGetAllByAccountIdQueryOptions = <
     TData = Awaited<ReturnType<typeof getAllByAccountId>>,
-    TError = unknown,
+    TError = CharacterProblemDetail | CharacterProblemDetail,
 >(options?: {
     query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllByAccountId>>, TError, TData>>;
 }) => {
@@ -278,11 +307,11 @@ export const getGetAllByAccountIdQueryOptions = <
 export type GetAllByAccountIdQueryResult = NonNullable<
     Awaited<ReturnType<typeof getAllByAccountId>>
 >;
-export type GetAllByAccountIdQueryError = unknown;
+export type GetAllByAccountIdQueryError = CharacterProblemDetail | CharacterProblemDetail;
 
 export function useGetAllByAccountId<
     TData = Awaited<ReturnType<typeof getAllByAccountId>>,
-    TError = unknown,
+    TError = CharacterProblemDetail | CharacterProblemDetail,
 >(
     options: {
         query: Partial<
@@ -301,7 +330,7 @@ export function useGetAllByAccountId<
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useGetAllByAccountId<
     TData = Awaited<ReturnType<typeof getAllByAccountId>>,
-    TError = unknown,
+    TError = CharacterProblemDetail | CharacterProblemDetail,
 >(
     options?: {
         query?: Partial<
@@ -320,7 +349,7 @@ export function useGetAllByAccountId<
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useGetAllByAccountId<
     TData = Awaited<ReturnType<typeof getAllByAccountId>>,
-    TError = unknown,
+    TError = CharacterProblemDetail | CharacterProblemDetail,
 >(
     options?: {
         query?: Partial<
@@ -332,7 +361,7 @@ export function useGetAllByAccountId<
 
 export function useGetAllByAccountId<
     TData = Awaited<ReturnType<typeof getAllByAccountId>>,
-    TError = unknown,
+    TError = CharacterProblemDetail | CharacterProblemDetail,
 >(
     options?: {
         query?: Partial<
@@ -362,7 +391,10 @@ export const selectCharacter = (selectCharacterDTO: SelectCharacterDTO, signal?:
     });
 };
 
-export const getSelectCharacterMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+export const getSelectCharacterMutationOptions = <
+    TError = CharacterProblemDetail | CharacterProblemDetail,
+    TContext = unknown,
+>(options?: {
     mutation?: UseMutationOptions<
         Awaited<ReturnType<typeof selectCharacter>>,
         TError,
@@ -398,9 +430,12 @@ export type SelectCharacterMutationResult = NonNullable<
     Awaited<ReturnType<typeof selectCharacter>>
 >;
 export type SelectCharacterMutationBody = SelectCharacterDTO;
-export type SelectCharacterMutationError = unknown;
+export type SelectCharacterMutationError = CharacterProblemDetail | CharacterProblemDetail;
 
-export const useSelectCharacter = <TError = unknown, TContext = unknown>(
+export const useSelectCharacter = <
+    TError = CharacterProblemDetail | CharacterProblemDetail,
+    TContext = unknown,
+>(
     options?: {
         mutation?: UseMutationOptions<
             Awaited<ReturnType<typeof selectCharacter>>,
@@ -426,7 +461,7 @@ export const removeSelectedCharacter = () => {
 };
 
 export const getRemoveSelectedCharacterMutationOptions = <
-    TError = unknown,
+    TError = CharacterProblemDetail | CharacterProblemDetail,
     TContext = unknown,
 >(options?: {
     mutation?: UseMutationOptions<
@@ -462,9 +497,12 @@ export type RemoveSelectedCharacterMutationResult = NonNullable<
     Awaited<ReturnType<typeof removeSelectedCharacter>>
 >;
 
-export type RemoveSelectedCharacterMutationError = unknown;
+export type RemoveSelectedCharacterMutationError = CharacterProblemDetail | CharacterProblemDetail;
 
-export const useRemoveSelectedCharacter = <TError = unknown, TContext = unknown>(
+export const useRemoveSelectedCharacter = <
+    TError = CharacterProblemDetail | CharacterProblemDetail,
+    TContext = unknown,
+>(
     options?: {
         mutation?: UseMutationOptions<
             Awaited<ReturnType<typeof removeSelectedCharacter>>,
@@ -495,7 +533,10 @@ export const login = (authRequestDTO: AuthRequestDTO, signal?: AbortSignal) => {
     });
 };
 
-export const getLoginMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+export const getLoginMutationOptions = <
+    TError = AuthProblemDetail | AuthProblemDetail | AuthProblemDetail,
+    TContext = unknown,
+>(options?: {
     mutation?: UseMutationOptions<
         Awaited<ReturnType<typeof login>>,
         TError,
@@ -529,9 +570,12 @@ export const getLoginMutationOptions = <TError = unknown, TContext = unknown>(op
 
 export type LoginMutationResult = NonNullable<Awaited<ReturnType<typeof login>>>;
 export type LoginMutationBody = AuthRequestDTO;
-export type LoginMutationError = unknown;
+export type LoginMutationError = AuthProblemDetail | AuthProblemDetail | AuthProblemDetail;
 
-export const useLogin = <TError = unknown, TContext = unknown>(
+export const useLogin = <
+    TError = AuthProblemDetail | AuthProblemDetail | AuthProblemDetail,
+    TContext = unknown,
+>(
     options?: {
         mutation?: UseMutationOptions<
             Awaited<ReturnType<typeof login>>,
@@ -562,7 +606,10 @@ export const registerRequest = (registerDTO: RegisterDTO, signal?: AbortSignal) 
     });
 };
 
-export const getRegisterRequestMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+export const getRegisterRequestMutationOptions = <
+    TError = AccountProblemDetail,
+    TContext = unknown,
+>(options?: {
     mutation?: UseMutationOptions<
         Awaited<ReturnType<typeof registerRequest>>,
         TError,
@@ -598,9 +645,9 @@ export type RegisterRequestMutationResult = NonNullable<
     Awaited<ReturnType<typeof registerRequest>>
 >;
 export type RegisterRequestMutationBody = RegisterDTO;
-export type RegisterRequestMutationError = unknown;
+export type RegisterRequestMutationError = AccountProblemDetail;
 
-export const useRegisterRequest = <TError = unknown, TContext = unknown>(
+export const useRegisterRequest = <TError = AccountProblemDetail, TContext = unknown>(
     options?: {
         mutation?: UseMutationOptions<
             Awaited<ReturnType<typeof registerRequest>>,
@@ -631,7 +678,7 @@ export const getGetMonsterByIdQueryKey = (id?: string) => {
 
 export const getGetMonsterByIdQueryOptions = <
     TData = Awaited<ReturnType<typeof getMonsterById>>,
-    TError = unknown,
+    TError = MonsterProblemDetail,
 >(
     id: string,
     options?: {
@@ -653,11 +700,11 @@ export const getGetMonsterByIdQueryOptions = <
 };
 
 export type GetMonsterByIdQueryResult = NonNullable<Awaited<ReturnType<typeof getMonsterById>>>;
-export type GetMonsterByIdQueryError = unknown;
+export type GetMonsterByIdQueryError = MonsterProblemDetail;
 
 export function useGetMonsterById<
     TData = Awaited<ReturnType<typeof getMonsterById>>,
-    TError = unknown,
+    TError = MonsterProblemDetail,
 >(
     id: string,
     options: {
@@ -675,7 +722,7 @@ export function useGetMonsterById<
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useGetMonsterById<
     TData = Awaited<ReturnType<typeof getMonsterById>>,
-    TError = unknown,
+    TError = MonsterProblemDetail,
 >(
     id: string,
     options?: {
@@ -695,7 +742,7 @@ export function useGetMonsterById<
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useGetMonsterById<
     TData = Awaited<ReturnType<typeof getMonsterById>>,
-    TError = unknown,
+    TError = MonsterProblemDetail,
 >(
     id: string,
     options?: {
@@ -706,7 +753,7 @@ export function useGetMonsterById<
 
 export function useGetMonsterById<
     TData = Awaited<ReturnType<typeof getMonsterById>>,
-    TError = unknown,
+    TError = MonsterProblemDetail,
 >(
     id: string,
     options?: {
@@ -735,7 +782,7 @@ export const getGetCombatByIdQueryKey = (id?: string) => {
 
 export const getGetCombatByIdQueryOptions = <
     TData = Awaited<ReturnType<typeof getCombatById>>,
-    TError = unknown,
+    TError = CombatProblemDetail | CombatProblemDetail,
 >(
     id: string,
     options?: {
@@ -757,11 +804,11 @@ export const getGetCombatByIdQueryOptions = <
 };
 
 export type GetCombatByIdQueryResult = NonNullable<Awaited<ReturnType<typeof getCombatById>>>;
-export type GetCombatByIdQueryError = unknown;
+export type GetCombatByIdQueryError = CombatProblemDetail | CombatProblemDetail;
 
 export function useGetCombatById<
     TData = Awaited<ReturnType<typeof getCombatById>>,
-    TError = unknown,
+    TError = CombatProblemDetail | CombatProblemDetail,
 >(
     id: string,
     options: {
@@ -779,7 +826,7 @@ export function useGetCombatById<
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useGetCombatById<
     TData = Awaited<ReturnType<typeof getCombatById>>,
-    TError = unknown,
+    TError = CombatProblemDetail | CombatProblemDetail,
 >(
     id: string,
     options?: {
@@ -797,7 +844,7 @@ export function useGetCombatById<
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useGetCombatById<
     TData = Awaited<ReturnType<typeof getCombatById>>,
-    TError = unknown,
+    TError = CombatProblemDetail | CombatProblemDetail,
 >(
     id: string,
     options?: {
@@ -808,7 +855,7 @@ export function useGetCombatById<
 
 export function useGetCombatById<
     TData = Awaited<ReturnType<typeof getCombatById>>,
-    TError = unknown,
+    TError = CombatProblemDetail | CombatProblemDetail,
 >(
     id: string,
     options?: {
@@ -837,7 +884,7 @@ export const getGetActiveCombatByParticipantIdQueryKey = () => {
 
 export const getGetActiveCombatByParticipantIdQueryOptions = <
     TData = Awaited<ReturnType<typeof getActiveCombatByParticipantId>>,
-    TError = unknown,
+    TError = CombatProblemDetail | CombatProblemDetail,
 >(options?: {
     query?: Partial<
         UseQueryOptions<Awaited<ReturnType<typeof getActiveCombatByParticipantId>>, TError, TData>
@@ -861,11 +908,11 @@ export const getGetActiveCombatByParticipantIdQueryOptions = <
 export type GetActiveCombatByParticipantIdQueryResult = NonNullable<
     Awaited<ReturnType<typeof getActiveCombatByParticipantId>>
 >;
-export type GetActiveCombatByParticipantIdQueryError = unknown;
+export type GetActiveCombatByParticipantIdQueryError = CombatProblemDetail | CombatProblemDetail;
 
 export function useGetActiveCombatByParticipantId<
     TData = Awaited<ReturnType<typeof getActiveCombatByParticipantId>>,
-    TError = unknown,
+    TError = CombatProblemDetail | CombatProblemDetail,
 >(
     options: {
         query: Partial<
@@ -888,7 +935,7 @@ export function useGetActiveCombatByParticipantId<
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useGetActiveCombatByParticipantId<
     TData = Awaited<ReturnType<typeof getActiveCombatByParticipantId>>,
-    TError = unknown,
+    TError = CombatProblemDetail | CombatProblemDetail,
 >(
     options?: {
         query?: Partial<
@@ -911,7 +958,7 @@ export function useGetActiveCombatByParticipantId<
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useGetActiveCombatByParticipantId<
     TData = Awaited<ReturnType<typeof getActiveCombatByParticipantId>>,
-    TError = unknown,
+    TError = CombatProblemDetail | CombatProblemDetail,
 >(
     options?: {
         query?: Partial<
@@ -927,7 +974,7 @@ export function useGetActiveCombatByParticipantId<
 
 export function useGetActiveCombatByParticipantId<
     TData = Awaited<ReturnType<typeof getActiveCombatByParticipantId>>,
-    TError = unknown,
+    TError = CombatProblemDetail | CombatProblemDetail,
 >(
     options?: {
         query?: Partial<
@@ -961,7 +1008,7 @@ export const getGetSelectedCharacterQueryKey = () => {
 
 export const getGetSelectedCharacterQueryOptions = <
     TData = Awaited<ReturnType<typeof getSelectedCharacter>>,
-    TError = unknown,
+    TError = CharacterProblemDetail | CharacterProblemDetail,
 >(options?: {
     query?: Partial<
         UseQueryOptions<Awaited<ReturnType<typeof getSelectedCharacter>>, TError, TData>
@@ -984,11 +1031,11 @@ export const getGetSelectedCharacterQueryOptions = <
 export type GetSelectedCharacterQueryResult = NonNullable<
     Awaited<ReturnType<typeof getSelectedCharacter>>
 >;
-export type GetSelectedCharacterQueryError = unknown;
+export type GetSelectedCharacterQueryError = CharacterProblemDetail | CharacterProblemDetail;
 
 export function useGetSelectedCharacter<
     TData = Awaited<ReturnType<typeof getSelectedCharacter>>,
-    TError = unknown,
+    TError = CharacterProblemDetail | CharacterProblemDetail,
 >(
     options: {
         query: Partial<
@@ -1007,7 +1054,7 @@ export function useGetSelectedCharacter<
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useGetSelectedCharacter<
     TData = Awaited<ReturnType<typeof getSelectedCharacter>>,
-    TError = unknown,
+    TError = CharacterProblemDetail | CharacterProblemDetail,
 >(
     options?: {
         query?: Partial<
@@ -1026,7 +1073,7 @@ export function useGetSelectedCharacter<
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useGetSelectedCharacter<
     TData = Awaited<ReturnType<typeof getSelectedCharacter>>,
-    TError = unknown,
+    TError = CharacterProblemDetail | CharacterProblemDetail,
 >(
     options?: {
         query?: Partial<
@@ -1038,7 +1085,7 @@ export function useGetSelectedCharacter<
 
 export function useGetSelectedCharacter<
     TData = Awaited<ReturnType<typeof getSelectedCharacter>>,
-    TError = unknown,
+    TError = CharacterProblemDetail | CharacterProblemDetail,
 >(
     options?: {
         query?: Partial<

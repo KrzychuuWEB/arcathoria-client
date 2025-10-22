@@ -9,7 +9,11 @@ import { useRegisterRequest } from "@api/orval.ts";
 import { applyFieldViolations } from "@shared/utils/applyFieldViolations.ts";
 import { isAxiosError } from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type RegisterFormData, registerSchema, toRegisterDTO, } from "@shared/validations/schema/account/register.ts";
+import {
+    type RegisterFormData,
+    registerSchema,
+    toRegisterDTO,
+} from "@shared/validations/schema/account/register.ts";
 
 const RegisterForm = () => {
     const navigate = useNavigate();
