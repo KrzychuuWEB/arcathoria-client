@@ -5,8 +5,49 @@
  * OpenAPI spec version: v0
  */
 export interface ExecuteActionDTO {
-    combatId?: string;
-    actionType?: string;
+    combatId: string;
+    actionType: string;
+}
+
+export type CombatProblemDetailProperties = { [key: string]: { [key: string]: unknown } };
+
+/**
+ * Combat service error code
+ */
+export type CombatProblemDetailErrorCode =
+    (typeof CombatProblemDetailErrorCode)[keyof typeof CombatProblemDetailErrorCode];
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const CombatProblemDetailErrorCode = {
+    ERR_COMBAT_WRONG_TURN: "ERR_COMBAT_WRONG_TURN",
+    ERR_COMBAT_ACTION_TYPE_NOT_FOUND: "ERR_COMBAT_ACTION_TYPE_NOT_FOUND",
+    ERR_COMBAT_PARTICIPANT_NOT_FOUND_IN_COMBAT: "ERR_COMBAT_PARTICIPANT_NOT_FOUND_IN_COMBAT",
+    ERR_ONLY_ONE_ACTIVE_COMBAT: "ERR_ONLY_ONE_ACTIVE_COMBAT",
+    ERR_COMBAT_ALREADY_FINISHED: "ERR_COMBAT_ALREADY_FINISHED",
+    ERR_PARTICIPANT_NOT_HAS_ACTIVE_COMBAT: "ERR_PARTICIPANT_NOT_HAS_ACTIVE_COMBAT",
+    ERR_COMBAT_NOT_FOUND: "ERR_COMBAT_NOT_FOUND",
+    ERR_SERVICE_UNAVAILABLE: "ERR_SERVICE_UNAVAILABLE",
+    ERR_COMBAT_PARTICIPANT_NOT_AVAILABLE: "ERR_COMBAT_PARTICIPANT_NOT_AVAILABLE",
+} as const;
+
+export type CombatProblemDetailContext = { [key: string]: { [key: string]: unknown } };
+
+export interface CombatProblemDetail {
+    type?: string;
+    title?: string;
+    status?: number;
+    detail?: string;
+    instance?: string;
+    properties?: CombatProblemDetailProperties;
+    /** Combat service error code */
+    readonly errorCode?: CombatProblemDetailErrorCode;
+    context?: CombatProblemDetailContext;
+    upstream?: UpstreamInfo;
+}
+
+export interface UpstreamInfo {
+    service?: string;
+    code?: string;
 }
 
 export type CombatResultDTOStatus =
@@ -55,6 +96,39 @@ export interface CreateCharacterDTO {
     characterName: string;
 }
 
+export type CharacterProblemDetailProperties = { [key: string]: { [key: string]: unknown } };
+
+/**
+ * Character service error code
+ */
+export type CharacterProblemDetailErrorCode =
+    (typeof CharacterProblemDetailErrorCode)[keyof typeof CharacterProblemDetailErrorCode];
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const CharacterProblemDetailErrorCode = {
+    ERR_CHARACTER_NOT_SELECTED: "ERR_CHARACTER_NOT_SELECTED",
+    ERR_CHARACTER_NOT_FOUND: "ERR_CHARACTER_NOT_FOUND",
+    ERR_CHARACTER_OWNER_NOT_FOUND: "ERR_CHARACTER_OWNER_NOT_FOUND",
+    ERR_CHARACTER_NAME_EXISTS: "ERR_CHARACTER_NAME_EXISTS",
+    ERR_SERVICE_UNAVAILABLE: "ERR_SERVICE_UNAVAILABLE",
+    ERR_CHARACTER_NOT_OWNED: "ERR_CHARACTER_NOT_OWNED",
+} as const;
+
+export type CharacterProblemDetailContext = { [key: string]: { [key: string]: unknown } };
+
+export interface CharacterProblemDetail {
+    type?: string;
+    title?: string;
+    status?: number;
+    detail?: string;
+    instance?: string;
+    properties?: CharacterProblemDetailProperties;
+    /** Character service error code */
+    readonly errorCode?: CharacterProblemDetailErrorCode;
+    context?: CharacterProblemDetailContext;
+    upstream?: UpstreamInfo;
+}
+
 export interface CharacterDTO {
     id?: string;
     characterName?: string;
@@ -63,7 +137,7 @@ export interface CharacterDTO {
 }
 
 export interface SelectCharacterDTO {
-    characterId?: string;
+    characterId: string;
 }
 
 export interface AuthRequestDTO {
@@ -73,6 +147,36 @@ export interface AuthRequestDTO {
      * @maxLength 2147483647
      */
     password: string;
+}
+
+export type AuthProblemDetailProperties = { [key: string]: { [key: string]: unknown } };
+
+/**
+ * Auth service error code
+ */
+export type AuthProblemDetailErrorCode =
+    (typeof AuthProblemDetailErrorCode)[keyof typeof AuthProblemDetailErrorCode];
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const AuthProblemDetailErrorCode = {
+    ERR_AUTH_BAD_CREDENTIALS: "ERR_AUTH_BAD_CREDENTIALS",
+    ERR_AUTH_EXPIRED_TOKEN: "ERR_AUTH_EXPIRED_TOKEN",
+    ERR_EXTERNAL_SERVICE_UNAVAILABLE: "ERR_EXTERNAL_SERVICE_UNAVAILABLE",
+} as const;
+
+export type AuthProblemDetailContext = { [key: string]: { [key: string]: unknown } };
+
+export interface AuthProblemDetail {
+    type?: string;
+    title?: string;
+    status?: number;
+    detail?: string;
+    instance?: string;
+    properties?: AuthProblemDetailProperties;
+    /** Auth service error code */
+    readonly errorCode?: AuthProblemDetailErrorCode;
+    context?: AuthProblemDetailContext;
+    upstream?: UpstreamInfo;
 }
 
 export interface TokenResponseDTO {
@@ -88,9 +192,67 @@ export interface RegisterDTO {
     password: string;
 }
 
+export type AccountProblemDetailProperties = { [key: string]: { [key: string]: unknown } };
+
+/**
+ * Account service error code
+ */
+export type AccountProblemDetailErrorCode =
+    (typeof AccountProblemDetailErrorCode)[keyof typeof AccountProblemDetailErrorCode];
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const AccountProblemDetailErrorCode = {
+    ERR_ACCOUNT_EMAIL_EXISTS: "ERR_ACCOUNT_EMAIL_EXISTS",
+    ERR_ACCOUNT_NOT_FOUND: "ERR_ACCOUNT_NOT_FOUND",
+    ERR_ACCOUNT_BAD_CREDENTIALS: "ERR_ACCOUNT_BAD_CREDENTIALS",
+} as const;
+
+export type AccountProblemDetailContext = { [key: string]: { [key: string]: unknown } };
+
+export interface AccountProblemDetail {
+    type?: string;
+    title?: string;
+    status?: number;
+    detail?: string;
+    instance?: string;
+    properties?: AccountProblemDetailProperties;
+    /** Account service error code */
+    readonly errorCode?: AccountProblemDetailErrorCode;
+    context?: AccountProblemDetailContext;
+    upstream?: UpstreamInfo;
+}
+
 export interface AccountDTO {
     id?: string;
     email?: string;
+}
+
+export type MonsterProblemDetailProperties = { [key: string]: { [key: string]: unknown } };
+
+/**
+ * Monster service error code
+ */
+export type MonsterProblemDetailErrorCode =
+    (typeof MonsterProblemDetailErrorCode)[keyof typeof MonsterProblemDetailErrorCode];
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const MonsterProblemDetailErrorCode = {
+    ERR_MONSTER_NOT_FOUND: "ERR_MONSTER_NOT_FOUND",
+} as const;
+
+export type MonsterProblemDetailContext = { [key: string]: { [key: string]: unknown } };
+
+export interface MonsterProblemDetail {
+    type?: string;
+    title?: string;
+    status?: number;
+    detail?: string;
+    instance?: string;
+    properties?: MonsterProblemDetailProperties;
+    /** Monster service error code */
+    readonly errorCode?: MonsterProblemDetailErrorCode;
+    context?: MonsterProblemDetailContext;
+    upstream?: UpstreamInfo;
 }
 
 export interface MonsterDTO {
@@ -102,5 +264,5 @@ export interface MonsterDTO {
 }
 
 export interface CombatIdDTO {
-    combatId?: string;
+    combatId: string;
 }
