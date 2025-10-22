@@ -3,21 +3,16 @@ import InputField from "@shared/components/InputField.tsx";
 import { Lock, LogIn, Mail } from "lucide-react";
 import Button from "@shared/components/Button.tsx";
 import { useNavigate } from "react-router-dom";
-import { routes } from "@app/routes.ts";
 import useNotification from "@shared/hooks/useNotification.ts";
-import { useRegisterRequest } from "@api/orval.ts";
-import { applyFieldViolations } from "@shared/utils/applyFieldViolations.ts";
-import { isAxiosError } from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-    type RegisterFormData,
-    registerSchema,
-    toRegisterDTO,
-} from "@shared/validations/schema/account/register.ts";
+import { type RegisterFormData, registerSchema, toRegisterDTO, } from "@shared/validations/schema/account/register.ts";
+import { useRegisterRequest } from "@api/orval.ts";
+import { routes } from "@app/routes.ts";
+import { useApiErrorHandler } from "@api/errors/useApiErrorHandler.ts";
 
 const RegisterForm = () => {
     const navigate = useNavigate();
-    const { successNotify, errorNotify } = useNotification();
+    const { successNotify } = useNotification();
 
     const {
         register,
@@ -29,19 +24,18 @@ const RegisterForm = () => {
         defaultValues: { email: "", password: "", confirmPassword: "" },
     });
 
+    const handleApiError = useApiErrorHandler<RegisterFormData>({
+        setError,
+        onViolations: () => null,
+    });
+
     const registerMutation = useRegisterRequest({
         mutation: {
             onSuccess: () => {
                 successNotify("Konto zostało zarejestrowane");
                 navigate(routes.account.login);
             },
-            onError: (error) => {
-                if (isAxiosError(error)) {
-                    applyFieldViolations<RegisterFormData>(error.response?.data, setError);
-                } else {
-                    errorNotify("Nie udało się zarejestrować. Spróbuj ponownie.");
-                }
-            },
+            onError: (error) => handleApiError(error),
         },
     });
 
