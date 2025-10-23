@@ -5,7 +5,11 @@ import Button from "@shared/components/Button.tsx";
 import { useNavigate } from "react-router-dom";
 import useNotification from "@shared/hooks/useNotification.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type RegisterFormData, registerSchema, toRegisterDTO, } from "@shared/validations/schema/account/register.ts";
+import {
+    type RegisterFormData,
+    registerSchema,
+    toRegisterDTO,
+} from "@shared/validations/schema/account/register.ts";
 import { useRegisterRequest } from "@api/orval.ts";
 import { routes } from "@app/routes.ts";
 import { useApiErrorHandler } from "@api/errors/useApiErrorHandler.ts";
