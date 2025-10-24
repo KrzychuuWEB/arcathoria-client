@@ -12,7 +12,7 @@ const RegisterPage = () => {
             <AccountContainer title="„Każda legenda zaczyna się od jednej iskry magii.”">
                 <RegisterForm />
 
-                <p className="text-center text-sm text-gray-400 mt-6">
+                <div className="text-center text-sm text-gray-400 mt-6">
                     Masz już konto?{" "}
                     <Link
                         to={routes.account.login}
@@ -20,7 +20,7 @@ const RegisterPage = () => {
                     >
                         Zaloguj się
                     </Link>
-                </p>
+                </div>
             </AccountContainer>
         </div>
     );
