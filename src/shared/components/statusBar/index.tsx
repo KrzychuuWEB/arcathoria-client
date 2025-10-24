@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { cn } from "@shared/libs/cn";
-import Tooltip from "@shared/components/Tooltip"; // dopasuj ścieżkę jeśli masz inną
+import Tooltip from "@shared/components/Tooltip";
 
 type StatusBarVariant = "hp" | "mana" | "stamina" | "xp";
 

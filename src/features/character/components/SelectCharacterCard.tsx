@@ -2,19 +2,13 @@ import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import Tooltip from "@shared/components/Tooltip.tsx";
 import ConfirmDialog from "@shared/components/ConfirmDialog.tsx";
-
-type CharacterCardProps = {
-    id: string;
-    name: string;
-    level: number;
-    avatarUrl: string;
-};
+import type { Character } from "@domain/character/types.ts";
 
 const SelectCharacterCard = ({
     character,
     onSelect,
 }: {
-    character: CharacterCardProps;
+    character: Character;
     onSelect: (id: string) => void;
 }) => {
     const [open, setOpen] = useState(false);
@@ -53,7 +47,7 @@ const SelectCharacterCard = ({
                 >
                     <div className="relative w-20 h-20 flex-shrink-0">
                         <img
-                            src={character.avatarUrl}
+                            src={character.avatar_url}
                             alt={character.name}
                             className="
                                 w-20 h-20 object-cover rounded-full

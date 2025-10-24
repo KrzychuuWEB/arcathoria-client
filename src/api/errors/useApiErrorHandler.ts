@@ -125,7 +125,7 @@ function executeStrategy<TFormData extends FieldValues>(
             break;
         case "redirect":
             notifiers.info(error.detail || "Przekierowanie...");
-            setTimeout(() => handlers.navigate(strategy.path), 1000);
+            handlers.navigate(strategy.path);
             break;
         case "custom":
             strategy.handler(error);
