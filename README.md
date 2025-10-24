@@ -70,7 +70,13 @@ Create a `.env` file in the project root:
    yarn install
    ```
 
-3. **Start the development server**
+3. **Generate orval**
+
+    ```bash
+   npm run codegen
+   ```
+
+4. **Start the development server**
 
 Before starting the application, make sure the backend (with HTTPS + Caddy) is running as described in  
 [DEV-SETUP.md](https://github.com/KrzychuuWEB/arcathoria-api/docs/DEV-SETUP.md) — this enables access via
