@@ -20,3 +20,7 @@ export const RedirectStrategy = (path: string): ErrorHandlerStrategy => ({
     type: "redirect",
     path: path,
 });
+
+export const IgnoreStrategy = (): ErrorHandlerStrategy => ({
+    type: "ignore",
+});
