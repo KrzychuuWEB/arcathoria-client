@@ -66,18 +66,18 @@ Create a `.env` file in the project root:
    ```
 
 3. **Start the development server**
+
+Before starting the application, make sure the backend (with HTTPS + Caddy) is running as described in  
+[DEV-SETUP.md](https://github.com/KrzychuuWEB/arcathoria-api/docs/DEV-SETUP.md) — this enables access via
+`https://game.arcathoria.dev`.
+
+**Run application**
+
    ```bash
    npm run dev
    # or
    yarn dev
-   ```  
-   The app will be available at `http://localhost:5173/`.
-
-## Usage
-
-- Open `http://localhost:5173/` in your browser.
-- Register a new account or log in with existing credentials.
-- Explore characters, combat via the navigation menu.
+   ```   
 
 ## Screenshots
 
