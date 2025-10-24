@@ -8,13 +8,7 @@ const CharacterLayout = () => {
     return (
         <ImageBackground src="/home_bg.png">
             <RWDContainer>
-                <CharacterTopMenu
-                    email="test@arcathoria.com"
-                    characterCount={1}
-                    maxSlots={4}
-                    onLogout={() => console.log("Wyloguj")}
-                    onOpenSettings={() => console.log("Ustawienia")}
-                />
+                <CharacterTopMenu />
 
                 <main>
                     <HeaderWithLogo />

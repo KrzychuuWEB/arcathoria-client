@@ -2,24 +2,26 @@ import SelectCharacterCard from "@features/character/components/SelectCharacterC
 import EmptyCharacterCard from "@features/character/components/EmptyCharacterCard.tsx";
 import { useNavigate } from "react-router-dom";
 import { routes } from "@app/routes.ts";
-
-type Character = {
-    id: string;
-    name: string;
-    level: number;
-    avatarUrl: string;
-};
-
-const mockCharacters: Character[] = [
-    { id: "c1", name: "Mag", level: 1, avatarUrl: "/default_avatar.png" },
-];
+import { useApiErrorHandler } from "@api/errors/useApiErrorHandler.ts";
+import { useEffect } from "react";
+import { useCharacters } from "@api/queries/character/queries.ts";
+import { MAX_SLOTS } from "@domain/character/types.ts";
+import { ArcathoriaSkeleton } from "@shared/components/ArcathoriaSkeleton.tsx";
 
 const CharacterListPage = () => {
     const navigate = useNavigate();
+    const handleApiError = useApiErrorHandler();
 
-    const maxSlots = 4;
-    const characters = mockCharacters;
-    const emptySlots = Math.max(0, maxSlots - characters.length);
+    const { data: characters = [], isLoading, isFetching, isError, error } = useCharacters();
+    const loading = isLoading || isFetching;
+
+    useEffect(() => {
+        if (isError && error) {
+            handleApiError(error);
+        }
+    }, [isError, error, handleApiError]);
+
+    const emptySlots = Math.max(0, MAX_SLOTS - characters.length);
 
     const handleSelect = (id: string) => navigate(routes.combat.byId(id));
     const handleAdd = () => navigate(routes.character.create);
@@ -31,13 +33,27 @@ const CharacterListPage = () => {
             </h2>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                {characters.map((ch) => (
-                    <SelectCharacterCard key={ch.id} character={ch} onSelect={handleSelect} />
-                ))}
+                {loading ? (
+                    Array.from({ length: MAX_SLOTS }).map((_, i) => (
+                        <div key={`skeleton-${i}`} className="w-full">
+                            <ArcathoriaSkeleton variant="block" height={120} radius={6} />
+                        </div>
+                    ))
+                ) : (
+                    <>
+                        {characters.map((ch) => (
+                            <SelectCharacterCard
+                                key={ch.id}
+                                character={ch}
+                                onSelect={() => handleSelect(ch.id)}
+                            />
+                        ))}
 
-                {Array.from({ length: emptySlots }).map((_, i) => (
-                    <EmptyCharacterCard key={`empty-${i}`} onAdd={handleAdd} />
-                ))}
+                        {Array.from({ length: emptySlots }).map((_, i) => (
+                            <EmptyCharacterCard key={`empty-${i}`} onAdd={handleAdd} />
+                        ))}
+                    </>
+                )}
             </div>
         </div>
     );

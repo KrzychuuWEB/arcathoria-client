@@ -31,17 +31,21 @@ import type {
     CombatProblemDetail,
     CombatResultDTO,
     CreateCharacterDTO,
+    CsrfParams,
+    CsrfToken,
     ExecuteActionDTO,
     InitPveDTO,
     MonsterDTO,
     MonsterProblemDetail,
     RegisterDTO,
     SelectCharacterDTO,
-    TokenResponseDTO,
 } from "./orval.schemas";
 
 import { api } from "./client";
 
+/**
+ * @summary Perform action in combat
+ */
 export const performActionInCombat = (
     id: string,
     executeActionDTO: ExecuteActionDTO,
@@ -100,6 +104,9 @@ export type PerformActionInCombatMutationError =
     | CombatProblemDetail
     | CombatProblemDetail;
 
+/**
+ * @summary Perform action in combat
+ */
 export const usePerformActionInCombat = <
     TError = CombatProblemDetail | CombatProblemDetail | CombatProblemDetail,
     TContext = unknown,
@@ -124,6 +131,9 @@ export const usePerformActionInCombat = <
     return useMutation(mutationOptions, queryClient);
 };
 
+/**
+ * @summary Initial PVE combat
+ */
 export const initPveCombat = (initPveDTO: InitPveDTO, signal?: AbortSignal) => {
     return api<CombatResultDTO>({
         url: `/combats/init/pve`,
@@ -176,6 +186,9 @@ export type InitPveCombatMutationError =
     | CombatProblemDetail
     | CombatProblemDetail;
 
+/**
+ * @summary Initial PVE combat
+ */
 export const useInitPveCombat = <
     TError = CombatProblemDetail | CombatProblemDetail | CombatProblemDetail,
     TContext = unknown,
@@ -200,177 +213,99 @@ export const useInitPveCombat = <
     return useMutation(mutationOptions, queryClient);
 };
 
-export const create = (createCharacterDTO: CreateCharacterDTO, signal?: AbortSignal) => {
-    return api<CharacterDTO>({
-        url: `/characters`,
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        data: createCharacterDTO,
-        signal,
-    });
+/**
+ * @summary Get all characters
+ */
+export const listCharacters = (signal?: AbortSignal) => {
+    return api<CharacterDTO[]>({ url: `/characters`, method: "GET", signal });
 };
 
-export const getCreateMutationOptions = <
-    TError = CharacterProblemDetail | CharacterProblemDetail | CharacterProblemDetail,
-    TContext = unknown,
+export const getListCharactersQueryKey = () => {
+    return [`/characters`] as const;
+};
+
+export const getListCharactersQueryOptions = <
+    TData = Awaited<ReturnType<typeof listCharacters>>,
+    TError = CharacterProblemDetail,
 >(options?: {
-    mutation?: UseMutationOptions<
-        Awaited<ReturnType<typeof create>>,
-        TError,
-        { data: CreateCharacterDTO },
-        TContext
-    >;
-}): UseMutationOptions<
-    Awaited<ReturnType<typeof create>>,
-    TError,
-    { data: CreateCharacterDTO },
-    TContext
-> => {
-    const mutationKey = ["create"];
-    const { mutation: mutationOptions } = options
-        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
-            ? options
-            : { ...options, mutation: { ...options.mutation, mutationKey } }
-        : { mutation: { mutationKey } };
-
-    const mutationFn: MutationFunction<
-        Awaited<ReturnType<typeof create>>,
-        { data: CreateCharacterDTO }
-    > = (props) => {
-        const { data } = props ?? {};
-
-        return create(data);
-    };
-
-    return { mutationFn, ...mutationOptions };
-};
-
-export type CreateMutationResult = NonNullable<Awaited<ReturnType<typeof create>>>;
-export type CreateMutationBody = CreateCharacterDTO;
-export type CreateMutationError =
-    | CharacterProblemDetail
-    | CharacterProblemDetail
-    | CharacterProblemDetail;
-
-export const useCreate = <
-    TError = CharacterProblemDetail | CharacterProblemDetail | CharacterProblemDetail,
-    TContext = unknown,
->(
-    options?: {
-        mutation?: UseMutationOptions<
-            Awaited<ReturnType<typeof create>>,
-            TError,
-            { data: CreateCharacterDTO },
-            TContext
-        >;
-    },
-    queryClient?: QueryClient,
-): UseMutationResult<
-    Awaited<ReturnType<typeof create>>,
-    TError,
-    { data: CreateCharacterDTO },
-    TContext
-> => {
-    const mutationOptions = getCreateMutationOptions(options);
-
-    return useMutation(mutationOptions, queryClient);
-};
-
-export const getAllByAccountId = (signal?: AbortSignal) => {
-    return api<CharacterDTO[]>({ url: `/characters/selects`, method: "GET", signal });
-};
-
-export const getGetAllByAccountIdQueryKey = () => {
-    return [`/characters/selects`] as const;
-};
-
-export const getGetAllByAccountIdQueryOptions = <
-    TData = Awaited<ReturnType<typeof getAllByAccountId>>,
-    TError = CharacterProblemDetail | CharacterProblemDetail,
->(options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllByAccountId>>, TError, TData>>;
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listCharacters>>, TError, TData>>;
 }) => {
     const { query: queryOptions } = options ?? {};
 
-    const queryKey = queryOptions?.queryKey ?? getGetAllByAccountIdQueryKey();
+    const queryKey = queryOptions?.queryKey ?? getListCharactersQueryKey();
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAllByAccountId>>> = ({ signal }) =>
-        getAllByAccountId(signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listCharacters>>> = ({ signal }) =>
+        listCharacters(signal);
 
     return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-        Awaited<ReturnType<typeof getAllByAccountId>>,
+        Awaited<ReturnType<typeof listCharacters>>,
         TError,
         TData
     > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
-export type GetAllByAccountIdQueryResult = NonNullable<
-    Awaited<ReturnType<typeof getAllByAccountId>>
->;
-export type GetAllByAccountIdQueryError = CharacterProblemDetail | CharacterProblemDetail;
+export type ListCharactersQueryResult = NonNullable<Awaited<ReturnType<typeof listCharacters>>>;
+export type ListCharactersQueryError = CharacterProblemDetail;
 
-export function useGetAllByAccountId<
-    TData = Awaited<ReturnType<typeof getAllByAccountId>>,
-    TError = CharacterProblemDetail | CharacterProblemDetail,
+export function useListCharacters<
+    TData = Awaited<ReturnType<typeof listCharacters>>,
+    TError = CharacterProblemDetail,
 >(
     options: {
-        query: Partial<
-            UseQueryOptions<Awaited<ReturnType<typeof getAllByAccountId>>, TError, TData>
-        > &
+        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof listCharacters>>, TError, TData>> &
             Pick<
                 DefinedInitialDataOptions<
-                    Awaited<ReturnType<typeof getAllByAccountId>>,
+                    Awaited<ReturnType<typeof listCharacters>>,
                     TError,
-                    Awaited<ReturnType<typeof getAllByAccountId>>
+                    Awaited<ReturnType<typeof listCharacters>>
                 >,
                 "initialData"
             >;
     },
     queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useGetAllByAccountId<
-    TData = Awaited<ReturnType<typeof getAllByAccountId>>,
-    TError = CharacterProblemDetail | CharacterProblemDetail,
+export function useListCharacters<
+    TData = Awaited<ReturnType<typeof listCharacters>>,
+    TError = CharacterProblemDetail,
 >(
     options?: {
         query?: Partial<
-            UseQueryOptions<Awaited<ReturnType<typeof getAllByAccountId>>, TError, TData>
+            UseQueryOptions<Awaited<ReturnType<typeof listCharacters>>, TError, TData>
         > &
             Pick<
                 UndefinedInitialDataOptions<
-                    Awaited<ReturnType<typeof getAllByAccountId>>,
+                    Awaited<ReturnType<typeof listCharacters>>,
                     TError,
-                    Awaited<ReturnType<typeof getAllByAccountId>>
+                    Awaited<ReturnType<typeof listCharacters>>
                 >,
                 "initialData"
             >;
     },
     queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useGetAllByAccountId<
-    TData = Awaited<ReturnType<typeof getAllByAccountId>>,
-    TError = CharacterProblemDetail | CharacterProblemDetail,
+export function useListCharacters<
+    TData = Awaited<ReturnType<typeof listCharacters>>,
+    TError = CharacterProblemDetail,
 >(
     options?: {
-        query?: Partial<
-            UseQueryOptions<Awaited<ReturnType<typeof getAllByAccountId>>, TError, TData>
-        >;
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listCharacters>>, TError, TData>>;
     },
     queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+/**
+ * @summary Get all characters
+ */
 
-export function useGetAllByAccountId<
-    TData = Awaited<ReturnType<typeof getAllByAccountId>>,
-    TError = CharacterProblemDetail | CharacterProblemDetail,
+export function useListCharacters<
+    TData = Awaited<ReturnType<typeof listCharacters>>,
+    TError = CharacterProblemDetail,
 >(
     options?: {
-        query?: Partial<
-            UseQueryOptions<Awaited<ReturnType<typeof getAllByAccountId>>, TError, TData>
-        >;
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listCharacters>>, TError, TData>>;
     },
     queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-    const queryOptions = getGetAllByAccountIdQueryOptions(options);
+    const queryOptions = getListCharactersQueryOptions(options);
 
     const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
         queryKey: DataTag<QueryKey, TData, TError>;
@@ -381,6 +316,93 @@ export function useGetAllByAccountId<
     return query;
 }
 
+/**
+ * @summary Create a new character
+ */
+export const createCharacter = (createCharacterDTO: CreateCharacterDTO, signal?: AbortSignal) => {
+    return api<CharacterDTO>({
+        url: `/characters`,
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: createCharacterDTO,
+        signal,
+    });
+};
+
+export const getCreateCharacterMutationOptions = <
+    TError = CharacterProblemDetail | CharacterProblemDetail | CharacterProblemDetail,
+    TContext = unknown,
+>(options?: {
+    mutation?: UseMutationOptions<
+        Awaited<ReturnType<typeof createCharacter>>,
+        TError,
+        { data: CreateCharacterDTO },
+        TContext
+    >;
+}): UseMutationOptions<
+    Awaited<ReturnType<typeof createCharacter>>,
+    TError,
+    { data: CreateCharacterDTO },
+    TContext
+> => {
+    const mutationKey = ["createCharacter"];
+    const { mutation: mutationOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey } };
+
+    const mutationFn: MutationFunction<
+        Awaited<ReturnType<typeof createCharacter>>,
+        { data: CreateCharacterDTO }
+    > = (props) => {
+        const { data } = props ?? {};
+
+        return createCharacter(data);
+    };
+
+    return { mutationFn, ...mutationOptions };
+};
+
+export type CreateCharacterMutationResult = NonNullable<
+    Awaited<ReturnType<typeof createCharacter>>
+>;
+export type CreateCharacterMutationBody = CreateCharacterDTO;
+export type CreateCharacterMutationError =
+    | CharacterProblemDetail
+    | CharacterProblemDetail
+    | CharacterProblemDetail;
+
+/**
+ * @summary Create a new character
+ */
+export const useCreateCharacter = <
+    TError = CharacterProblemDetail | CharacterProblemDetail | CharacterProblemDetail,
+    TContext = unknown,
+>(
+    options?: {
+        mutation?: UseMutationOptions<
+            Awaited<ReturnType<typeof createCharacter>>,
+            TError,
+            { data: CreateCharacterDTO },
+            TContext
+        >;
+    },
+    queryClient?: QueryClient,
+): UseMutationResult<
+    Awaited<ReturnType<typeof createCharacter>>,
+    TError,
+    { data: CreateCharacterDTO },
+    TContext
+> => {
+    const mutationOptions = getCreateCharacterMutationOptions(options);
+
+    return useMutation(mutationOptions, queryClient);
+};
+
+/**
+ * @summary Select character
+ */
 export const selectCharacter = (selectCharacterDTO: SelectCharacterDTO, signal?: AbortSignal) => {
     return api<CharacterDTO>({
         url: `/characters/selects`,
@@ -432,6 +454,9 @@ export type SelectCharacterMutationResult = NonNullable<
 export type SelectCharacterMutationBody = SelectCharacterDTO;
 export type SelectCharacterMutationError = CharacterProblemDetail | CharacterProblemDetail;
 
+/**
+ * @summary Select character
+ */
 export const useSelectCharacter = <
     TError = CharacterProblemDetail | CharacterProblemDetail,
     TContext = unknown,
@@ -456,6 +481,9 @@ export const useSelectCharacter = <
     return useMutation(mutationOptions, queryClient);
 };
 
+/**
+ * @summary Remove selected character
+ */
 export const removeSelectedCharacter = () => {
     return api<void>({ url: `/characters/selects`, method: "DELETE" });
 };
@@ -499,6 +527,9 @@ export type RemoveSelectedCharacterMutationResult = NonNullable<
 
 export type RemoveSelectedCharacterMutationError = CharacterProblemDetail | CharacterProblemDetail;
 
+/**
+ * @summary Remove selected character
+ */
 export const useRemoveSelectedCharacter = <
     TError = CharacterProblemDetail | CharacterProblemDetail,
     TContext = unknown,
@@ -523,8 +554,11 @@ export const useRemoveSelectedCharacter = <
     return useMutation(mutationOptions, queryClient);
 };
 
+/**
+ * @summary Login
+ */
 export const login = (authRequestDTO: AuthRequestDTO, signal?: AbortSignal) => {
-    return api<TokenResponseDTO>({
+    return api<void>({
         url: `/authenticate`,
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -572,6 +606,9 @@ export type LoginMutationResult = NonNullable<Awaited<ReturnType<typeof login>>>
 export type LoginMutationBody = AuthRequestDTO;
 export type LoginMutationError = AuthProblemDetail | AuthProblemDetail | AuthProblemDetail;
 
+/**
+ * @summary Login
+ */
 export const useLogin = <
     TError = AuthProblemDetail | AuthProblemDetail | AuthProblemDetail,
     TContext = unknown,
@@ -596,7 +633,10 @@ export const useLogin = <
     return useMutation(mutationOptions, queryClient);
 };
 
-export const registerRequest = (registerDTO: RegisterDTO, signal?: AbortSignal) => {
+/**
+ * @summary Register new account
+ */
+export const register = (registerDTO: RegisterDTO, signal?: AbortSignal) => {
     return api<AccountDTO>({
         url: `/accounts/register`,
         method: "POST",
@@ -606,23 +646,23 @@ export const registerRequest = (registerDTO: RegisterDTO, signal?: AbortSignal) 
     });
 };
 
-export const getRegisterRequestMutationOptions = <
+export const getRegisterMutationOptions = <
     TError = AccountProblemDetail,
     TContext = unknown,
 >(options?: {
     mutation?: UseMutationOptions<
-        Awaited<ReturnType<typeof registerRequest>>,
+        Awaited<ReturnType<typeof register>>,
         TError,
         { data: RegisterDTO },
         TContext
     >;
 }): UseMutationOptions<
-    Awaited<ReturnType<typeof registerRequest>>,
+    Awaited<ReturnType<typeof register>>,
     TError,
     { data: RegisterDTO },
     TContext
 > => {
-    const mutationKey = ["registerRequest"];
+    const mutationKey = ["register"];
     const { mutation: mutationOptions } = options
         ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
             ? options
@@ -630,27 +670,28 @@ export const getRegisterRequestMutationOptions = <
         : { mutation: { mutationKey } };
 
     const mutationFn: MutationFunction<
-        Awaited<ReturnType<typeof registerRequest>>,
+        Awaited<ReturnType<typeof register>>,
         { data: RegisterDTO }
     > = (props) => {
         const { data } = props ?? {};
 
-        return registerRequest(data);
+        return register(data);
     };
 
     return { mutationFn, ...mutationOptions };
 };
 
-export type RegisterRequestMutationResult = NonNullable<
-    Awaited<ReturnType<typeof registerRequest>>
->;
-export type RegisterRequestMutationBody = RegisterDTO;
-export type RegisterRequestMutationError = AccountProblemDetail;
+export type RegisterMutationResult = NonNullable<Awaited<ReturnType<typeof register>>>;
+export type RegisterMutationBody = RegisterDTO;
+export type RegisterMutationError = AccountProblemDetail;
 
-export const useRegisterRequest = <TError = AccountProblemDetail, TContext = unknown>(
+/**
+ * @summary Register new account
+ */
+export const useRegister = <TError = AccountProblemDetail, TContext = unknown>(
     options?: {
         mutation?: UseMutationOptions<
-            Awaited<ReturnType<typeof registerRequest>>,
+            Awaited<ReturnType<typeof register>>,
             TError,
             { data: RegisterDTO },
             TContext
@@ -658,110 +699,114 @@ export const useRegisterRequest = <TError = AccountProblemDetail, TContext = unk
     },
     queryClient?: QueryClient,
 ): UseMutationResult<
-    Awaited<ReturnType<typeof registerRequest>>,
+    Awaited<ReturnType<typeof register>>,
     TError,
     { data: RegisterDTO },
     TContext
 > => {
-    const mutationOptions = getRegisterRequestMutationOptions(options);
+    const mutationOptions = getRegisterMutationOptions(options);
 
     return useMutation(mutationOptions, queryClient);
 };
 
-export const getMonsterById = (id: string, signal?: AbortSignal) => {
+/**
+ * @summary Get monster by id
+ */
+export const getMonster = (id: string, signal?: AbortSignal) => {
     return api<MonsterDTO>({ url: `/monsters/${id}`, method: "GET", signal });
 };
 
-export const getGetMonsterByIdQueryKey = (id?: string) => {
+export const getGetMonsterQueryKey = (id?: string) => {
     return [`/monsters/${id}`] as const;
 };
 
-export const getGetMonsterByIdQueryOptions = <
-    TData = Awaited<ReturnType<typeof getMonsterById>>,
+export const getGetMonsterQueryOptions = <
+    TData = Awaited<ReturnType<typeof getMonster>>,
     TError = MonsterProblemDetail,
 >(
     id: string,
     options?: {
-        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getMonsterById>>, TError, TData>>;
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getMonster>>, TError, TData>>;
     },
 ) => {
     const { query: queryOptions } = options ?? {};
 
-    const queryKey = queryOptions?.queryKey ?? getGetMonsterByIdQueryKey(id);
+    const queryKey = queryOptions?.queryKey ?? getGetMonsterQueryKey(id);
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMonsterById>>> = ({ signal }) =>
-        getMonsterById(id, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMonster>>> = ({ signal }) =>
+        getMonster(id, signal);
 
     return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseQueryOptions<
-        Awaited<ReturnType<typeof getMonsterById>>,
+        Awaited<ReturnType<typeof getMonster>>,
         TError,
         TData
     > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
-export type GetMonsterByIdQueryResult = NonNullable<Awaited<ReturnType<typeof getMonsterById>>>;
-export type GetMonsterByIdQueryError = MonsterProblemDetail;
+export type GetMonsterQueryResult = NonNullable<Awaited<ReturnType<typeof getMonster>>>;
+export type GetMonsterQueryError = MonsterProblemDetail;
 
-export function useGetMonsterById<
-    TData = Awaited<ReturnType<typeof getMonsterById>>,
+export function useGetMonster<
+    TData = Awaited<ReturnType<typeof getMonster>>,
     TError = MonsterProblemDetail,
 >(
     id: string,
     options: {
-        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getMonsterById>>, TError, TData>> &
+        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getMonster>>, TError, TData>> &
             Pick<
                 DefinedInitialDataOptions<
-                    Awaited<ReturnType<typeof getMonsterById>>,
+                    Awaited<ReturnType<typeof getMonster>>,
                     TError,
-                    Awaited<ReturnType<typeof getMonsterById>>
+                    Awaited<ReturnType<typeof getMonster>>
                 >,
                 "initialData"
             >;
     },
     queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useGetMonsterById<
-    TData = Awaited<ReturnType<typeof getMonsterById>>,
+export function useGetMonster<
+    TData = Awaited<ReturnType<typeof getMonster>>,
     TError = MonsterProblemDetail,
 >(
     id: string,
     options?: {
-        query?: Partial<
-            UseQueryOptions<Awaited<ReturnType<typeof getMonsterById>>, TError, TData>
-        > &
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getMonster>>, TError, TData>> &
             Pick<
                 UndefinedInitialDataOptions<
-                    Awaited<ReturnType<typeof getMonsterById>>,
+                    Awaited<ReturnType<typeof getMonster>>,
                     TError,
-                    Awaited<ReturnType<typeof getMonsterById>>
+                    Awaited<ReturnType<typeof getMonster>>
                 >,
                 "initialData"
             >;
     },
     queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useGetMonsterById<
-    TData = Awaited<ReturnType<typeof getMonsterById>>,
+export function useGetMonster<
+    TData = Awaited<ReturnType<typeof getMonster>>,
     TError = MonsterProblemDetail,
 >(
     id: string,
     options?: {
-        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getMonsterById>>, TError, TData>>;
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getMonster>>, TError, TData>>;
     },
     queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+/**
+ * @summary Get monster by id
+ */
 
-export function useGetMonsterById<
-    TData = Awaited<ReturnType<typeof getMonsterById>>,
+export function useGetMonster<
+    TData = Awaited<ReturnType<typeof getMonster>>,
     TError = MonsterProblemDetail,
 >(
     id: string,
     options?: {
-        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getMonsterById>>, TError, TData>>;
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getMonster>>, TError, TData>>;
     },
     queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-    const queryOptions = getGetMonsterByIdQueryOptions(id, options);
+    const queryOptions = getGetMonsterQueryOptions(id, options);
 
     const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
         queryKey: DataTag<QueryKey, TData, TError>;
@@ -772,98 +817,185 @@ export function useGetMonsterById<
     return query;
 }
 
-export const getCombatById = (id: string, signal?: AbortSignal) => {
+export const csrf = (params: CsrfParams, signal?: AbortSignal) => {
+    return api<CsrfToken>({ url: `/csrf`, method: "GET", params, signal });
+};
+
+export const getCsrfQueryKey = (params?: CsrfParams) => {
+    return [`/csrf`, ...(params ? [params] : [])] as const;
+};
+
+export const getCsrfQueryOptions = <TData = Awaited<ReturnType<typeof csrf>>, TError = unknown>(
+    params: CsrfParams,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof csrf>>, TError, TData>> },
+) => {
+    const { query: queryOptions } = options ?? {};
+
+    const queryKey = queryOptions?.queryKey ?? getCsrfQueryKey(params);
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof csrf>>> = ({ signal }) =>
+        csrf(params, signal);
+
+    return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+        Awaited<ReturnType<typeof csrf>>,
+        TError,
+        TData
+    > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type CsrfQueryResult = NonNullable<Awaited<ReturnType<typeof csrf>>>;
+export type CsrfQueryError = unknown;
+
+export function useCsrf<TData = Awaited<ReturnType<typeof csrf>>, TError = unknown>(
+    params: CsrfParams,
+    options: {
+        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof csrf>>, TError, TData>> &
+            Pick<
+                DefinedInitialDataOptions<
+                    Awaited<ReturnType<typeof csrf>>,
+                    TError,
+                    Awaited<ReturnType<typeof csrf>>
+                >,
+                "initialData"
+            >;
+    },
+    queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useCsrf<TData = Awaited<ReturnType<typeof csrf>>, TError = unknown>(
+    params: CsrfParams,
+    options?: {
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof csrf>>, TError, TData>> &
+            Pick<
+                UndefinedInitialDataOptions<
+                    Awaited<ReturnType<typeof csrf>>,
+                    TError,
+                    Awaited<ReturnType<typeof csrf>>
+                >,
+                "initialData"
+            >;
+    },
+    queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useCsrf<TData = Awaited<ReturnType<typeof csrf>>, TError = unknown>(
+    params: CsrfParams,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof csrf>>, TError, TData>> },
+    queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+export function useCsrf<TData = Awaited<ReturnType<typeof csrf>>, TError = unknown>(
+    params: CsrfParams,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof csrf>>, TError, TData>> },
+    queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+    const queryOptions = getCsrfQueryOptions(params, options);
+
+    const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+        queryKey: DataTag<QueryKey, TData, TError>;
+    };
+
+    query.queryKey = queryOptions.queryKey;
+
+    return query;
+}
+
+/**
+ * @summary Get combat by id
+ */
+export const getCombat = (id: string, signal?: AbortSignal) => {
     return api<CombatResultDTO>({ url: `/combats/${id}`, method: "GET", signal });
 };
 
-export const getGetCombatByIdQueryKey = (id?: string) => {
+export const getGetCombatQueryKey = (id?: string) => {
     return [`/combats/${id}`] as const;
 };
 
-export const getGetCombatByIdQueryOptions = <
-    TData = Awaited<ReturnType<typeof getCombatById>>,
+export const getGetCombatQueryOptions = <
+    TData = Awaited<ReturnType<typeof getCombat>>,
     TError = CombatProblemDetail | CombatProblemDetail,
 >(
     id: string,
     options?: {
-        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCombatById>>, TError, TData>>;
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCombat>>, TError, TData>>;
     },
 ) => {
     const { query: queryOptions } = options ?? {};
 
-    const queryKey = queryOptions?.queryKey ?? getGetCombatByIdQueryKey(id);
+    const queryKey = queryOptions?.queryKey ?? getGetCombatQueryKey(id);
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCombatById>>> = ({ signal }) =>
-        getCombatById(id, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCombat>>> = ({ signal }) =>
+        getCombat(id, signal);
 
     return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseQueryOptions<
-        Awaited<ReturnType<typeof getCombatById>>,
+        Awaited<ReturnType<typeof getCombat>>,
         TError,
         TData
     > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
-export type GetCombatByIdQueryResult = NonNullable<Awaited<ReturnType<typeof getCombatById>>>;
-export type GetCombatByIdQueryError = CombatProblemDetail | CombatProblemDetail;
+export type GetCombatQueryResult = NonNullable<Awaited<ReturnType<typeof getCombat>>>;
+export type GetCombatQueryError = CombatProblemDetail | CombatProblemDetail;
 
-export function useGetCombatById<
-    TData = Awaited<ReturnType<typeof getCombatById>>,
+export function useGetCombat<
+    TData = Awaited<ReturnType<typeof getCombat>>,
     TError = CombatProblemDetail | CombatProblemDetail,
 >(
     id: string,
     options: {
-        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCombatById>>, TError, TData>> &
+        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCombat>>, TError, TData>> &
             Pick<
                 DefinedInitialDataOptions<
-                    Awaited<ReturnType<typeof getCombatById>>,
+                    Awaited<ReturnType<typeof getCombat>>,
                     TError,
-                    Awaited<ReturnType<typeof getCombatById>>
+                    Awaited<ReturnType<typeof getCombat>>
                 >,
                 "initialData"
             >;
     },
     queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useGetCombatById<
-    TData = Awaited<ReturnType<typeof getCombatById>>,
+export function useGetCombat<
+    TData = Awaited<ReturnType<typeof getCombat>>,
     TError = CombatProblemDetail | CombatProblemDetail,
 >(
     id: string,
     options?: {
-        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCombatById>>, TError, TData>> &
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCombat>>, TError, TData>> &
             Pick<
                 UndefinedInitialDataOptions<
-                    Awaited<ReturnType<typeof getCombatById>>,
+                    Awaited<ReturnType<typeof getCombat>>,
                     TError,
-                    Awaited<ReturnType<typeof getCombatById>>
+                    Awaited<ReturnType<typeof getCombat>>
                 >,
                 "initialData"
             >;
     },
     queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useGetCombatById<
-    TData = Awaited<ReturnType<typeof getCombatById>>,
+export function useGetCombat<
+    TData = Awaited<ReturnType<typeof getCombat>>,
     TError = CombatProblemDetail | CombatProblemDetail,
 >(
     id: string,
     options?: {
-        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCombatById>>, TError, TData>>;
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCombat>>, TError, TData>>;
     },
     queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+/**
+ * @summary Get combat by id
+ */
 
-export function useGetCombatById<
-    TData = Awaited<ReturnType<typeof getCombatById>>,
+export function useGetCombat<
+    TData = Awaited<ReturnType<typeof getCombat>>,
     TError = CombatProblemDetail | CombatProblemDetail,
 >(
     id: string,
     options?: {
-        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCombatById>>, TError, TData>>;
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCombat>>, TError, TData>>;
     },
     queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-    const queryOptions = getGetCombatByIdQueryOptions(id, options);
+    const queryOptions = getGetCombatQueryOptions(id, options);
 
     const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
         queryKey: DataTag<QueryKey, TData, TError>;
@@ -874,6 +1006,9 @@ export function useGetCombatById<
     return query;
 }
 
+/**
+ * @summary Get active combat by participant id
+ */
 export const getActiveCombatByParticipantId = (signal?: AbortSignal) => {
     return api<CombatIdDTO>({ url: `/combats/active`, method: "GET", signal });
 };
@@ -971,6 +1106,9 @@ export function useGetActiveCombatByParticipantId<
     },
     queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+/**
+ * @summary Get active combat by participant id
+ */
 
 export function useGetActiveCombatByParticipantId<
     TData = Awaited<ReturnType<typeof getActiveCombatByParticipantId>>,
@@ -998,6 +1136,9 @@ export function useGetActiveCombatByParticipantId<
     return query;
 }
 
+/**
+ * @summary Get selected character
+ */
 export const getSelectedCharacter = (signal?: AbortSignal) => {
     return api<CharacterDTO>({ url: `/characters/selects/me`, method: "GET", signal });
 };
@@ -1082,6 +1223,9 @@ export function useGetSelectedCharacter<
     },
     queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+/**
+ * @summary Get selected character
+ */
 
 export function useGetSelectedCharacter<
     TData = Awaited<ReturnType<typeof getSelectedCharacter>>,

@@ -179,10 +179,6 @@ export interface AuthProblemDetail {
     upstream?: UpstreamInfo;
 }
 
-export interface TokenResponseDTO {
-    token?: string;
-}
-
 export interface RegisterDTO {
     email: string;
     /**
@@ -263,6 +259,16 @@ export interface MonsterDTO {
     intelligence?: number;
 }
 
+export interface CsrfToken {
+    token?: string;
+    parameterName?: string;
+    headerName?: string;
+}
+
 export interface CombatIdDTO {
     combatId: string;
 }
+
+export type CsrfParams = {
+    token: CsrfToken;
+};

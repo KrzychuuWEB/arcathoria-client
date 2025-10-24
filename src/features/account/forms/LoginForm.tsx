@@ -5,7 +5,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useNotification from "@shared/hooks/useNotification.ts";
 import { useNavigate } from "react-router-dom";
-import { type LoginFormData, loginSchema, toAuthRequestDTO, } from "@shared/validations/schema/account/login.ts";
+import {
+    type LoginFormData,
+    loginSchema,
+    toAuthRequestDTO,
+} from "@shared/validations/schema/account/login.ts";
 import { useApiErrorHandler } from "@api/errors/useApiErrorHandler.ts";
 import { routes } from "@app/routes.ts";
 import { useLogin } from "@api/orval.ts";

@@ -3,24 +3,26 @@ import { useNavigate } from "react-router-dom";
 import Tooltip from "@shared/components/Tooltip.tsx";
 import { useState } from "react";
 import { routes } from "@app/routes.ts";
+import { MAX_SLOTS } from "@domain/character/types.ts";
+import { useCharacterCount } from "@api/queries/character/queries.ts";
+import { ArcathoriaSkeleton } from "@shared/components/ArcathoriaSkeleton.tsx";
 
-type TopMenuProps = {
-    email: string;
-    characterCount: number;
-    maxSlots?: number;
-    onLogout: () => void;
-    onOpenSettings: () => void;
-};
-
-const CharacterTopMenu = ({
-    email,
-    characterCount,
-    maxSlots = 4,
-    onLogout,
-    onOpenSettings,
-}: TopMenuProps) => {
+const CharacterTopMenu = () => {
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
+    const email = "brak";
+    const { data: characterCount = 0, isFetching, isLoading } = useCharacterCount();
+    const loading = isFetching || isLoading;
+
+    const onLogout = () => {
+        console.log("Wyloguj");
+        setOpen(false);
+    };
+
+    const onOpenSettings = () => {
+        console.log("Ustawienia");
+        setOpen(false);
+    };
 
     const goToCharacters = () => {
         navigate(routes.character.list);
@@ -50,12 +52,23 @@ const CharacterTopMenu = ({
                             <div
                                 onClick={goToCharacters}
                                 className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/80 bg-primary-dark/40 text-text-light shadow-[0_0_10px_rgba(106,13,173,0.25)] hover:border-secondary/50 hover:text-secondary transition-all cursor-pointer select-none"
-                                aria-label={`Postacie: ${characterCount}/${maxSlots}`}
+                                aria-label={`Postacie: ${characterCount}/${MAX_SLOTS}`}
                             >
                                 <Users className="w-4 h-4 text-secondary cursor-pointer" />
                                 <span className="text-sm font-roboto cursor-pointer">
-                                    {characterCount}
-                                    <span className="opacity-60">/{maxSlots}</span>
+                                    {loading ? (
+                                        <ArcathoriaSkeleton
+                                            variant="block"
+                                            width={30}
+                                            height={14}
+                                            radius={6}
+                                        />
+                                    ) : (
+                                        <>
+                                            {characterCount}
+                                            <span className="opacity-60">/{MAX_SLOTS}</span>
+                                        </>
+                                    )}
                                 </span>
                             </div>
                         </Tooltip>
@@ -114,12 +127,23 @@ const CharacterTopMenu = ({
                                 <div
                                     onClick={goToCharacters}
                                     className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/40 bg-primary-dark/40 text-text-light shadow-[0_0_10px_rgba(106,13,173,0.25)] hover:border-secondary/50 hover:text-secondary transition-all cursor-pointer w-auto self-start"
-                                    aria-label={`Postacie: ${characterCount}/${maxSlots}`}
+                                    aria-label={`Postacie: ${characterCount}/${MAX_SLOTS}`}
                                 >
                                     <Users className="w-4 h-4 text-secondary cursor-pointer" />
                                     <span className="text-sm font-roboto cursor-pointer">
-                                        {characterCount}
-                                        <span className="opacity-60">/{maxSlots}</span>
+                                        {loading ? (
+                                            <ArcathoriaSkeleton
+                                                variant="block"
+                                                width={30}
+                                                height={14}
+                                                radius={6}
+                                            />
+                                        ) : (
+                                            <>
+                                                {characterCount}
+                                                <span className="opacity-60">/{MAX_SLOTS}</span>
+                                            </>
+                                        )}
                                     </span>
                                 </div>
                             </Tooltip>
