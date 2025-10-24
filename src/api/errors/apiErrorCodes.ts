@@ -1,3 +1,10 @@
-import type { AccountProblemDetailErrorCode } from "@api/orval.schemas.ts";
+import {
+    type AccountProblemDetailErrorCode,
+    AuthProblemDetailErrorCode,
+    type CharacterProblemDetailErrorCode,
+} from "@api/orval.schemas.ts";
 
-export type ApiErrorCodes = AccountProblemDetailErrorCode;
+export type ApiErrorCodes =
+    | AccountProblemDetailErrorCode
+    | AuthProblemDetailErrorCode
+    | CharacterProblemDetailErrorCode;
