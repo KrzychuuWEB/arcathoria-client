@@ -25,3 +25,5 @@ dist-ssr
 
 # my
 .env
+src/api/orval.ts
+src/api/orval.schemas.ts
