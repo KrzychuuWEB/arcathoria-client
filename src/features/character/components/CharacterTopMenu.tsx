@@ -6,17 +6,30 @@ import { routes } from "@app/routes.ts";
 import { MAX_SLOTS } from "@domain/character/types.ts";
 import { useCharacterCount } from "@api/queries/character/queries.ts";
 import { ArcathoriaSkeleton } from "@shared/components/ArcathoriaSkeleton.tsx";
+import { useLogout } from "@api/orval.ts";
+import useNotification from "@shared/hooks/useNotification.ts";
+import { useApiErrorHandler } from "@api/errors/useApiErrorHandler.ts";
 
 const CharacterTopMenu = () => {
     const navigate = useNavigate();
+    const { successNotify } = useNotification();
     const [open, setOpen] = useState(false);
     const email = "brak";
     const { data: characterCount = 0, isFetching, isLoading } = useCharacterCount();
     const loading = isFetching || isLoading;
 
+    const handleApiError = useApiErrorHandler();
+    const { mutate: doLogout } = useLogout({
+        mutation: {
+            onSuccess: async () => {
+                successNotify("Zostałeś/aś wylogowany/a");
+                setOpen(false);
+            },
+            onError: (error) => handleApiError(error),
+        },
+    });
     const onLogout = () => {
-        console.log("Wyloguj");
-        setOpen(false);
+        doLogout();
     };
 
     const onOpenSettings = () => {

@@ -1,21 +1,18 @@
 import type { FieldPath, FieldValues, UseFormSetError } from "react-hook-form";
-import type {
-    ErrorHandlerConfig,
-    ErrorHandlerStrategy,
-    Violation,
-} from "@api/errors/errorHandlerStrategy";
+import type { ErrorHandlerConfig, ErrorHandlerStrategy, Violation, } from "@api/errors/errorHandlerStrategy";
 import { useNavigate } from "react-router-dom";
 import useNotification from "@shared/hooks/useNotification";
 import { errorCodeStrategies } from "@api/errors/errorCodeStrategies";
 import { useCallback } from "react";
 import type { ProblemDetail } from "@api/errors/problemDetail";
+import { routes } from "@app/routes.ts";
 
 export const useApiErrorHandler = <TFormData extends FieldValues = FieldValues>(
     config?: ErrorHandlerConfig<TFormData>,
     customStrategies?: Record<string, ErrorHandlerStrategy<TFormData>>,
 ) => {
     const navigate = useNavigate();
-    const { errorNotify, warningNotify, successNotify, infoNotify } = useNotification(); // ⬅️ HOOK tylko tutaj
+    const { errorNotify, warningNotify, successNotify, infoNotify } = useNotification();
     const { setError, navigate: customNavigate, onCustom, onViolations } = config || {};
 
     const notifiers = {
@@ -75,7 +72,7 @@ export const useApiErrorHandler = <TFormData extends FieldValues = FieldValues>(
                 return;
             }
 
-            handleByStatusCode(error, notifiers);
+            handleByStatusCode(error, notifiers, customNavigate || navigate);
         },
         [
             setError,
@@ -136,7 +133,7 @@ function executeStrategy<TFormData extends FieldValues>(
     }
 }
 
-function handleByStatusCode(
+const handleByStatusCode = (
     error: ProblemDetail,
     notifiers: {
         error: (m: string) => void;
@@ -144,14 +141,15 @@ function handleByStatusCode(
         success: (m: string) => void;
         info: (m: string) => void;
     },
-) {
+    navigate: (path: string) => void,
+) => {
     const status = error.status ?? 500;
     if (status >= 500) notifiers.error("Błąd serwera. Spróbuj ponownie później.");
     else if (status === 404) notifiers.warning("Nie znaleziono zasobu");
     else if (status === 403) notifiers.warning("Brak uprawnień");
-    else if (status === 401) notifiers.info("Wymagane logowanie");
+    else if (status === 401) navigate(routes.account.login);
     else notifiers.error(error.detail || "Wystąpił błąd");
-}
+};
 
 function isProblemDetail(error: unknown): error is ProblemDetail {
     return typeof error === "object" && error !== null && "errorCode" in error;
