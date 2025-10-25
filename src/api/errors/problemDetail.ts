@@ -1,8 +1,5 @@
-import {
-    type AccountProblemDetailContext,
-    AccountProblemDetailErrorCode,
-    type UpstreamInfo,
-} from "@api/orval.schemas.ts";
+import { type AccountProblemDetailContext, type UpstreamInfo } from "@api/orval.schemas.ts";
+import type { ApiErrorCodes } from "@api/errors/apiErrorCodes.ts";
 
 export type ProblemDetail = {
     type?: string;
@@ -10,7 +7,7 @@ export type ProblemDetail = {
     status?: number;
     detail?: string;
     instance?: string;
-    readonly errorCode?: AccountProblemDetailErrorCode;
+    readonly errorCode?: ApiErrorCodes;
     context?: AccountProblemDetailContext;
     upstream?: UpstreamInfo;
 };
