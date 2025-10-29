@@ -9,14 +9,16 @@ import { ArcathoriaSkeleton } from "@shared/components/ArcathoriaSkeleton.tsx";
 import { useLogout } from "@api/orval.ts";
 import useNotification from "@shared/hooks/useNotification.ts";
 import { useApiErrorHandler } from "@api/errors/useApiErrorHandler.ts";
+import { useAccount } from "@api/queries/account/queries.ts";
 
 const CharacterTopMenu = () => {
     const navigate = useNavigate();
     const { successNotify } = useNotification();
     const [open, setOpen] = useState(false);
-    const email = "brak";
+    const { data: account, isFetching: isFetchingAcc, isLoading: isLoadingAcc } = useAccount();
     const { data: characterCount = 0, isFetching, isLoading } = useCharacterCount();
     const loading = isFetching || isLoading;
+    const loadingAcc = isFetchingAcc || isLoadingAcc;
 
     const handleApiError = useApiErrorHandler();
     const { mutate: doLogout } = useLogout({
@@ -51,12 +53,20 @@ const CharacterTopMenu = () => {
 
                 <nav className="relative z-10 hidden sm:grid grid-cols-3 items-center">
                     <div className="justify-self-start min-w-0 px-1">
-                        <div
-                            className="inline-flex max-w-full items-center gap-2 px-2.5 py-1.5 rounded-xl border border-primary/40 bg-primary-dark/40 text-text-light hover:bg-primary-dark/60 transition"
-                            title={email}
-                        >
+                        <div className="inline-flex max-w-full items-center gap-2 px-2.5 py-1.5 rounded-xl border border-primary/40 bg-primary-dark/40 text-text-light hover:bg-primary-dark/60 transition">
                             <Mail className="w-4 h-4 text-secondary shrink-0" />
-                            <span className="text-sm font-roboto truncate block">{email}</span>
+                            <span className="text-sm font-roboto truncate block">
+                                {loadingAcc ? (
+                                    <ArcathoriaSkeleton
+                                        variant="block"
+                                        width={70}
+                                        height={14}
+                                        radius={6}
+                                    />
+                                ) : (
+                                    <>{account?.email}</>
+                                )}
+                            </span>
                         </div>
                     </div>
 
@@ -115,7 +125,18 @@ const CharacterTopMenu = () => {
                         <div className="min-w-0">
                             <div className="inline-flex max-w-[62vw] items-center gap-2 px-2.5 py-1.5 rounded-xl border border-primary/40 bg-primary-dark/80 text-text-light">
                                 <Mail className="w-4 h-4 text-secondary shrink-0" />
-                                <span className="text-sm font-roboto truncate block">{email}</span>
+                                <span className="text-sm font-roboto truncate block">
+                                    {loadingAcc ? (
+                                        <ArcathoriaSkeleton
+                                            variant="block"
+                                            width={70}
+                                            height={14}
+                                            radius={6}
+                                        />
+                                    ) : (
+                                        <>{account?.email}</>
+                                    )}
+                                </span>
                             </div>
                         </div>
 
