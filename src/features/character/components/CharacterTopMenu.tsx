@@ -10,9 +10,11 @@ import { useLogout } from "@api/orval.ts";
 import useNotification from "@shared/hooks/useNotification.ts";
 import { useApiErrorHandler } from "@api/errors/useApiErrorHandler.ts";
 import { useAccount } from "@api/queries/account/queries.ts";
+import { setGuestSession } from "@app/guard/query.ts";
 
 const CharacterTopMenu = () => {
     const navigate = useNavigate();
+    const handleApiError = useApiErrorHandler();
     const { successNotify } = useNotification();
     const [open, setOpen] = useState(false);
     const { data: account, isFetching: isFetchingAcc, isLoading: isLoadingAcc } = useAccount();
@@ -20,12 +22,13 @@ const CharacterTopMenu = () => {
     const loading = isFetching || isLoading;
     const loadingAcc = isFetchingAcc || isLoadingAcc;
 
-    const handleApiError = useApiErrorHandler();
     const { mutate: doLogout } = useLogout({
         mutation: {
             onSuccess: async () => {
+                setGuestSession();
                 successNotify("Zostałeś/aś wylogowany/a");
                 setOpen(false);
+                navigate(routes.account.login);
             },
             onError: (error) => handleApiError(error),
         },
