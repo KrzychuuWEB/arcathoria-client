@@ -1,11 +1,14 @@
-import { getGetSelectedCharacterQueryOptions } from "@api/orval";
+import { getGetSelectedCharacterQueryOptions, getMyAccountQueryOptions } from "@api/orval";
 import type { GuardTypes } from "./types";
 import { queryClient } from "@shared/libs/query.ts";
-import { ensureAccount } from "@api/queries/account/queries.ts";
 
 async function probeAuth(): Promise<Pick<GuardTypes, "isAuthenticated" | "userId">> {
     try {
-        const me = await ensureAccount(queryClient);
+        const me = await queryClient.fetchQuery(
+            getMyAccountQueryOptions({
+                query: { retry: false },
+            }),
+        );
         return {
             isAuthenticated: true,
             userId: me.id,
@@ -17,7 +20,11 @@ async function probeAuth(): Promise<Pick<GuardTypes, "isAuthenticated" | "userId
 
 async function probeCharacter(): Promise<Pick<GuardTypes, "hasCharacter" | "characterId">> {
     try {
-        const char = await queryClient.fetchQuery(getGetSelectedCharacterQueryOptions());
+        const char = await queryClient.fetchQuery(
+            getGetSelectedCharacterQueryOptions({
+                query: { retry: false },
+            }),
+        );
         return {
             hasCharacter: !!char,
             characterId: (char as any)?.id ?? (char as any)?.characterId ?? null,
