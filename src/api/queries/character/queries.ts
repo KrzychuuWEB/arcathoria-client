@@ -3,9 +3,13 @@ import { mapCharacterDto } from "@domain/character/mapper.ts";
 import { makeQuery } from "@api/queries/makeQuery.ts";
 
 export const [useCharacters] = makeQuery(() =>
-    getListCharactersQueryOptions({ query: { select: (dtos) => dtos.map(mapCharacterDto) } }),
+    getListCharactersQueryOptions({
+        query: { select: (dtos) => dtos.map(mapCharacterDto), refetchOnMount: "always" },
+    }),
 );
 
 export const [useCharacterCount] = makeQuery(() =>
-    getListCharactersQueryOptions({ query: { select: (dtos) => dtos.length } }),
+    getListCharactersQueryOptions({
+        query: { select: (dtos) => dtos.length, refetchOnMount: "always" },
+    }),
 );

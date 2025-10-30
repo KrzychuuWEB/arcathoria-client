@@ -12,6 +12,8 @@ export const passwordField = z
 
 export const characterNameField = z
     .string()
-    .min(3, "Imię powinno mieć min. 3 znaki")
-    .max(20, "Imię może mieć maks. 20 znaków")
-    .regex(/^[A-Za-zÀ-ÖØ-öø-ÿ' -]+$/, "Dozwolone: litery, spacje, apostrof, myślnik");
+    .min(3, { message: "Nazwa musi mieć co najmniej 3 znaki." })
+    .max(20, { message: "Nazwa może mieć maksymalnie 20 znaków." })
+    .regex(/^[A-Za-z0-9_-]+$/, {
+        message: "Dozwolone są tylko litery A–Z, cyfry 0–9, podkreślenie (_) i myślnik (-).",
+    });

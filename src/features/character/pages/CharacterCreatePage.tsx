@@ -1,15 +1,12 @@
 import { Wand2 } from "lucide-react";
 import CreateCharacterForm from "@features/character/forms/CreateCharacterForm.tsx";
 import { useState } from "react";
-import type { characterSchema } from "@shared/validations/characterSchema.ts";
-import { z } from "zod";
 import CharacterCreatePreview from "@features/character/components/CharacterCreatePreview.tsx";
 import BlurContainer from "@shared/components/BlurContainer.tsx";
-
-type CharacterFormData = z.infer<typeof characterSchema>;
+import type { CreateCharacterFormData } from "@shared/validations/schema/character/create.ts";
 
 const CreateCharacterPage = () => {
-    const [draft, setDraft] = useState<CharacterFormData>({ characterName: "" });
+    const [draft, setDraft] = useState<CreateCharacterFormData>({ characterName: "" });
 
     return (
         <div>
