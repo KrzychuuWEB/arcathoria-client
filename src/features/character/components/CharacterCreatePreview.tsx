@@ -1,8 +1,8 @@
 import { z } from "zod";
-import type { characterSchema } from "@shared/validations/characterSchema.ts";
+import { createCharacterSchema } from "@shared/validations/schema/character/create.ts";
 
 type CharacterPreviewProps = {
-    character: z.infer<typeof characterSchema>;
+    character: z.infer<typeof createCharacterSchema>;
 };
 
 const CharacterCreatePreview = ({ character }: CharacterPreviewProps) => {

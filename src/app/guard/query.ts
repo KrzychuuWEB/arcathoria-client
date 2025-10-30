@@ -25,6 +25,13 @@ export function setAuthSessionOptimistic() {
     }));
 }
 
+export function setSelectCharacterSessionOptimistic() {
+    queryClient.setQueryData(sessionKeys.summary(), (prev: any) => ({
+        ...(prev ?? {}),
+        hasCharacter: true,
+    }));
+}
+
 export function setGuestSession() {
     queryClient.setQueryData(sessionKeys.summary(), guestSession);
 }
