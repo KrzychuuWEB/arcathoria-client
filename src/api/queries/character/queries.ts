@@ -14,6 +14,6 @@ export const [useCharacterCount] = makeQuery(() =>
     }),
 );
 
-export const [useSelectCharacter] = makeQuery(() =>
+export const [useSelectedCharacter] = makeQuery(() =>
     getGetSelectedCharacterQueryOptions({ query: { select: mapCharacterDto } }),
 );

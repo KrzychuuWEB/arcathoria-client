@@ -33,6 +33,7 @@ const CharacterTopMenu = () => {
             onError: (error) => handleApiError(error),
         },
     });
+
     const onLogout = () => {
         doLogout();
     };
