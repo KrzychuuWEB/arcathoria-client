@@ -7,13 +7,29 @@ import { useEffect } from "react";
 import { useCharacters } from "@api/queries/character/queries.ts";
 import { MAX_SLOTS } from "@domain/character/types.ts";
 import { ArcathoriaSkeleton } from "@shared/components/ArcathoriaSkeleton.tsx";
+import { useSelectCharacter } from "@api/orval.ts";
+import { setSelectCharacterSessionOptimistic } from "@app/guard/query.ts";
+import useNotification from "@shared/hooks/useNotification.ts";
+import type { SelectCharacterDTO } from "@api/orval.schemas.ts";
 
 const CharacterListPage = () => {
     const navigate = useNavigate();
     const handleApiError = useApiErrorHandler();
+    const { successNotify } = useNotification();
 
     const { data: characters = [], isLoading, isFetching, isError, error } = useCharacters();
     const loading = isLoading || isFetching;
+
+    const selectCharacterMutation = useSelectCharacter({
+        mutation: {
+            onSuccess: () => {
+                setSelectCharacterSessionOptimistic();
+                successNotify("Postać została wybrana");
+                navigate(routes.dashboard.base);
+            },
+            onError: (error) => handleApiError(error),
+        },
+    });
 
     useEffect(() => {
         if (isError && error) {
@@ -23,7 +39,13 @@ const CharacterListPage = () => {
 
     const emptySlots = Math.max(0, MAX_SLOTS - characters.length);
 
-    const handleSelect = (id: string) => navigate(routes.combat.byId(id));
+    const handleSelect = (id: string) => {
+        selectCharacterMutation.mutate({
+            data: {
+                characterId: id,
+            } satisfies SelectCharacterDTO,
+        });
+    };
     const handleAdd = () => navigate(routes.character.create);
 
     return (
