@@ -1,6 +1,7 @@
 import { redirect } from "react-router-dom";
 import { ensureSessionSummary } from "./query";
 import type { GuardTypes, Policy } from "./types";
+import { toast } from "react-toastify";
 
 export const guardedLoader = (policy: Policy) => async () => {
     let s: GuardTypes;
@@ -11,5 +12,10 @@ export const guardedLoader = (policy: Policy) => async () => {
     }
     const d = policy(s);
     if (d === true) return s;
-    throw redirect(d);
+
+    if (typeof d === "object" && d.message) {
+        toast.info(d.message);
+    }
+
+    throw redirect(d.redirect);
 };

@@ -11,8 +11,8 @@ export const all =
     };
 
 export const not =
-    (p: Policy, redirect: string): Policy =>
+    (p: Policy, redirect: string, message?: string): Policy =>
     (s) => {
         const result = p(s);
-        return result === true ? redirect : true;
+        return result === true ? { redirect, message } : true;
     };
