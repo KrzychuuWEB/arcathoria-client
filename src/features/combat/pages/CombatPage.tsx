@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CombatLog } from "@features/combat/components/CombatLog.tsx";
 import { CombatBasicActions } from "@features/combat/components/CombatBasicActions.tsx";
 import { CombatSpells } from "@features/combat/components/CombatSpells.tsx";
@@ -17,6 +17,17 @@ const CombatPage = () => {
         id: "321",
         health: { value: 50, max: 50 },
     });
+
+    useEffect(() => {
+        setPlayer({
+            id: "123",
+            health: { value: 100, max: 100 },
+        });
+        setEnemy({
+            id: "321",
+            health: { value: 100, max: 100 },
+        });
+    }, []);
 
     const enemyEffects = useFloatingEffects();
 
