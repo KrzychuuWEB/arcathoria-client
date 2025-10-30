@@ -12,7 +12,7 @@ export const errorCodeStrategies: Record<ApiErrorCodes, ErrorHandlerStrategy> = 
     ERR_AUTH_EXPIRED_TOKEN: RedirectStrategy(routes.account.login),
     ERR_EXTERNAL_SERVICE_UNAVAILABLE: ToastStrategy("Wymagany serwis jest niedostępny!", "error"),
 
-    ERR_CHARACTER_NAME_EXISTS: FormStrategy("name", "Ta nazwa postaci jest już zajęta!"),
+    ERR_CHARACTER_NAME_EXISTS: FormStrategy("characterName", "Ta nazwa postaci jest już zajęta!"),
     ERR_CHARACTER_NOT_FOUND: ToastStrategy("Postać nie istnieje!", "warning"),
     ERR_CHARACTER_NOT_OWNED: ToastStrategy("Konto nie zostało znalezione", "error"),
     ERR_CHARACTER_NOT_SELECTED: RedirectStrategy(routes.character.list),
