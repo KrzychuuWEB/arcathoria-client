@@ -1,8 +1,4 @@
-import axios, {
-    type AxiosError,
-    type AxiosRequestConfig,
-    type InternalAxiosRequestConfig,
-} from "axios";
+import axios, { type AxiosError, type AxiosRequestConfig, type InternalAxiosRequestConfig, } from "axios";
 import NProgress from "nprogress";
 import type { ProblemDetail } from "@api/errors/problemDetail.ts";
 
@@ -39,23 +35,6 @@ const hasCsrfToken = () => {
 instance.interceptors.request.use(
     async (config: InternalAxiosRequestConfig) => {
         NProgress.start();
-
-        if (import.meta.env.DEV) {
-            const stack = new Error().stack
-                ?.split("\n")
-                .slice(2, 7)
-                .map((s) => s.trim());
-            console.log(
-                "%c[HTTP]",
-                "color:#9D65C9;",
-                config.method?.toUpperCase(),
-                config.url,
-                "origin:",
-                (config as any).meta?.origin, // ← z React Query
-                "\nstack:",
-                stack,
-            );
-        }
 
         const isMutatingRequest = ["post", "put", "delete", "patch"].includes(
             config.method?.toLowerCase() ?? "",
