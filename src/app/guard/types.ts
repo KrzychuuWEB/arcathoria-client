@@ -5,5 +5,5 @@ export type GuardTypes = {
     characterId?: string | null;
 };
 
-export type Decision = true | string;
+export type Decision = true | { redirect: string; message?: string };
 export type Policy = (types: GuardTypes) => Decision;
