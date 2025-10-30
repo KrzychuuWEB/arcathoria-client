@@ -11,13 +11,17 @@ export const guestSession: GuardTypes = {
     characterId: null,
 };
 
-export const ensureSessionSummary = () =>
-    queryClient.ensureQueryData({
+export function ensureSessionSummary(opts: { force?: boolean } = {}) {
+    const options = {
         queryKey: sessionKeys.summary(),
         queryFn: () => buildGuardTypes(),
-        staleTime: 60_000,
         gcTime: 5 * 60_000,
-    });
+    } as const;
+
+    return opts.force
+        ? queryClient.fetchQuery<GuardTypes>(options)
+        : queryClient.ensureQueryData<GuardTypes>({ ...options, staleTime: 60_000 });
+}
 
 export function setAuthSessionOptimistic() {
     queryClient.setQueryData(sessionKeys.summary(), (prev: any) => ({
