@@ -1,4 +1,8 @@
-import axios, { type AxiosError, type AxiosRequestConfig, type InternalAxiosRequestConfig, } from "axios";
+import axios, {
+    type AxiosError,
+    type AxiosRequestConfig,
+    type InternalAxiosRequestConfig,
+} from "axios";
 import NProgress from "nprogress";
 import type { ProblemDetail } from "@api/errors/problemDetail.ts";
 
