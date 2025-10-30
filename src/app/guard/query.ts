@@ -35,3 +35,11 @@ export function setSelectCharacterSessionOptimistic() {
 export function setGuestSession() {
     queryClient.setQueryData(sessionKeys.summary(), guestSession);
 }
+
+export function setAuthSession() {
+    queryClient.setQueryData(sessionKeys.summary(), (prev: any) => ({
+        ...(prev ?? {}),
+        hasCharacter: false,
+        characterId: null,
+    }));
+}

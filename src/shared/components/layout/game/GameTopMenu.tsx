@@ -2,32 +2,41 @@ import { Coins, Gem, LogOut, Settings, Sparkles, User, Zap } from "lucide-react"
 import Tooltip from "@shared/components/Tooltip.tsx";
 import GameTopMenuMobile from "@shared/components/layout/game/GameTopMenuMobile.tsx";
 import { MenuCharacterBar } from "@shared/components/layout/game/MenuCharacterBar.tsx";
-
-export type CharacterDataTypes = {
-    playerName: string;
-    avatarUrl: string;
-    level: number;
-    energy: number;
-    energyMax: number;
-    xp: number;
-    xpToLevel: number;
-    gold: number;
-    crystals: number;
-};
-
-const CharacterDefaultData: CharacterDataTypes = {
-    playerName: "Player name",
-    avatarUrl: "/default_avatar.png",
-    level: 1,
-    energy: 50,
-    energyMax: 100,
-    xp: 50,
-    xpToLevel: 100,
-    gold: 0,
-    crystals: 0,
-};
+import { useRemoveSelectedCharacter } from "@api/orval.ts";
+import { setAuthSession } from "@app/guard/query.ts";
+import { routes } from "@app/routes.ts";
+import { useNavigate } from "react-router-dom";
+import useNotification from "@shared/hooks/useNotification.ts";
+import { useApiErrorHandler } from "@api/errors/useApiErrorHandler.ts";
+import { useSelectedCharacter } from "@api/queries/character/queries.ts";
+import { useEffect } from "react";
+import { ArcathoriaSkeleton } from "@shared/components/ArcathoriaSkeleton.tsx";
 
 const GameTopMenu = () => {
+    const navigate = useNavigate();
+    const { successNotify } = useNotification();
+    const handleApiError = useApiErrorHandler();
+
+    const { data: character, isLoading, isFetching, isError, error } = useSelectedCharacter();
+    const loading = isLoading || isFetching;
+
+    const { mutate: doLogout } = useRemoveSelectedCharacter({
+        mutation: {
+            onSuccess: async () => {
+                setAuthSession();
+                successNotify("Postać została wylogowana");
+                navigate(routes.character.list);
+            },
+            onError: (error) => handleApiError(error),
+        },
+    });
+
+    useEffect(() => {
+        if (isError && error) {
+            handleApiError(error);
+        }
+    }, [isError, error, handleApiError]);
+
     const onOpenCharacter = () => {
         console.log("Open character");
     };
@@ -37,7 +46,7 @@ const GameTopMenu = () => {
     };
 
     const onLogout = () => {
-        console.log("Logout");
+        doLogout();
     };
 
     return (
@@ -50,44 +59,66 @@ const GameTopMenu = () => {
                             className="cursor-pointer relative inline-flex items-center gap-3 px-2.5 py-1.5 rounded-xl border border-primary/40 bg-primary/15 text-text-light hover:bg-primary/25 transition shadow-[0_0_10px_rgba(106,13,173,0.25)]"
                         >
                             <div className="relative w-9 h-9 rounded-lg overflow-hidden ring-1 ring-primary/50">
-                                {CharacterDefaultData.avatarUrl ? (
-                                    <img
-                                        src={CharacterDefaultData.avatarUrl}
-                                        alt="Avatar"
-                                        className="w-full h-full object-cover"
+                                {loading ? (
+                                    <ArcathoriaSkeleton
+                                        variant="block"
+                                        width={70}
+                                        height={14}
+                                        radius={6}
                                     />
                                 ) : (
-                                    <div className="w-full h-full grid place-items-center bg-black/40">
-                                        <User className="w-5 h-5 text-secondary" />
-                                    </div>
+                                    <>
+                                        {character?.avatar_url ? (
+                                            <img
+                                                src={character?.avatar_url}
+                                                alt="Avatar"
+                                                className="w-full h-full object-cover"
+                                            />
+                                        ) : (
+                                            <div className="w-full h-full grid place-items-center bg-black/40">
+                                                <User className="w-5 h-5 text-secondary" />
+                                            </div>
+                                        )}
+                                    </>
                                 )}
                             </div>
                             <div className="min-w-0">
                                 <div className="flex items-center gap-2 text-sm font-roboto flex-wrap">
                                     <span className="truncate max-w-[22ch]">
-                                        {CharacterDefaultData.playerName}
+                                        {loading ? (
+                                            <ArcathoriaSkeleton
+                                                variant="block"
+                                                width={70}
+                                                height={14}
+                                                radius={6}
+                                            />
+                                        ) : (
+                                            <>{character?.name}</>
+                                        )}
                                     </span>
                                     <span className="px-1.5 py-0.5 rounded bg-primary/25 border border-primary/50 text-secondary text-[11px] leading-none">
-                                        Lv {CharacterDefaultData.level}
+                                        Lv{" "}
+                                        {loading ? (
+                                            <ArcathoriaSkeleton
+                                                variant="block"
+                                                width={20}
+                                                height={14}
+                                                radius={6}
+                                            />
+                                        ) : (
+                                            <>{character?.level}</>
+                                        )}
                                     </span>
                                 </div>
 
                                 <div className="mt-1.5 flex items-center gap-3">
                                     <div className="flex items-center gap-1 min-w-[120px]">
                                         <Zap className="w-3.5 h-3.5 text-complementary-green" />
-                                        <MenuCharacterBar
-                                            value={CharacterDefaultData.energy}
-                                            max={CharacterDefaultData.energyMax}
-                                            variant="energy"
-                                        />
+                                        <MenuCharacterBar value={100} max={100} variant="energy" />
                                     </div>
                                     <div className="flex items-center gap-1 min-w-[120px]">
                                         <Sparkles className="w-3.5 h-3.5 text-complementary-red" />
-                                        <MenuCharacterBar
-                                            value={CharacterDefaultData.xp}
-                                            max={CharacterDefaultData.xpToLevel}
-                                            variant="xp"
-                                        />
+                                        <MenuCharacterBar value={100} max={100} variant="xp" />
                                     </div>
                                 </div>
                             </div>
@@ -97,15 +128,11 @@ const GameTopMenu = () => {
                     <div className="flex items-center gap-3 sm:ml-4 justify-self-start lg:justify-self-center">
                         <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-lg border border-primary/50 bg-black/40 text-text-light shadow-[0_0_8px_rgba(106,13,173,0.2)]">
                             <Coins className="w-4 h-4 text-secondary" />
-                            <span className="text-sm font-roboto tabular-nums">
-                                {CharacterDefaultData.gold.toLocaleString()}
-                            </span>
+                            <span className="text-sm font-roboto tabular-nums">0</span>
                         </div>
                         <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-lg border border-primary/50 bg-black/40 text-text-light shadow-[0_0_8px_rgba(106,13,173,0.2)]">
                             <Gem className="w-4 h-4 text-complementary-blue" />
-                            <span className="text-sm font-roboto tabular-nums">
-                                {CharacterDefaultData.crystals.toLocaleString()}
-                            </span>
+                            <span className="text-sm font-roboto tabular-nums">0</span>
                         </div>
                     </div>
 
@@ -131,7 +158,8 @@ const GameTopMenu = () => {
                 </nav>
 
                 <GameTopMenuMobile
-                    character={CharacterDefaultData}
+                    character={character}
+                    loading={loading}
                     onOpenCharacter={onOpenCharacter}
                     onOpenSettings={onOpenSettings}
                     onLogout={onLogout}
