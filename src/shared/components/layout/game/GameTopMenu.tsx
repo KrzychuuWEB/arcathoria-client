@@ -63,8 +63,8 @@ const GameTopMenu = () => {
                                     <ArcathoriaSkeleton
                                         variant="block"
                                         width={70}
-                                        height={14}
-                                        radius={6}
+                                        height={70}
+                                        radius={60}
                                     />
                                 ) : (
                                     <>
@@ -113,7 +113,7 @@ const GameTopMenu = () => {
 
                                 <div className="mt-1.5 flex items-center gap-3">
                                     <div className="flex items-center gap-1 min-w-[120px]">
-                                        <Zap className="w-3.5 h-3.5 text-complementary-green" />
+                                        <Zap className="w-3.5 h-3.5 text-secondary" />
                                         <MenuCharacterBar value={100} max={100} variant="energy" />
                                     </div>
                                     <div className="flex items-center gap-1 min-w-[120px]">
