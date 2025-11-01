@@ -1,8 +1,8 @@
-import {useEffect} from "react";
-import {useSelectedCharacter} from "@api/queries/character/queries.ts";
-import {useApiErrorHandler} from "@api/errors/useApiErrorHandler.ts";
-import {CharacterContainer} from "@features/dashboard/components/CharacterContainer.tsx";
-import {CharacterAttributes} from "@features/dashboard/components/CharacterAttributes.tsx";
+import { useEffect } from "react";
+import { useSelectedCharacter } from "@api/queries/character/queries.ts";
+import { useApiErrorHandler } from "@api/errors/useApiErrorHandler.ts";
+import { CharacterContainer } from "@features/dashboard/components/CharacterContainer.tsx";
+import { CharacterAttributes } from "@features/dashboard/components/CharacterAttributes.tsx";
 
 const DashboardPage = () => {
     const handleApiError = useApiErrorHandler();
