@@ -79,7 +79,7 @@ Create a `.env` file in the project root:
 4. **Start the development server**
 
 Before starting the application, make sure the backend (with HTTPS + Caddy) is running as described in  
-[DEV-SETUP.md](https://github.com/KrzychuuWEB/arcathoria-api/docs/DEV-SETUP.md) — this enables access via
+[DEV-SETUP.md](https://github.com/KrzychuuWEB/arcathoria-api/blob/master/docs/DEV-SETUP.md) — this enables access via
 `https://game.arcathoria.dev`.
 
 **Run application**
