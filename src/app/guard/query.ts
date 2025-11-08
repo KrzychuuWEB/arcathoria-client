@@ -7,8 +7,10 @@ export const sessionKeys = { summary: () => ["session", "summary"] as const };
 export const guestSession: GuardTypes = {
     isAuthenticated: false,
     hasCharacter: false,
+    hasActiveCombat: false,
     userId: null,
     characterId: null,
+    activeCombatId: null,
 };
 
 export function ensureSessionSummary() {
@@ -41,5 +43,13 @@ export function setAuthSession() {
         ...(prev ?? {}),
         hasCharacter: false,
         characterId: null,
+    }));
+}
+
+export function setActiveCombatSession(id: string) {
+    queryClient.setQueryData(sessionKeys.summary(), (prev: any) => ({
+        ...(prev ?? {}),
+        hasActiveCombat: true,
+        activeCombatId: id,
     }));
 }

@@ -12,6 +12,10 @@ export type Combat = {
     id: string;
     attacker: Participant;
     defender: Participant;
-    combatSide: "ATTACKER" | "DEFENDER";
-    status: "IS_PROGRESS" | "FINISHED";
+    combatSide: CombatSideType;
+    status: CombatStatusType;
 };
+
+export type CombatSideType = "ATTACKER" | "DEFENDER";
+
+export type CombatStatusType = "IN_PROGRESS" | "FINISHED" | "CANCELLED";

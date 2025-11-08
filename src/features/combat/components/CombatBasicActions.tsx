@@ -4,9 +4,10 @@ import BlurContainer from "@shared/components/BlurContainer.tsx";
 
 type CombatBasicActionProps = {
     handleBasicAction: () => void;
+    loading: boolean;
 };
 
-export const CombatBasicActions = ({ handleBasicAction }: CombatBasicActionProps) => {
+export const CombatBasicActions = ({ handleBasicAction, loading }: CombatBasicActionProps) => {
     return (
         <BlurContainer>
             <div className="grid grid-cols-3 gap-2 sm:gap-3">
@@ -15,21 +16,22 @@ export const CombatBasicActions = ({ handleBasicAction }: CombatBasicActionProps
                     icon={Swords}
                     color="text-complementary-red-600"
                     onClick={handleBasicAction}
+                    disabled={loading}
                 />
 
                 <CombatActionButton
-                    disabled={true}
                     title="Obrona"
                     icon={Shield}
                     onClick={() => console.log("Obrona")}
+                    disabled={true}
                 />
 
                 <CombatActionButton
-                    disabled={true}
                     title="Leczenie"
                     icon={Heart}
                     color="text-complementary-green"
                     onClick={() => console.log("Leczenie")}
+                    disabled={true}
                 />
             </div>
         </BlurContainer>
