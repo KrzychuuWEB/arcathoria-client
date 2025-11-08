@@ -1,9 +1,37 @@
 @import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;600&display=swap");
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #6a0dad;
+    --color-primary-300: #9b59b6;
+    --color-primary-600: #4a007a;
+
+    --color-secondary: #ffd700;
+    --color-secondary-300: #ffe680;
+    --color-secondary-600: #b89500;
+
+    --color-complementary-blue: #0a74da;
+    --color-complementary-blue-300: #1a8fe3;
+    --color-complementary-blue-600: #0645b1;
+
+    --color-complementary-red: #ff4c4c;
+    --color-complementary-red-300: #ff6b6b;
+    --color-complementary-red-600: #e02a2a;
+
+    --color-complementary-green: #4caf50;
+    --color-complementary-green-300: #66bb6a;
+    --color-complementary-green-600: #388e3c;
+
+    --color-text-light: #f2f2f2;
+    --color-text-secondary: #b0b0b0;
+    --color-text-highlight: #ffd700;
+
+    --font-heading: "Cinzel Decorative", serif;
+    --font-body: "Roboto", sans-serif;
+    --font-tooltip: "Open Sans", sans-serif;
+}
 
 body {
-    font-family: "Roboto", "serif";
+    font-family: "Roboto", "sans-serif";
 }

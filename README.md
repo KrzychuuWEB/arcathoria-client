@@ -5,21 +5,17 @@
 
 ---
 
-**Current client version is not fully connected to the API (the API has a new response for exceptions) I working on new
-client version with typescript**
-
 ## Description
 
 Web client for the Arcathoria game built with React and Vite (SPA). In the game player can login, register, create
 character, select character and init PvE combat and perform melee attack. I want to develop new features in the future.
-My first step is a migrate from plain Javascript to Typescript.
 
 ## Features
 
 - **Authentication:** Sign up and log in using JWT-based authentication
 - **Character Management:** Create and select character
 - **Combat Interface:** Initiate PvE Combat and perform attack
-- **Form Validation:** Built with Formik and Yup
+- **Form Validation:** Built with React-hook-form and zod
 - **Notifications:** Real-time feedback with React Toastify
 - **Progress Indicators:** Page loading indicators via `@tanem/react-nprogress`
 
@@ -37,16 +33,23 @@ My first step is a migrate from plain Javascript to Typescript.
 
 ## Stack
 
-- React with plain JavaScript
-- Vite
-- Formik
-- Yup
+- React with Vite
+- Typescript
+- Tanstack/React Query
+- React hook form
 - React Toastify
-- Axios
 - React NProgress
 - React Router DOM
 - Tailwind CSS
 - Prettier
+- Orval
+- Zod
+- Axios
+
+## Requirements
+
+- Node.js 16 or higher
+- NPM 8+ or Yarn 1+/2+
 
 ## Environment Variables
 
@@ -67,26 +70,34 @@ Create a `.env` file in the project root:
    yarn install
    ```
 
-3. **Start the development server**
+3. **Generate orval**
+
+    ```bash
+   npm run codegen
+   ```
+
+4. **Start the development server**
+
+Before starting the application, make sure the backend (with HTTPS + Caddy) is running as described in  
+[DEV-SETUP.md](https://github.com/KrzychuuWEB/arcathoria-api/docs/DEV-SETUP.md) — this enables access via
+`https://game.arcathoria.dev`.
+
+**Run application**
+
    ```bash
    npm run dev
    # or
    yarn dev
-   ```  
-   The app will be available at `http://localhost:5173/`.
-
-## Usage
-
-- Open `http://localhost:5173/` in your browser.
-- Register a new account or log in with existing credentials.
-- Explore characters, combat via the navigation menu.
+   ```   
 
 ## Screenshots
 
 ![Login Page](gh_img/login.png)
 
-![Expeditions](gh_img/expedition.png)
+![Character List page](gh_img/character_list.png)
 
-![Choose Expedition](gh_img/choose_expedition.png)
+![Character create](gh_img/character_create.png)
 
-![PvE Combat](gh_img/combat.png)
+![Expedition](gh_img/expedition.png)
+
+![Combat page](gh_img/combat.png)

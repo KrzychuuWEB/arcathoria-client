@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# my
+.env
+src/api/orval.ts
+src/api/orval.schemas.ts
