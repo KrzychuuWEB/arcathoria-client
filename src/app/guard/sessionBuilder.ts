@@ -1,4 +1,8 @@
-import { getGetSelectedCharacterQueryOptions, getMyAccountQueryOptions } from "@api/orval";
+import {
+    getGetActiveCombatByParticipantIdQueryOptions,
+    getGetSelectedCharacterQueryOptions,
+    getMyAccountQueryOptions,
+} from "@api/orval";
 import type { GuardTypes } from "./types";
 import { queryClient } from "@shared/libs/query.ts";
 
@@ -34,6 +38,24 @@ async function probeCharacter(): Promise<Pick<GuardTypes, "hasCharacter" | "char
     }
 }
 
+async function probeActiveCombat(): Promise<
+    Pick<GuardTypes, "hasActiveCombat" | "activeCombatId">
+> {
+    try {
+        const combat = await queryClient.fetchQuery(
+            getGetActiveCombatByParticipantIdQueryOptions({
+                query: { retry: false },
+            }),
+        );
+        return {
+            hasActiveCombat: true,
+            activeCombatId: combat.combatId,
+        };
+    } catch (e: any) {
+        return { hasActiveCombat: false, activeCombatId: null };
+    }
+}
+
 export async function buildGuardTypes(): Promise<GuardTypes> {
     const auth = await probeAuth();
 
@@ -41,17 +63,22 @@ export async function buildGuardTypes(): Promise<GuardTypes> {
         return {
             isAuthenticated: false,
             hasCharacter: false,
+            hasActiveCombat: false,
             userId: null,
             characterId: null,
+            activeCombatId: null,
         };
     }
 
     const char = await probeCharacter();
+    const combat = await probeActiveCombat();
 
     return {
         isAuthenticated: true,
         userId: auth.userId,
         hasCharacter: char.hasCharacter,
         characterId: char.characterId,
+        hasActiveCombat: combat.hasActiveCombat,
+        activeCombatId: combat.activeCombatId,
     };
 }

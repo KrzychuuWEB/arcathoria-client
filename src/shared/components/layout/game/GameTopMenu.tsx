@@ -114,11 +114,11 @@ const GameTopMenu = () => {
                                 <div className="mt-1.5 flex items-center gap-3">
                                     <div className="flex items-center gap-1 min-w-[120px]">
                                         <Zap className="w-3.5 h-3.5 text-secondary" />
-                                        <MenuCharacterBar value={100} max={100} variant="energy" />
+                                        <MenuCharacterBar value={0} max={0} variant="energy" />
                                     </div>
                                     <div className="flex items-center gap-1 min-w-[120px]">
                                         <Sparkles className="w-3.5 h-3.5 text-complementary-red" />
-                                        <MenuCharacterBar value={100} max={100} variant="xp" />
+                                        <MenuCharacterBar value={0} max={0} variant="xp" />
                                     </div>
                                 </div>
                             </div>

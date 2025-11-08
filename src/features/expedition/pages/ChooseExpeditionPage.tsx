@@ -7,6 +7,10 @@ import Button from "@shared/components/Button.tsx";
 import { ExpeditionCard } from "@features/expedition/components/ExpeditionCard.tsx";
 import { useNavigate } from "react-router-dom";
 import { routes } from "@app/routes.ts";
+import { useApiErrorHandler } from "@api/errors/useApiErrorHandler.ts";
+import { useInitPveCombat } from "@api/orval.ts";
+import type { InitPveDTO } from "@api/orval.schemas.ts";
+import { setActiveCombatSession } from "@app/guard/query.ts";
 
 export type BiomeKey = "vulcan" | "mountain" | "ruins" | "forest";
 
@@ -26,11 +30,27 @@ const BIOMES: Biome[] = [
 const ChooseExpeditionPage = () => {
     const [selected, setSelected] = useState<BiomeKey | null>(null);
     const navigate = useNavigate();
+    const handleApiError = () => useApiErrorHandler();
+
+    const initCombatMutation = useInitPveCombat({
+        mutation: {
+            onSuccess: (data) => {
+                setActiveCombatSession(data.combatId || "");
+                navigate(routes.combat.byId(data.combatId || ""));
+            },
+            onError: handleApiError,
+        },
+    });
 
     const startExpedition = () => {
-        console.log("Start expedition", selected);
-        navigate(routes.combat.byId("123"));
+        const payload: InitPveDTO = {
+            monsterId: "bf4397d8-b4dc-361e-9b6d-191a352e9134",
+        };
+
+        initCombatMutation.mutate({ data: payload });
     };
+
+    const isLoading = initCombatMutation.isPending;
 
     return (
         <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
@@ -79,7 +99,7 @@ const ChooseExpeditionPage = () => {
                     <div className="h-px bg-primary/30 my-4" />
 
                     <div>
-                        <Button onClick={startExpedition} disabled={!selected}>
+                        <Button onClick={startExpedition} disabled={!selected || isLoading}>
                             Rozpocznij
                         </Button>
                     </div>

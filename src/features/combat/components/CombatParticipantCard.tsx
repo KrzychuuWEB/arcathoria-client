@@ -4,18 +4,13 @@ import { ShieldCheck, Skull } from "lucide-react";
 import { TimerRing } from "@features/combat/components/CombatTimerRing.tsx";
 import { FloatingEffectsHost } from "@shared/components/floatingEffect";
 import type { EffectItem } from "@shared/components/floatingEffect/FloatingEffect.tsx";
+import type { Participant } from "@domain/combat/types.ts";
 
 type Role = "player" | "enemy";
 
 type CombatParticipantCardProps = {
     role: Role;
-    name: string;
-    avatar: string;
-    level: number;
-    hp: number;
-    hpMax: number;
-    mp: number;
-    mpMax: number;
+    participant: Participant;
     turnProgress?: number;
     isActiveTurn?: boolean;
     effects?: EffectItem[];
@@ -23,13 +18,7 @@ type CombatParticipantCardProps = {
 
 export const CombatParticipantCard = ({
     role,
-    name,
-    avatar,
-    level,
-    hp,
-    hpMax,
-    mp,
-    mpMax,
+    participant,
     turnProgress = 0,
     isActiveTurn = false,
     effects,
@@ -47,8 +36,8 @@ export const CombatParticipantCard = ({
             <div className="relative">
                 <div className="relative w-16 h-16 sm:w-20 sm:h-20">
                     <img
-                        src={avatar}
-                        alt={name}
+                        src={"/default_avatar.png"}
+                        alt={participant.id}
                         className="w-full h-full rounded-full border border-primary/40 object-cover"
                     />
                     <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/20 to-secondary/10 opacity-60 blur-md" />
@@ -69,8 +58,8 @@ export const CombatParticipantCard = ({
 
             <div className="flex-1 min-w-0">
                 <h3 className="font-cinzel text-text-light text-lg truncate">
-                    <span className="align-middle">{name}</span>{" "}
-                    <span className="text-text-secondary align-middle">Lv. {level}</span>
+                    <span className="align-middle">{participant.id}</span>{" "}
+                    <span className="text-text-secondary align-middle">Lv. {0}</span>
                     <span
                         className={cn(
                             "ml-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] border align-middle",
@@ -86,8 +75,12 @@ export const CombatParticipantCard = ({
                 </h3>
 
                 <div className="mt-2 space-y-2">
-                    <StatusBar value={hp} max={hpMax} variant="hp" />
-                    <StatusBar value={mp} max={mpMax} variant="mana" />
+                    <StatusBar
+                        value={participant.health.value}
+                        max={participant.health.max}
+                        variant="hp"
+                    />
+                    <StatusBar value={0} max={0} variant="mana" />
                 </div>
             </div>
         </div>

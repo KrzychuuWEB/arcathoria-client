@@ -6,7 +6,7 @@ import { ProgressFallback } from "@shared/components/ProgressFallback.tsx";
 import CombatLayout from "@features/combat/CombatLayout.tsx";
 import { NotFoundPage } from "@shared/components/NotFoundPage.tsx";
 import { guardedLoader } from "@app/guard/guardedLoader.ts";
-import { onlyAccountAndCharacter } from "@app/guard/policyFactory.ts";
+import { onlyWithActiveCombat } from "@app/guard/policyFactory.ts";
 
 const CombatPage = lazy(() => import("./pages/CombatPage"));
 
@@ -20,7 +20,7 @@ export const combatRoutes: RouteObject[] = [
         children: [
             {
                 index: true,
-                loader: guardedLoader(onlyAccountAndCharacter),
+                loader: guardedLoader(onlyWithActiveCombat),
                 element: S(<CombatPage />),
             },
         ],

@@ -8,7 +8,13 @@ export const guardedLoader = (policy: Policy) => async () => {
     try {
         s = await ensureSessionSummary();
     } catch {
-        s = { isAuthenticated: false, hasCharacter: false, userId: null, characterId: null };
+        s = {
+            isAuthenticated: false,
+            hasCharacter: false,
+            userId: null,
+            characterId: null,
+            activeCombatId: null,
+        };
     }
     const d = policy(s);
     if (d === true) return s;
