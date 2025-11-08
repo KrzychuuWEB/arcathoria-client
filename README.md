@@ -46,6 +46,11 @@ character, select character and init PvE combat and perform melee attack. I want
 - Zod
 - Axios
 
+## Requirements
+
+- Node.js 16 or higher
+- NPM 8+ or Yarn 1+/2+
+
 ## Environment Variables
 
 Create a `.env` file in the project root:
@@ -89,8 +94,10 @@ Before starting the application, make sure the backend (with HTTPS + Caddy) is r
 
 ![Login Page](gh_img/login.png)
 
-![Expeditions](gh_img/expedition.png)
+![Character List page](gh_img/character_list.png)
 
-![Choose Expedition](gh_img/choose_expedition.png)
+![Character create](gh_img/character_create.png)
 
-![PvE Combat](gh_img/combat.png)
+![Expedition](gh_img/expedition.png)
+
+![Combat page](gh_img/combat.png)
