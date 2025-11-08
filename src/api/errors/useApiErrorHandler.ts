@@ -1,5 +1,9 @@
 import type { FieldPath, FieldValues, UseFormSetError } from "react-hook-form";
-import type { ErrorHandlerConfig, ErrorHandlerStrategy, Violation, } from "@api/errors/errorHandlerStrategy";
+import type {
+    ErrorHandlerConfig,
+    ErrorHandlerStrategy,
+    Violation,
+} from "@api/errors/errorHandlerStrategy";
 import { useNavigate } from "react-router-dom";
 import useNotification from "@shared/hooks/useNotification";
 import { errorCodeStrategies } from "@api/errors/errorCodeStrategies";
